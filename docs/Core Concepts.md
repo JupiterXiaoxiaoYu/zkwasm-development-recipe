@@ -164,7 +164,7 @@ This is where zero-knowledge proofs come into play. Zero-knowledge proofs are a 
 Zero-knowledge proofs provide a more efficient way to implement determinism and verifiability:
 
 - For determinism, zero-knowledge proofs require the state transition logic to be deterministic (like zkWasm using a deterministic Wasm subset) to generate proofs.
-    
+
 - For verifiability, zero-knowledge proofs allow the prover to generate a succinct proof proving the correctness of the state transition, and the verifier only needs to check this proof without redoing the computation. This greatly reduces the cost of verification.
 
 Here's an example. Suppose there is a complex state transition that requires 1,000,000 steps of computation. In a traditional blockchain, each node would need to replay these 1,000,000 steps to verify the result. But with zero-knowledge proofs, the prover only needs to do the computation once to generate a proof, and the verifier might only need to do 100 steps of computation to verify this proof.
@@ -174,9 +174,9 @@ In addition to efficiency, zero-knowledge proofs bring another important propert
 ### Supplemental Resources
 
 - [Zero-Knowledge Mastery](https://github.com/Quillhash/Zero-Knowledge-Mastery?tab=readme-ov-file): A comprehensive guide to zero-knowledge proofs.
-- [zkhack](https://zkhack.dev/): A community-driven platform for zero-knowledge proof research and development.
-- [zksummit](https://www.zksummit.com/): The annual zkSummit conference, an important event in the zero-knowledge proof community.
-- [progcrypto](https://progcrypto.org/): A platform for learning and sharing knowledge about zero-knowledge proofs and blockchain technology.
+- [zkhack](https://zkhack.dev/): zkhack is a hub for zk learning and building. It hosts virtual events and advanced puzzle competitions, as well as produces educational content and runs study groups. Its goal is to explore and explain key concepts and tools and get you onboarded into zk.
+- [zksummit](https://www.zksummit.com/): The annual zkSummit conference, an important event in the zero-knowledge proof community. The conference brings together the best thinkers and builders to discuss the latest in zero knowledge research, zk use-cases, cryptographic primitives, privacy and maths. 
+- [progcrypto](https://progcrypto.org/): The Programmable Cryptography Conference is a 2-day event, organized by 0xPARC and PSE, which brings together researchers, developers, and community members focused on next-generation cryptography and its applications. Topics include new research developments in applied cryptography, infrastructure for tools like zkSNARKs and MPC, and applications of these new cryptographic primitives for areas such as digital identity or financial privacy.
 
 Next, we will introduce the core concepts and fundamentals of zkWasm.
 
