@@ -77,6 +77,10 @@
         </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#understanding-zero-knowledge-proofs">Understanding Zero-Knowledge Proofs</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#supplemental-resources">Supplemental Resources</a>
+    </li>
+        </ul>
     </li>
     </ul>
                 </li>
@@ -246,7 +250,7 @@
 </li>
 </ul>
 <p>Traditional blockchains (like Bitcoin and Ethereum) achieve determinism by replaying every transaction on each node, and achieve verifiability through a hash-linked block structure. But this method is less efficient, especially when the state transition logic is complex.</p>
-<p>This is where zero-knowledge proofs come into play. Zero-knowledge proofs are a cryptographic technique that can prove a statement is correct without revealing any information. In blockchain, zero-knowledge proofs can be used to prove that a state transition is legal without revealing the specific input data and intermediate states. More Information about Zero-Knowledge Proofs can be found <a href="https://en.wikipedia.org/wiki/Zero-knowledge_proof">here</a> or Later in Supplemental Reading.</p>
+<p>This is where zero-knowledge proofs come into play. Zero-knowledge proofs are a cryptographic technique that can prove a statement is correct without revealing any information. In blockchain, zero-knowledge proofs can be used to prove that a state transition is legal without revealing the specific input data and intermediate states. More Information about Zero-Knowledge Proofs can be found <a href="https://en.wikipedia.org/wiki/Zero-knowledge_proof">here</a> or Later in Supplemental Resources.</p>
 <p>Zero-knowledge proofs provide a more efficient way to implement determinism and verifiability:</p>
 <ul>
 <li>
@@ -258,6 +262,13 @@
 </ul>
 <p>Here's an example. Suppose there is a complex state transition that requires 1,000,000 steps of computation. In a traditional blockchain, each node would need to replay these 1,000,000 steps to verify the result. But with zero-knowledge proofs, the prover only needs to do the computation once to generate a proof, and the verifier might only need to do 100 steps of computation to verify this proof.</p>
 <p>In addition to efficiency, zero-knowledge proofs bring another important property: privacy. Since the proving process does not reveal input data and intermediate states, zero-knowledge proofs allow verifying the correctness of a computation result without disclosing the original data. This is very important for privacy-sensitive application scenarios (like finance and healthcare).</p>
+<h3 id="supplemental-resources">Supplemental Resources</h3>
+<ul>
+<li><a href="https://github.com/Quillhash/Zero-Knowledge-Mastery?tab=readme-ov-file">Zero-Knowledge Mastery</a>: A comprehensive guide to zero-knowledge proofs.</li>
+<li><a href="https://zkhack.dev/">zkhack</a>: A community-driven platform for zero-knowledge proof research and development.</li>
+<li><a href="https://www.zksummit.com/">zksummit</a>: The annual zkSummit conference, an important event in the zero-knowledge proof community.</li>
+<li><a href="https://progcrypto.org/">progcrypto</a>: A platform for learning and sharing knowledge about zero-knowledge proofs and blockchain technology.</li>
+</ul>
 <p>Next, we will introduce the core concepts and fundamentals of zkWasm.</p>
               
             </div>
