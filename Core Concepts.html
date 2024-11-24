@@ -46,7 +46,7 @@
               <ul class="current">
                 <li class="toctree-l1 current"><a class="reference internal current" href="#">Core Concepts</a>
     <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#understanding-application-development">Understanding Application Development</a>
+    <li class="toctree-l2"><a class="reference internal" href="#understanding-web-application-development">Understanding Web Application Development</a>
         <ul>
     <li class="toctree-l3"><a class="reference internal" href="#backend-state-storage-and-transformation">Backend: State Storage and Transformation</a>
     </li>
@@ -105,8 +105,16 @@
             <div class="section" itemprop="articleBody">
               
                 <h1 id="core-concepts">Core Concepts</h1>
-<h2 id="understanding-application-development">Understanding Application Development</h2>
-<p>In modern application development, the frontend and backend have clear divisions of labor. Although technologies are constantly evolving, one thing remains constant: the frontend is responsible for presenting the state, while the backend is responsible for managing the state.</p>
+<h2 id="understanding-web-application-development">Understanding Web Application Development</h2>
+<p>In modern web application development, the frontend and backend have clear divisions of labor. Although technologies are constantly evolving, one thing remains constant: the frontend is responsible for presenting the state, while the backend is responsible for managing the state.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul>
+<li>The recipe focuses on web application development due to zkWasm's strong ties with WebAssembly. However, zkWasm is not limited to web applications, you can use zkWasm to develop applications such as games for other platforms.</li>
+<li>Wasm's widespread support in web browsers makes it easier to integrate zkWasm into web applications.</li>
+<li>The zkWasm ecosystem and Delphinus Labs provide web-friendly tools and libraries for a streamlined development process.</li>
+</ul>
+</div>
 <h3 id="backend-state-storage-and-transformation">Backend: State Storage and Transformation</h3>
 <p>The backend is the core of an application, and its main responsibilities include:</p>
 <ol>
@@ -250,6 +258,7 @@
 </ul>
 <p>Here's an example. Suppose there is a complex state transition that requires 1,000,000 steps of computation. In a traditional blockchain, each node would need to replay these 1,000,000 steps to verify the result. But with zero-knowledge proofs, the prover only needs to do the computation once to generate a proof, and the verifier might only need to do 100 steps of computation to verify this proof.</p>
 <p>In addition to efficiency, zero-knowledge proofs bring another important property: privacy. Since the proving process does not reveal input data and intermediate states, zero-knowledge proofs allow verifying the correctness of a computation result without disclosing the original data. This is very important for privacy-sensitive application scenarios (like finance and healthcare).</p>
+<p>Next, we will introduce the core concepts and fundamentals of zkWasm.</p>
               
             </div>
           </div><footer>
