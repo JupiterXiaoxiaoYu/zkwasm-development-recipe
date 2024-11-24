@@ -159,17 +159,24 @@ To achieve reliable verification, determinism and verifiability are needed:
 
 Traditional blockchains (like Bitcoin and Ethereum) achieve determinism by replaying every transaction on each node, and achieve verifiability through a hash-linked block structure. But this method is less efficient, especially when the state transition logic is complex.
 
-This is where zero-knowledge proofs come into play. Zero-knowledge proofs are a cryptographic technique that can prove a statement is correct without revealing any information. In blockchain, zero-knowledge proofs can be used to prove that a state transition is legal without revealing the specific input data and intermediate states. More Information about Zero-Knowledge Proofs can be found [here](https://en.wikipedia.org/wiki/Zero-knowledge_proof) or Later in Supplemental Reading.
+This is where zero-knowledge proofs come into play. Zero-knowledge proofs are a cryptographic technique that can prove a statement is correct without revealing any information. In blockchain, zero-knowledge proofs can be used to prove that a state transition is legal without revealing the specific input data and intermediate states. More Information about Zero-Knowledge Proofs can be found [here](https://en.wikipedia.org/wiki/Zero-knowledge_proof) or Later in Supplemental Resources.
 
 Zero-knowledge proofs provide a more efficient way to implement determinism and verifiability:
 
 - For determinism, zero-knowledge proofs require the state transition logic to be deterministic (like zkWasm using a deterministic Wasm subset) to generate proofs.
-
+    
 - For verifiability, zero-knowledge proofs allow the prover to generate a succinct proof proving the correctness of the state transition, and the verifier only needs to check this proof without redoing the computation. This greatly reduces the cost of verification.
 
 Here's an example. Suppose there is a complex state transition that requires 1,000,000 steps of computation. In a traditional blockchain, each node would need to replay these 1,000,000 steps to verify the result. But with zero-knowledge proofs, the prover only needs to do the computation once to generate a proof, and the verifier might only need to do 100 steps of computation to verify this proof.
 
 In addition to efficiency, zero-knowledge proofs bring another important property: privacy. Since the proving process does not reveal input data and intermediate states, zero-knowledge proofs allow verifying the correctness of a computation result without disclosing the original data. This is very important for privacy-sensitive application scenarios (like finance and healthcare).
+
+### Supplemental Resources
+
+- [Zero-Knowledge Mastery](https://github.com/Quillhash/Zero-Knowledge-Mastery?tab=readme-ov-file): A comprehensive guide to zero-knowledge proofs.
+- [zkhack](https://zkhack.dev/): A community-driven platform for zero-knowledge proof research and development.
+- [zksummit](https://www.zksummit.com/): The annual zkSummit conference, an important event in the zero-knowledge proof community.
+- [progcrypto](https://progcrypto.org/): A platform for learning and sharing knowledge about zero-knowledge proofs and blockchain technology.
 
 Next, we will introduce the core concepts and fundamentals of zkWasm.
 
