@@ -69,10 +69,10 @@ Here are a few steps you should follow to ensure a great development experience:
 ## Getting Started
 
 <div class="grid-wrapper">
-    <a href="basics/introduction/" class="grid-box">
+    <a href="Core%20Concepts.html" class="grid-box">
         <h3>🔰 Core Concepts</h3>
         <p>Learn the core concepts of zkWasm development</p>
-        <span class="grid-link">开始学习 →</span>
+        <span class="grid-link">Start Learning →</span>
     </a>
     
     <!-- <a href="setup/environment/" class="grid-box">
