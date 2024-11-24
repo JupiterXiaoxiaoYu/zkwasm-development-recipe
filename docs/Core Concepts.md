@@ -1,8 +1,13 @@
 # Core Concepts
 
-## Understanding Application Development 
+## Understanding Web Application Development 
 
-In modern application development, the frontend and backend have clear divisions of labor. Although technologies are constantly evolving, one thing remains constant: the frontend is responsible for presenting the state, while the backend is responsible for managing the state.
+In modern web application development, the frontend and backend have clear divisions of labor. Although technologies are constantly evolving, one thing remains constant: the frontend is responsible for presenting the state, while the backend is responsible for managing the state.
+
+!!! note
+    - The recipe focuses on web application development due to zkWasm's strong ties with WebAssembly. However, zkWasm is not limited to web applications, you can use zkWasm to develop applications such as games for other platforms.
+    - Wasm's widespread support in web browsers makes it easier to integrate zkWasm into web applications.
+    - The zkWasm ecosystem and Delphinus Labs provide web-friendly tools and libraries for a streamlined development process.
 
 ### Backend: State Storage and Transformation
 The backend is the core of an application, and its main responsibilities include:
@@ -165,5 +170,7 @@ Zero-knowledge proofs provide a more efficient way to implement determinism and 
 Here's an example. Suppose there is a complex state transition that requires 1,000,000 steps of computation. In a traditional blockchain, each node would need to replay these 1,000,000 steps to verify the result. But with zero-knowledge proofs, the prover only needs to do the computation once to generate a proof, and the verifier might only need to do 100 steps of computation to verify this proof.
 
 In addition to efficiency, zero-knowledge proofs bring another important property: privacy. Since the proving process does not reveal input data and intermediate states, zero-knowledge proofs allow verifying the correctness of a computation result without disclosing the original data. This is very important for privacy-sensitive application scenarios (like finance and healthcare).
+
+Next, we will introduce the core concepts and fundamentals of zkWasm.
 
 
