@@ -70,13 +70,13 @@ Here are a few steps you should follow to ensure a great development experience:
 
 <div class="grid-wrapper">
     <a href="basics/introduction/" class="grid-box">
-        <h3>🔰 基础知识</h3>
-        <p>从零开始学习区块链和零知识证明的基础知识</p>
+        <h3>🔰 Core Concepts</h3>
+        <p>Learn the core concepts of zkWasm development</p>
         <span class="grid-link">开始学习 →</span>
     </a>
     
-    <a href="setup/environment/" class="grid-box">
-        <h3>⚙️ 开发环境</h3>
+    <!-- <a href="setup/environment/" class="grid-box">
+        <h3>⚙️ Development Environment</h3>
         <p>配置zkWasm开发所需的工具和环境</p>
         <span class="grid-link">环境配置 →</span>
     </a>
@@ -85,7 +85,7 @@ Here are a few steps you should follow to ensure a great development experience:
         <h3>🚀 实战项目</h3>
         <p>从零开始构建完整的zkWasm应用</p>
         <span class="grid-link">开始实战 →</span>
-    </a>
+    </a> -->
 </div>
 
 <style>

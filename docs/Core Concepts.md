@@ -25,7 +25,7 @@ The frontend directly faces the user, and its main responsibilities include:
 ### Frontend-Backend Separation: State Synchronization
 As the division between frontend and backend becomes clearer, frontend-backend separation has become the mainstream model of web development. In this model, the frontend and backend communicate through APIs and need to agree on data formats and communication protocols. We can view the interaction between frontend and backend as a process of synchronizing state from the backend to the frontend: the frontend requests the backend API, the backend returns or updates state data, and the frontend updates the UI based on the state data.
 
-![Frontend-Backend Architecture](../media/Frontend-vs-Backend.png)
+<img src="../media/Frontend-vs-Backend.png" alt="Frontend-Backend Architecture" />
 
 In summary, in a frontend-backend separated architecture, state management requires close cooperation between the frontend and backend. Both sides need to reach agreement on API design, data synchronization, authentication, and other aspects to jointly maintain the application's state.
 
