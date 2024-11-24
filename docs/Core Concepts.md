@@ -23,9 +23,10 @@ The frontend directly faces the user, and its main responsibilities include:
 3. **Local State Management**: Although the backend is the main manager of state, the frontend also needs to manage some local UI states, such as the currently selected tab or whether a modal is shown. These states are usually related to specific UI components and do not need to be passed to the backend.
 
 ### Frontend-Backend Separation: State Synchronization
+
 As the division between frontend and backend becomes clearer, frontend-backend separation has become the mainstream model of web development. In this model, the frontend and backend communicate through APIs and need to agree on data formats and communication protocols. We can view the interaction between frontend and backend as a process of synchronizing state from the backend to the frontend: the frontend requests the backend API, the backend returns or updates state data, and the frontend updates the UI based on the state data.
 
-<img src="../media/Frontend-vs-Backend.png" alt="Frontend-Backend Architecture" />
+![Frontend-Backend Architecture](./media/fb.drawio.png)
 
 In summary, in a frontend-backend separated architecture, state management requires close cooperation between the frontend and backend. Both sides need to reach agreement on API design, data synchronization, authentication, and other aspects to jointly maintain the application's state.
 
@@ -83,7 +84,11 @@ Understanding state management allows us to better understand the essence of blo
 
 ## Understanding Blockchain Engineering
 
-In blockchain application development, the blockchain can replace or partially replace the traditional backend as a distributed database and server. The core of blockchain engineering is managing global state in a decentralized network. Here, state can be account balances, smart contract variables, token ownership, etc. Unlike traditional centralized systems, state management in blockchain faces several major challenges:
+In blockchain application development, the blockchain can replace or partially replace the traditional backend as a distributed database and server. 
+
+![Blockchain Application Architecture](./media/frontend-backend-blockchain.drawio.png)
+
+The core of blockchain engineering is managing global state in a decentralized network. Here, state can be account balances, smart contract variables, token ownership, etc. Unlike traditional centralized systems, state management in blockchain faces several major challenges.
 
 ### Decentralized Storage of Global State
 
