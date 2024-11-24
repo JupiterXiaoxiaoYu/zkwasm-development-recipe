@@ -1,7 +1,7 @@
 site_name: zkWasm Development Recipe
 nav:
   - Home: index.md
-  - About: about.md
+  - Core Concepts: Core Concepts.md
 theme:
   name: readthedocs
   icon:

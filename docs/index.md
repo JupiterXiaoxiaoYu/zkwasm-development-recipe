@@ -48,11 +48,19 @@ This will equip you to build your own zkWasm applications from the ground up.
 Here are a few steps you should follow to ensure a great development experience:
 
 ### Join the Discord Community
-[Delphinus Labs Discord Community](https://discord.com/invite/delphinuslab) - Ask questions, share your ideas, and get help from the community. There are also many events and activities organized by the community which you can participate in.
+[Delphinus Labs Discord Community](https://discord.com/invite/delphinuslab) 
+
+- Ask questions, share your ideas, and get help from the community. 
+- "The best way to learn is by teaching.” If you see others who are stuck, help them out! 
+- There are also many events and activities organized by the community which you can participate in.
 
 ### Join the Telegram Dev Chat 
 
-[Please DM The Developer Relations Team](https://t.me/jupxiao) - Direct Message the developer relations team to be invited into the telegram chat group, you can get help from the developer relations team, also you will be able to connect with other developers. Please also give us your feedback and suggestions on how to improve the development experience.
+[Please DM The Developer Relations Team](https://t.me/jupxiao) 
+
+- Direct Message the developer relations team to be invited into the telegram chat group.
+- You can get help from the developer relations team, also you will be able to connect with other developers. 
+- Please also give us your feedback and suggestions on how to improve the development experience.
 
 **Let's dive in!**
 
