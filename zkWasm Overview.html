@@ -587,6 +587,16 @@
 <h2 id="2-the-state-machine-foundation">2. The State Machine Foundation</h2>
 <p>At its core, zkWasm operates as a state machine that processes WebAssembly bytecode while generating proofs of correct execution. The state machine takes as input a tuple consisting of several key components that together define the program and its execution environment. This tuple, represented as (I(C,H), E, IO), contains the WebAssembly executable image I (which includes both code C and initial memory state H), the entry point E, and the input/output firmware IO.</p>
 <p>The state machine maintains an internal state that captures every aspect of program execution. This state, represented as a tuple (iaddr, F, M, G, Sp, I, IO), includes the current instruction address (iaddr), the call frame (F), memory state (M), global variables (G), and the execution stack (Sp). Each of these components plays a crucial role in program execution and proof generation.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Understanding the state machine model is crucial for application development because:</p>
+<ul>
+<li>Design the state machine model before starting to write code will help a lot on development efficiency</li>
+<li>Your application's performance depends on minimizing state transitions</li>
+<li>Proper state handling is essential for correctness and security of your application</li>
+<li>Consider using tools to analyze your application's state transitions during development</li>
+</ul>
+</div>
 <h3 id="state-representation-and-execution-flow">State Representation and Execution Flow</h3>
 <p>The instruction address (iaddr) keeps track of the current position in the program, determining which instruction will be executed next. The call frame (F) manages function calls and their context, including a depth field that tracks the nesting level of function calls. This depth tracking is crucial for ensuring that all function calls properly return and maintaining the correct execution context. </p>
 <p>Memory management in zkWasm is handled through the memory state (M), which represents the linear memory space available to the WebAssembly program. This memory can be read from and written to during program execution, with all operations being tracked and verified through the proof system. Global variables (G) provide a way to maintain state across function calls, while the stack (Sp) handles temporary values and computation results.</p>
@@ -683,6 +693,16 @@
 <li>Merkle tree related host functions: zkWasm includes a Merkle tree implementation for efficiently verifying large data structures. The Merkle tree host functions include setting the root, specifying leaf addresses, updating and retrieving values, and getting the root hash. These functions follow a specific set of rules to ensure consistency and verifiability.</li>
 <li>Cryptographic operation related host functions: zkWasm implements advanced cryptographic operations, particularly the Poseidon signature scheme, which works well with zero-knowledge proofs. The signature host functions use elliptic curve cryptography (through the BabyJubjub curve) and involve multi-scalar multiplication for verification. These functions provide a secure and efficient way to perform cryptographic operations within the zkWasm environment.</li>
 </ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When developing zkWasm applications:</p>
+<ul>
+<li>Use host functions for external interactions and cryptographic operations (like user operations and signature)</li>
+<li>Carefully manage the distinction between public and private inputs</li>
+<li>Leverage the Merkle tree functions for efficient data structure storage, retrieval, and verification, because in zkWasm, we implement Merkle tree as Database Service.</li>
+<li>Design your application architecture around these built-in capabilities rather than implementing custom solutions.    </li>
+</ul>
+</div>
 <h3 id="inputoutput-system-implementation">Input/Output System Implementation</h3>
 <p>The input/output system in zkWasm provides a mechanism for handling both public and private data. The system centers around the zkmain function, which serves as the entry point for all zkWasm applications. This function has the signature zkmain(void): (void), but can interact with the outside world through specialized host functions.</p>
 <p>zkWasm distinguishes between public and private inputs through its input functions:</p>
@@ -837,6 +857,16 @@
 </code></pre></div>
 <h2 id="4-proof-generation-and-verification">4. Proof Generation and Verification</h2>
 <p>The proof generation system in zkWasm handles the complexity of real-world applications through a segmentation approach. This is necessary because execution traces can contain millions of instructions, far exceeding what can be proved in a single circuit. The system breaks down long execution traces into manageable segments, each with its own proof, which are then combined into a complete verification of the entire execution.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To optimize proof generation in your applications:</p>
+<ul>
+<li>Design with proof segmentation in mind</li>
+<li>Batch related operations to minimize segment boundaries</li>
+<li>Implement proper error handling that doesn't leak private information</li>
+<li>Consider the trade-offs between segment size and proof generation time</li>
+</ul>
+</div>
 <p>Each execution segment maintains its own starting state, sequence of instructions, ending state, and proof of correct execution:</p>
 <div class="highlight"><pre><span></span><code><span class="k">struct</span><span class="w"> </span><span class="nc">ExecutionSegment</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="n">start_state</span><span class="p">:</span><span class="w"> </span><span class="nc">State</span><span class="p">,</span>
@@ -942,8 +972,8 @@
 <p>The proof generation process begins with individual segment proofs, creates continuation proofs to connect the segments, and finally combines everything into a single, verifiable proof. This hierarchical approach allows zkWasm to handle complex applications while maintaining efficient proof generation and verification.</p>
 <h2 id="5-development-process-and-best-practices">5. Development Process and Best Practices</h2>
 <p>Developing applications for zkWasm requires careful attention to state management and performance optimization. State changes should be minimized when possible, as each state transition must be proved in the zero-knowledge system. Related operations should be batched together when possible to reduce the number of state transitions and improve proof generation efficiency.</p>
-<p>Memory management plays a crucial role in zkWasm application performance. The linear memory model of WebAssembly must be used efficiently, with careful attention paid to memory layout and access patterns. Global variables should be used judiciously, as they affect the state that must be tracked and proved.</p>
-<p>Error handling in zkWasm applications requires special consideration due to the zero-knowledge context. Errors must be handled in a way that doesn't leak information about private data while still providing useful feedback about what went wrong. This often involves careful design of error conditions and appropriate use of public and private inputs.</p>
+<p>Besides, memory management plays a crucial role in zkWasm application performance. The linear memory model of WebAssembly must be used efficiently, with careful attention paid to memory layout and access patterns. Global variables should be used judiciously, as they affect the state that must be tracked and proved.</p>
+<p>Error handling in zkWasm applications requires special consideration due to the zero-knowledge context. Errors must be handled in a way that doesn't leak information about private data while still providing useful feedback about what went wrong. This often involves careful design of error conditions and appropriate use of public and private inputs. We will cover more about error handling in practice in the later chapters.</p>
 
 
 
