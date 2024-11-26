@@ -2,17 +2,33 @@
 
 ## 1. Introduction to zkWasm Architecture
 
-zkWasm represents a fundamental advancement in the field of trustless computation by combining WebAssembly with zero-knowledge proofs. The system implements a complete WebAssembly virtual machine within zkSNARK circuits, creating a bridge between traditional application development and blockchain technology. This approach allows developers to write programs in familiar languages while gaining the benefits of zero-knowledge proofs without requiring specialized cryptographic knowledge.
-
-The core innovation of zkWasm lies in its approach to implementing zero-knowledge proofs. Rather than requiring developers to write programs in specialized circuit-friendly languages, zkWasm applies zero-knowledge proofs at the bytecode level of the virtual machine. This means that any program that can be compiled to WebAssembly can automatically benefit from zero-knowledge capabilities, making the technology accessible to a much broader range of developers and applications.
-
-Traditional approaches to implementing zero-knowledge proofs often require developers to work with specialized languages and tools like Pinocchio, TinyRAM, or ZoKrates. This requirement creates a significant barrier to adoption, as developers must learn new programming paradigms and rewrite existing applications. zkWasm eliminates this barrier by operating at the WebAssembly level, allowing developers to work in languages they already know, such as C++, Rust, or AssemblyScript.
-
 !!! note
     This section provides a high-level overview of zkWasm. For more detailed information about zkWasm, please refer to the:
 
     - [zkWasm Whitepaper](https://ieeexplore.ieee.org/document/10587123)
     - [zkWasm Book](https://zkwasmdoc.gitbook.io/delphinus-zkwasm)
+
+zkWasm represents a fundamental advancement in the field of trustless computation by combining WebAssembly with zero-knowledge proofs. The system implements a complete WebAssembly virtual machine within zkSNARK circuits, creating a bridge between traditional application development and blockchain technology. This approach allows developers to write programs in familiar languages while gaining the benefits of zero-knowledge proofs without requiring specialized cryptographic knowledge.
+
+The core innovation of zkWasm lies in its approach to implementing zero-knowledge proofs. Rather than requiring developers to write programs in specialized circuit-friendly languages, zkWasm applies zero-knowledge proofs at the bytecode level of the virtual machine. This means that any program that can be compiled to WebAssembly can automatically benefit from zero-knowledge capabilities, making the technology accessible to a much broader range of developers and applications. 
+
+Traditional approaches to implementing zero-knowledge proofs often require developers to work with specialized languages and tools like Pinocchio, TinyRAM, or ZoKrates. This requirement creates a significant barrier to adoption, as developers must learn new programming paradigms and rewrite existing applications. zkWasm eliminates this barrier by operating at the WebAssembly level, allowing developers to work in languages they already know, such as C++, Rust, or AssemblyScript.
+
+![Easily Migrate Web Apps to Trustless Web3 Apps](../media/toWeb3.png)
+
+This accessibility extends beyond just the programming language choice. While traditional blockchain development requires extensive knowledge of specific blockchain protocols and smart contract languages, zkWasm further simplifies the blockchain integration process. By operating at the WebAssembly bytecode level, zkWasm automatically handles the generation of zero-knowledge proofs for any application logic like user operations and user interactions. These standardized proofs can be verified on any blockchain platform without requiring developers to write custom smart contracts or complex blockchain-specific protocols for application logic. This approach not only lowers the technical barriers for Web2 developers (as well as their users) entering the Web3 space, but also enables seamless cross-chain compatibility for their applications. 
+
+!!! info
+    Compared to the traditional Web3 applications which heavily rely on smart contracts and a specific blockchain system, zkWasm applications are more like Web2 applications, but with the trustless verification capabilities brought by zero-knowledge proofs, it can:
+
+    - Seamlessly integrate with existing Web2 or Web3 applications
+    - Allow developers to focus on business logic and frontend design, without the need to learn much about blockchain or zero-knowledge proofs
+    - Allow developers to easily switch between different blockchain platforms if needed
+    - Allow developers to easily scale or upgrade their applications
+    - Allow gasless interactions and operations (except for the proof verification, deposit and withdrawal which is required when manipulating the onchain assets) for application users
+
+
+
 
 ## 2. The State Machine Foundation
 
