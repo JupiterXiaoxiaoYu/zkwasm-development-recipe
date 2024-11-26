@@ -20,6 +20,14 @@ At its core, zkWasm operates as a state machine that processes WebAssembly bytec
 
 The state machine maintains an internal state that captures every aspect of program execution. This state, represented as a tuple (iaddr, F, M, G, Sp, I, IO), includes the current instruction address (iaddr), the call frame (F), memory state (M), global variables (G), and the execution stack (Sp). Each of these components plays a crucial role in program execution and proof generation.
 
+!!! note
+    Understanding the state machine model is crucial for application development because:
+
+    - Design the state machine model before starting to write code will help a lot on development efficiency
+    - Your application's performance depends on minimizing state transitions
+    - Proper state handling is essential for correctness and security of your application
+    - Consider using tools to analyze your application's state transitions during development
+
 ### State Representation and Execution Flow
 
 The instruction address (iaddr) keeps track of the current position in the program, determining which instruction will be executed next. The call frame (F) manages function calls and their context, including a depth field that tracks the nesting level of function calls. This depth tracking is crucial for ensuring that all function calls properly return and maintaining the correct execution context. 
@@ -136,6 +144,14 @@ In the zkWasm system, a wide range of pre-defined host functions are provided to
 - I/O related host functions: These functions handle the input and output operations in zkWasm. They provide ways for reading both public and private inputs, keeping track of the current position in the input stream, and outputting results. The difference between public and private inputs is very important for zero-knowledge applications.
 - Merkle tree related host functions: zkWasm includes a Merkle tree implementation for efficiently verifying large data structures. The Merkle tree host functions include setting the root, specifying leaf addresses, updating and retrieving values, and getting the root hash. These functions follow a specific set of rules to ensure consistency and verifiability.
 - Cryptographic operation related host functions: zkWasm implements advanced cryptographic operations, particularly the Poseidon signature scheme, which works well with zero-knowledge proofs. The signature host functions use elliptic curve cryptography (through the BabyJubjub curve) and involve multi-scalar multiplication for verification. These functions provide a secure and efficient way to perform cryptographic operations within the zkWasm environment.
+
+!!! note
+    When developing zkWasm applications:
+
+    - Use host functions for external interactions and cryptographic operations (like user operations and signature)
+    - Carefully manage the distinction between public and private inputs
+    - Leverage the Merkle tree functions for efficient data structure storage, retrieval, and verification, because in zkWasm, we implement Merkle tree as Database Service.
+    - Design your application architecture around these built-in capabilities rather than implementing custom solutions.    
 
 ### Input/Output System Implementation
 
@@ -319,6 +335,14 @@ pub extern "C" fn verify_signature_example() {
 
 The proof generation system in zkWasm handles the complexity of real-world applications through a segmentation approach. This is necessary because execution traces can contain millions of instructions, far exceeding what can be proved in a single circuit. The system breaks down long execution traces into manageable segments, each with its own proof, which are then combined into a complete verification of the entire execution.
 
+!!! note
+    To optimize proof generation in your applications:
+
+    - Design with proof segmentation in mind
+    - Batch related operations to minimize segment boundaries
+    - Implement proper error handling that doesn't leak private information
+    - Consider the trade-offs between segment size and proof generation time
+
 Each execution segment maintains its own starting state, sequence of instructions, ending state, and proof of correct execution:
 
 ```rust
@@ -440,6 +464,6 @@ The proof generation process begins with individual segment proofs, creates cont
 
 Developing applications for zkWasm requires careful attention to state management and performance optimization. State changes should be minimized when possible, as each state transition must be proved in the zero-knowledge system. Related operations should be batched together when possible to reduce the number of state transitions and improve proof generation efficiency.
 
-Memory management plays a crucial role in zkWasm application performance. The linear memory model of WebAssembly must be used efficiently, with careful attention paid to memory layout and access patterns. Global variables should be used judiciously, as they affect the state that must be tracked and proved.
+Besides, memory management plays a crucial role in zkWasm application performance. The linear memory model of WebAssembly must be used efficiently, with careful attention paid to memory layout and access patterns. Global variables should be used judiciously, as they affect the state that must be tracked and proved.
 
-Error handling in zkWasm applications requires special consideration due to the zero-knowledge context. Errors must be handled in a way that doesn't leak information about private data while still providing useful feedback about what went wrong. This often involves careful design of error conditions and appropriate use of public and private inputs.
+Error handling in zkWasm applications requires special consideration due to the zero-knowledge context. Errors must be handled in a way that doesn't leak information about private data while still providing useful feedback about what went wrong. This often involves careful design of error conditions and appropriate use of public and private inputs. We will cover more about error handling in practice in the later chapters.
