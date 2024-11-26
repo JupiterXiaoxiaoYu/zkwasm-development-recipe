@@ -1,6 +1,6 @@
 # Core Concepts
 
-## Understanding Web Application Development 
+## 1. Understanding Web Application Development 
 
 In modern web application development, the frontend and backend have clear divisions of labor. Although technologies are constantly evolving, one thing remains constant: the frontend is responsible for presenting the state, while the backend is responsible for managing the state.
 
@@ -35,7 +35,7 @@ As the division between frontend and backend becomes clearer, frontend-backend s
 
 In summary, in a frontend-backend separated architecture, state management requires close cooperation between the frontend and backend. Both sides need to reach agreement on API design, data synchronization, authentication, and other aspects to jointly maintain the application's state.
 
-## Understanding State Management
+## 2. Understanding State Management
 
 We've discussed the roles of the frontend and backend in state management. It's clear that regardless of frontend or backend, state management is a core issue in application development. So, what is state? Why is state management so important?
 
@@ -87,7 +87,7 @@ Many engineering problems, such as concurrency control and exception handling, c
 
 Understanding state management allows us to better understand the essence of blockchain development.
 
-## Understanding Blockchain Engineering
+## 3. Understanding Blockchain Engineering
 
 In blockchain application development, the blockchain can replace or partially replace the traditional backend as a distributed database and server. 
 
@@ -140,7 +140,7 @@ Layer2 solutions, such as state channels and rollups, process state off-chain an
 
 For example, zkRollup uses zero-knowledge proofs to verify off-chain state transitions, while Optimistic Rollup ensures state legitimacy through fraud proofs and challenge periods. zkWasm achieves deterministic and verifiable state transitions by compiling state transition logic into Wasm bytecode and executing it in a zkVM.
 
-## Understanding Zero-Knowledge Proofs
+## 4. Understanding Zero-Knowledge Proofs
 
 The most significant role of blockchain as a distributed system is verification. We mentioned earlier that zkWasm achieves deterministic and verifiable state transitions, so why do we need verification? What is determinism and verifiability in the context of blockchain, and what role does zero-knowledge proof play in it?
 

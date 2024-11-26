@@ -74,18 +74,6 @@ Here are a few steps you should follow to ensure a great development experience:
         <p>Learn the core concepts of zkWasm development</p>
         <span class="grid-link">Start Learning →</span>
     </a>
-    
-    <!-- <a href="setup/environment/" class="grid-box">
-        <h3>⚙️ Development Environment</h3>
-        <p>配置zkWasm开发所需的工具和环境</p>
-        <span class="grid-link">环境配置 →</span>
-    </a>
-    
-    <a href="projects/first-project/" class="grid-box">
-        <h3>🚀 实战项目</h3>
-        <p>从零开始构建完整的zkWasm应用</p>
-        <span class="grid-link">开始实战 →</span>
-    </a> -->
 </div>
 
 <style>

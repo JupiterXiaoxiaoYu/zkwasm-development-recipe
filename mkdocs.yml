@@ -2,13 +2,39 @@ site_name: zkWasm Development Recipe
 nav:
   - Home: index.md
   - Core Concepts: Core Concepts.md
+  - zkWasm Overview: zkWasm Overview.md
+  - Quick Tutorial: Quick Tutorial.md
 theme:
-  name: readthedocs
+  name: material
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: pink
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: blue
+      accent: lime
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  font:
+    text: Roboto
+    code: Roboto Mono
   icon:
     repo: fontawesome/brands/github
   features:
     - navigation.instant
     - navigation.tracking
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.suggest
+    - content.code.copy
+    - search.highlight
 markdown_extensions:
   - attr_list
   - md_in_html
@@ -16,4 +42,8 @@ markdown_extensions:
       emoji_index: !!python/name:materialx.emoji.twemoji
       emoji_generator: !!python/name:materialx.emoji.to_svg
   - admonition
+  - pymdownx.highlight
+  - pymdownx.superfences
 use_directory_urls: false
+extra_css:
+  - stylesheets/extra.css
