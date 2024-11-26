@@ -1,11 +1,11 @@
 # Welcome to zkWasm Development Recipe
 
-The zkWasm Development Recipe focuses on building trustless blockchain applications using zkWasm and related technologies. 
-
-This Development Recipe will start from scratch, from understanding blockchain and zero-knowledge proofs, to learning the basics and architecture of zkWasm, and then to developing a complete application, allowing you to transform from a beginner to an advanced zkWasm developer.
+The zkWasm Development Recipe focuses on building trustless blockchain applications using zkWasm and related technologies. It will start from scratch, from understanding blockchain and zero-knowledge proofs, to learning the basics and architecture of zkWasm, and then to developing a complete application, allowing you to transform from a beginner to an advanced zkWasm developer.
 
 Of course, this Development Recipe can serve as both an introductory tutorial for beginners and a reference manual for developing zkWasm applications. Each chapter corresponds to a step in developing a full-stack zkWasm application.
 
+!!! note
+    This is still a work in progress. We will keep updating it with the latest information and best practices.
 
 ## Learning Experience
 
