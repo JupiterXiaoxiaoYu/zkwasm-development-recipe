@@ -1,6 +1,6 @@
 # zkWasm Overview
 
-## 1. Introduction to zkWasm Architecture
+## 1. Introduction to zkWasm
 
 !!! note
     This section provides a high-level overview of zkWasm. For more detailed information about zkWasm, please refer to the:
