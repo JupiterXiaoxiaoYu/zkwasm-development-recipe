@@ -39,7 +39,7 @@ This will equip you to build your own zkWasm applications from the ground up.
 - **Hackathons**: Put your skills to the test by participating in hackathons across various ecosystems and showcasing your zkWasm prowess
 - **Entrepreneurship**: Embark on an entrepreneurial journey by building your own innovative products and starting a company, with the support of Delphinus Labs
 - **Ecosystem Contribution**: Contribute to the growth of the zkWasm ecosystem by creating essential tools and libraries, with grants from Delphinus Labs
-- Launch your career as a sought-after full-stack developer in the thriving blockchain industry
+- **Career Development**: Launch your career as a sought-after full-stack developer in the thriving blockchain industry
 - **Academic Research**: Delve deeper into the academic realm by pursuing research on zkWasm and pushing the boundaries of this cutting-edge technology
 - **Discover Opportunities**: Discover countless other opportunities to apply your newfound expertise and make your mark in the world of blockchain and zero-knowledge proofs
 

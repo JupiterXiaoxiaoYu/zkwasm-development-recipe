@@ -1,141 +1,9 @@
 # Quick Tutorial
 
 ## Guideline 
-This tutorial will guide you through the process of creating a simple zkWasm application in minutes.
+This tutorial will guide you through the process of creating a simple zkWasm application in minutes. Please make sure you have already setup the environment by following the [Setup Environment](Setup Environment.md) guide.
 
-## Prerequisites
-- Basic knowledge of Rust programming language and Cargo.
-- Basic knowledge of Makefile.
-- Basic knowledge of TypeScript and Node.js.
-
-## Step 1: Setup Environment
-
-### Node.js Setup
-
-!!! note "Install Node.js and npm"
-    To install Node.js and npm, follow these steps:
-
-    1. Visit the [Node.js download page](https://nodejs.org/) and download the LTS version for your operating system.
-    2. Run the installer and follow the setup instructions.
-    3. Ensure that you check the option to install npm along with Node.js.
-
-!!! tip "Verify Installation"
-    After installation, verify Node.js and npm are properly installed:
-    ```bash
-    node --version
-    npm --version
-    ```
-
-!!! warning "Note for Windows Users"
-    If you encounter issues with permissions or paths, consider using [nvm-windows](https://github.com/coreybutler/nvm-windows) to manage Node.js versions.
-
-!!! example "Using nvm for Node.js"
-    If you prefer using a version manager, you can use nvm (Node Version Manager):
-
-    - For macOS/Linux:
-    ```bash
-    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
-    source ~/.bashrc
-    nvm install --lts
-    ```
-
-    - For Windows, use [nvm-windows](https://github.com/coreybutler/nvm-windows) and follow the installation instructions on the GitHub page.
-
-!!! info "Package Manager Installation"
-    If you need to install package managers first:
-
-    - Homebrew (macOS): [Installation Guide](https://brew.sh/)
-    - apt (Ubuntu/Debian): Pre-installed, or use:
-     ```bash
-     sudo apt update && sudo apt install apt
-     ```
-    - Chocolatey (Windows): [Installation Guide](https://chocolatey.org/install)
-
-### Rust Setup
-
-!!! note "Install Rust"
-    If you haven't installed Rust, you can install it using rustup:
-    ```bash
-    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-    ```
-
-!!! tip "Verify Installation"
-    After installation, verify Rust and Cargo are properly installed:
-    ```bash
-    rustc --version
-    cargo --version
-    ```
-
-!!! warning "Note for Windows Users"
-    If you're using Windows, we recommend:
-
-    1. Using Windows Subsystem for Linux (WSL)
-    2. Or installing Rust through the official installer from [rustup.rs](https://rustup.rs/)
-
-!!! example "Optional: IDE Setup"
-    We recommend using VS Code with the following extensions:
-
-    - rust-analyzer
-    - Even Better TOML
-    - CodeLLDB
-
-### Install Make
-
-!!! note "Linux/macOS Users"
-    For Unix-based systems, Make is usually pre-installed. If not:
-
-    Ubuntu/Debian:
-    ```bash
-    sudo apt update
-    sudo apt install build-essential
-    ```
-
-    macOS:
-    ```bash
-    xcode-select --install
-    ```
-
-!!! note "Windows Setup for Make"
-    Windows users have several options:
-
-    1. Using Chocolatey (Recommended):
-    ```bash
-    choco install make
-    ```
-
-    2. Using MSYS2:
-    ```bash
-    # First install MSYS2 from https://www.msys2.org/
-    # Then open MSYS2 terminal and run:
-    pacman -S make
-    ```
-
-    3. Using WSL (Best Option):
-    ```bash
-    # Install WSL first
-    wsl --install
-
-    # After WSL is installed, open Ubuntu terminal and run:
-    sudo apt update
-    sudo apt install build-essential
-    ```
-
-!!! tip "Verify Installation"
-    After installation, verify Make is properly installed:
-    ```bash
-    make --version
-    ```
-
-!!! info "Package Manager Installation"
-    If you need to install package managers first:
-
-    - Chocolatey: [Installation Guide](https://chocolatey.org/install)
-    - MSYS2: [Download Page](https://www.msys2.org/)
-    - WSL: [Microsoft Guide](https://learn.microsoft.com/en-us/windows/wsl/install)
-
-    After installing the package manager, make sure you correctly setup the environment variables for the package manager.
-
-### Get the Template Project
+## Step 1: Get the Template Project
 
 !!! info "Clone Template"
     Clone the example project to get started:
@@ -287,8 +155,146 @@ pub type HelloWorldPlayer = Player<PlayerData>;
 ```
 
 !!! info "Player Management"
-    - Defines player-specific data structure, here we use `PlayerData` to store the player's counter.
-    - Implements serialization and storage traits
-    - Provides default values for new players
+    - Defines player-specific data structure with a counter field
+    - Implements `Default` trait for initializing new players with counter set to 0
+    - Implements `StorageData` trait for data serialization and deserialization
+    - Creates a type alias `HelloWorldPlayer` for Player with PlayerData
 
 #### 2. State Structure
+```rust
+#[derive(Serialize)]
+pub struct State {
+    counter: u64
+}
+
+impl State {
+    pub fn get_state(pkey: Vec<u64>) -> String {
+        let player = HelloWorldPlayer::get_from_pid(&HelloWorldPlayer::pkey_to_pid(&pkey.try_into().unwrap()));
+        serde_json::to_string(&player).unwrap()
+    }
+
+    pub fn rand_seed() -> u64 {
+        0
+    }
+
+    pub fn store(&self) {
+    }
+
+    pub fn initialize() {
+    }
+
+    pub fn new() -> Self {
+        State {
+            counter: 0,
+        }
+    }
+
+    pub fn snapshot() -> String {
+        let state = unsafe { &STATE };
+        serde_json::to_string(&state).unwrap()
+    }
+
+    pub fn preempt() -> bool {
+        let state = unsafe { &STATE };
+        return state.counter >= 20;
+    }
+
+    pub fn flush_settlement() -> Vec<u8> {
+        let data = SettlementInfo::flush_settlement();
+        unsafe { STATE.store() };
+        data
+    }
+
+    pub fn tick(&mut self) {
+        self.counter += 1;
+    }
+}
+```
+
+!!! info "State Management"
+    - Maintains global state with a counter field
+    - Provides methods for state manipulation and querying
+    - Implements serialization for state snapshots
+    - Handles settlement flushing and state updates
+
+#### 3. Transaction Handler
+```rust
+pub struct Transaction {
+    pub command: u64,
+    pub data: Vec<u64>,
+}
+
+const AUTOTICK: u64 = 0;
+const INSTALL_PLAYER: u64 = 1;
+const INC_COUNTER: u64 = 2;
+
+const ERROR_PLAYER_ALREADY_EXIST: u32 = 1;
+const ERROR_PLAYER_NOT_EXIST: u32 = 2;
+
+impl Transaction {
+    pub fn decode_error(e: u32) -> &'static str {
+        match e {
+            ERROR_PLAYER_NOT_EXIST => "PlayerNotExist",
+            ERROR_PLAYER_ALREADY_EXIST => "PlayerAlreadyExist",
+            _ => "Unknown"
+        }
+    }
+
+    pub fn decode(params: [u64; 4]) -> Self {
+        let command = params[0] & 0xff;
+        let data = vec![params[1], params[2], params[3]]; // pkey[0], pkey[1], amount
+        Transaction {
+            command,
+            data,
+        }
+    }
+
+    pub fn install_player(&self, pkey: &[u64; 4]) -> u32 {
+        zkwasm_rust_sdk::dbg!("install \n");
+        let pid = HelloWorldPlayer::pkey_to_pid(pkey);
+        let player = HelloWorldPlayer::get_from_pid(&pid);
+        match player {
+            Some(_) => ERROR_PLAYER_ALREADY_EXIST,
+            None => {
+                let player = HelloWorldPlayer::new_from_pid(pid);
+                player.store();
+                0
+            }
+        }
+    }
+
+    pub fn inc_counter(&self, _pkey: &[u64; 4]) -> u32 {
+        todo!()
+    }
+
+    pub fn process(&self, pkey: &[u64; 4], _rand: &[u64; 4]) -> u32 {
+        match self.command {
+            AUTOTICK => {
+                unsafe { STATE.tick() };
+                return 0;
+            },
+            INSTALL_PLAYER => self.install_player(pkey),
+            INC_COUNTER => self.inc_counter(pkey),
+            _ => {
+                return 0
+            }
+        }
+    }
+}
+```
+
+!!! info "Transaction Processing"
+    - Defines transaction structure and command types
+    - Handles player installation and counter increment operations
+    - Implements error handling with specific error codes
+    - Provides transaction decoding and processing functionality
+    - Uses pattern matching for command routing
+
+!!! tip "Global State"
+```rust
+pub static mut STATE: State = State {
+    counter: 0
+};
+```
+
+The global state is maintained as a static mutable variable, initialized with a counter of 0. This allows for state persistence across transactions.
