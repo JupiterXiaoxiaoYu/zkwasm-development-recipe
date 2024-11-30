@@ -483,3 +483,7 @@ Developing applications for zkWasm requires careful attention to state managemen
 Besides, memory management plays a crucial role in zkWasm application performance. The linear memory model of WebAssembly must be used efficiently, with careful attention paid to memory layout and access patterns. Global variables should be used judiciously, as they affect the state that must be tracked and proved.
 
 Error handling in zkWasm applications requires special consideration due to the zero-knowledge context. Errors must be handled in a way that doesn't leak information about private data while still providing useful feedback about what went wrong. This often involves careful design of error conditions and appropriate use of public and private inputs. We will cover more about error handling in practice in the later chapters.
+
+## 6. Architecture of a zkWasm Rollup Application
+
+![Architecture of a zkWasm Rollup Application](./media/monitor-architecture.png)
