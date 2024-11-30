@@ -3,14 +3,40 @@
 ## Guideline 
 This tutorial will guide you through the process of creating a simple zkWasm application in minutes. Please make sure you have already setup the environment by following the [Setup Environment](Setup Environment.md) guide.
 
-## Step 1: Get the Template Project
+## Step 1: Install the zkWasm Mini-Rollup service
+The zkWasm Mini-Rollup service is a RESTful service that provides the zkWasm runtime environment. It provides the following functionalities:
 
-!!! info "Clone Template"
-    Clone the example project to get started:
-    ```bash
-    git clone https://github.com/riddles-are-us/helloworld-rollup
-    cd helloworld-rollup
-    ```
+- Serve the zkWasm runtime environment
+- Provide the zkWasm REST API
+- Maintain the zkWasm state through merkle tree enabled database and Redis
+- Calculate the new merkle tree root when receiving the zkWasm transaction batch for settlement
+
+### 1. Get the zkWasm Mini-Rollup service
+You can get the zkWasm Mini-Rollup service by cloning the repository:
+```bash
+git clone https://github.com/DelphinusLab/zkwasm-mini-rollup.git
+cd zkwasm-mini-rollup
+```
+Or, download the zip file from the [Github page](https://github.com/DelphinusLab/zkwasm-mini-rollup) and unzip it.
+
+### 2. Start the zkWasm Mini-Rollup service
+In the root directory of the zkWasm Mini-Rollup service, run:
+```bash
+docker-compose up
+```
+Make sure your running environment has the permission to access the Docker daemon.
+
+!!! info "Note"
+    One zkWasm Mini-Rollup service must correspond to one zkWasm rollup application. This will be improved in the future by supporting multiple rollup applications in one service.
+
+
+## Step 2: Get the Template Project
+
+Clone the template project - The Hello World Rollup:
+```bash
+git clone https://github.com/DelphinusLab/helloworld-rollup
+cd helloworld-rollup
+```
 
 !!! tip "Project Structure"
     The template includes:
@@ -23,21 +49,25 @@ This tutorial will guide you through the process of creating a simple zkWasm app
     └── rust-toolchain # Rust version specification
     ```
 
-!!! info "Install Dependencies for ts"
-    Install the dependencies for ts:
-    ```bash
-    cd ts
-    npm install
-    ```
+Install the dependencies for ts:
+```bash
+cd ts
+npm install
+```
 
-!!! example "Build the Project"
-    Build the project using make:
-    ```bash
-    cd ..   #Move to the root directory of the project
-    make build
-    ```
+Build the project using make:
+```bash
+cd ..   #Move to the root directory of the project
+make build
+```
 
-## Step 2: The Code Overview
+## Step 3: Test the Rollup Application
+
+
+
+
+
+## Step 4: The Code Overview
 
 Let's examine the core components of our zkWasm application. The project is structured into several key Rust files, each handling specific functionality.
 
@@ -55,10 +85,11 @@ use crate::state::{State, Transaction};
 zkwasm_rest_abi::create_zkwasm_apis!(Transaction, State, Config);
 ```
 
-!!! info "Key Components"
-    - `wasm_bindgen`: Enables Rust-JavaScript interoperability
-    - `zkwasm_rest_abi`: Provides core zkWasm functionality
-    - `create_zkwasm_apis!`: Macro that generates necessary API endpoints
+The above code includes the following key components:
+
+- `wasm_bindgen`: Enables Rust-JavaScript interoperability
+- `zkwasm_rest_abi`: Provides core zkWasm functionality
+- `create_zkwasm_apis!`: Macro that generates necessary API endpoints
 
 ### Configuration (`src/config.rs`)
 
@@ -87,11 +118,11 @@ impl Config {
 }
 ```
 
-!!! info "Configuration Details"
-    - Defines application configuration
-    - Uses `lazy_static` for singleton pattern
-    - Provides JSON serialization for config values
-    - Controls auto-tick behavior
+The `Config` struct:
+
+- Defines application configuration
+- Provides JSON serialization for config values
+- Controls auto-tick behavior - the system will automatically advance its state through tick events, facilitating time-based state transitions in the zkWasm runtime
 
 ### Settlement Management (`src/settlement.rs`)
 
@@ -121,10 +152,11 @@ impl SettlementInfo {
 }
 ```
 
-!!! info "Important Notes"
-    - Handles withdrawal information
-    - Converts settlement data to bytes for processing
-    - Implements flush mechanism for batch processing
+The `SettlementInfo` struct:
+
+- Handles withdrawal information
+- Converts settlement data to bytes for processing
+- Implements flush mechanism for batch processing
 
 ### State Management (`src/state.rs`)
 
@@ -154,11 +186,12 @@ impl StorageData for PlayerData {
 pub type HelloWorldPlayer = Player<PlayerData>;
 ```
 
-!!! info "Player Management"
-    - Defines player-specific data structure with a counter field
-    - Implements `Default` trait for initializing new players with counter set to 0
-    - Implements `StorageData` trait for data serialization and deserialization
-    - Creates a type alias `HelloWorldPlayer` for Player with PlayerData
+The `PlayerData` struct:
+
+- Defines player-specific data structure with a counter field
+- Implements `Default` trait for initializing new players with counter set to 0
+- Implements `StorageData` trait for data serialization and deserialization
+- Creates a type alias `HelloWorldPlayer` for Player with PlayerData
 
 #### 2. State Structure
 ```rust
@@ -211,11 +244,12 @@ impl State {
 }
 ```
 
-!!! info "State Management"
-    - Maintains global state with a counter field
-    - Provides methods for state manipulation and querying
-    - Implements serialization for state snapshots
-    - Handles settlement flushing and state updates
+The `State` struct:
+
+- Maintains global state with a counter field - The counter can be used to track the number of transactions processed
+- Provides methods for state manipulation and querying
+- Implements serialization for state snapshots
+- Handles settlement flushing and state updates
 
 #### 3. Transaction Handler
 ```rust
@@ -283,18 +317,14 @@ impl Transaction {
 }
 ```
 
-!!! info "Transaction Processing"
-    - Defines transaction structure and command types
-    - Handles player installation and counter increment operations
-    - Implements error handling with specific error codes
-    - Provides transaction decoding and processing functionality
-    - Uses pattern matching for command routing
+The `Transaction` struct:
 
-!!! tip "Global State"
-```rust
-pub static mut STATE: State = State {
-    counter: 0
-};
-```
+- Defines transaction structure and command types
+- Handles player installation and counter increment operations (todo)
+- Implements error handling with specific error codes
+- Provides transaction decoding and processing functionality
+- Uses pattern matching for command routing
 
-The global state is maintained as a static mutable variable, initialized with a counter of 0. This allows for state persistence across transactions.
+## Step 5: Implementing your own Rollup Application
+
+

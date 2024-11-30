@@ -3,8 +3,8 @@
 ## Prerequisites
 - Basic knowledge of Rust programming language and Cargo.
 - Basic knowledge of Makefile.
+- Basic knowledge of Docker.
 - Basic knowledge of TypeScript and Node.js.
-
 
 ## Node.js Setup
 
@@ -130,3 +130,73 @@
     - WSL: [Microsoft Guide](https://learn.microsoft.com/en-us/windows/wsl/install)
 
     After installing the package manager, make sure you correctly setup the environment variables for the package manager.
+
+## Docker Setup
+
+!!! note "Install Docker"
+    Choose your operating system and follow the installation steps:
+
+    1. For Ubuntu/Debian:
+    ```bash
+    # Remove old versions
+    sudo apt-get remove docker docker-engine docker.io containerd runc
+
+    # Install dependencies
+    sudo apt-get update
+    sudo apt-get install \
+        ca-certificates \
+        curl \
+        gnupg \
+        lsb-release
+
+    # Add Docker's official GPG key
+    sudo mkdir -m 0755 -p /etc/apt/keyrings
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+
+    # Set up the repository
+    echo \
+        "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+        $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+    # Install Docker Engine
+    sudo apt-get update
+    sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+    ```
+
+    2. For macOS:
+
+        - Download [Docker Desktop for Mac](https://www.docker.com/products/docker-desktop)
+        - Double-click the downloaded `.dmg` file and drag Docker to Applications
+        - Start Docker from Applications
+
+    3. For Windows:
+
+        - Enable WSL 2 feature
+        - Download [Docker Desktop for Windows](https://www.docker.com/products/docker-desktop)
+        - Run the installer and follow the prompts
+
+!!! tip "Verify Installation"
+    After installation, verify Docker is properly installed:
+    ```bash
+    docker --version
+    docker compose version
+    ```
+
+!!! warning "Post-installation Steps"
+    To use Docker without sudo (Linux):
+    ```bash
+    # Create docker group
+    sudo groupadd docker
+
+    # Add your user to docker group
+    sudo usermod -aG docker $USER
+
+    # Apply new group membership (or log out and back in)
+    newgrp docker
+    ```
+
+!!! example "Test Docker Installation"
+    Run a test container:
+    ```bash
+    docker run hello-world
+    ```
