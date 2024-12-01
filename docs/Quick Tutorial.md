@@ -413,6 +413,40 @@ function createCommand(nonce: bigint, command: bigint, feature: bigint) {
     - `command`: Operation type (install or increment)
     - `feature`: Additional features (currently unused)
 
+You can customize the `createCommand` function to pack different types of data based on your application's needs. Here are some examples of how you might modify the bit layout:
+
+1. **Game Commands**:
+```typescript
+// 32 bits nonce + 8 bits gameType + 8 bits playerId + 16 bits command
+function createGameCommand(nonce: bigint, gameType: bigint, playerId: bigint, command: bigint) {
+    return (nonce << 32n) + (gameType << 24n) + (playerId << 16n) + command;
+}
+```
+
+2. **Transaction Commands**:
+```typescript
+// 32 bits nonce + 16 bits amount + 8 bits tokenId + 8 bits command
+function createTxCommand(nonce: bigint, amount: bigint, tokenId: bigint, command: bigint) {
+    return (nonce << 32n) + (amount << 16n) + (tokenId << 8n) + command;
+}
+```
+
+3. **NFT Commands**:
+```typescript
+// 16 bits nonce + 32 bits tokenId + 8 bits collection + 8 bits command
+function createNFTCommand(nonce: bigint, tokenId: bigint, collection: bigint, command: bigint) {
+    return (nonce << 48n) + (tokenId << 16n) + (collection << 8n) + command;
+}
+```
+
+When designing your command structure, consider:
+
+- The size needed for each field
+- Priority and access frequency of fields
+- Future extensibility requirements
+
+Remember to provide corresponding extraction functions for unpacking the data when needed.
+
 #### Player Class
 
 The `Player` class serves as the main interface for interacting with the rollup:
@@ -518,7 +552,7 @@ Here's how you might use the client-side API to interact or test with the hello 
 
 ```typescript
 // Initialize a player
-const player = new Player("playerKey123", "http://localhost:3000");
+const player = new Player("processingKey", "http://localhost:3000");
 
 // Register the player
 await player.register();
@@ -530,6 +564,8 @@ console.log("Player state:", state);
 // Increment counter
 await player.incCounter();
 ```
+!!! note "Note"
+    You may notice that the "processingKey" is actually the key for accessing the zkWasm rollup application, it is required and used to sign the data in every transaction to the zkWasm rollup application. In real implementation, you need to generate a processingKey from the user's signature, which is derived from a unique message signed by the user's private key. Please remind your user to keep this key secure and never expose it to the public, as well as never signing a same message with the same private key.
 
 ## Step 5: Implementing your own Rollup Application
 
