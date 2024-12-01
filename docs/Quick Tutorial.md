@@ -35,7 +35,7 @@ Make sure your running environment has the permission to access the Docker daemo
 
 Clone the template project - The Hello World Rollup:
 ```bash
-git clone https://github.com/DelphinusLab/helloworld-rollup
+git clone https://github.com/riddles-are-us/helloworld-rollup.git
 cd helloworld-rollup
 ```
 
