@@ -9,6 +9,7 @@ The zkWasm Mini-Rollup service is a RESTful service that provides the zkWasm run
 - Serve the zkWasm runtime environment
 - Provide the zkWasm REST API
 - Maintain the zkWasm state through merkle tree enabled database and Redis
+- Generate the witness from the merkle tree database for zkWasm verification
 - Calculate the new merkle tree root when receiving the zkWasm transaction batch for settlement
 
 ### 1. Get the zkWasm Mini-Rollup service
@@ -24,7 +25,7 @@ In the root directory of the zkWasm Mini-Rollup service, run:
 ```bash
 docker-compose up
 ```
-Make sure your running environment has the permission to access the Docker daemon.
+Make sure your running environment has the permission to access the Docker daemon. This command will start a Docker container named `zkwasm-mini-rollup`.
 
 !!! info "Note"
     One zkWasm Mini-Rollup service must correspond to one zkWasm rollup application. This will be improved in the future by supporting multiple rollup applications in one service.
@@ -55,23 +56,51 @@ cd ts
 npm install
 ```
 
+After installing the dependencies, compile the ts code:
+```bash
+npx tsc
+```
+This will generate the js code in the `ts/` directory and facilitate the backend server running and testing.
+
 Build the project using make:
 ```bash
 cd ..   #Move to the root directory of the project
 make build
 ```
 
-## Step 3: Test the Rollup Application
+## Step 3: Run the Rollup Application
 
+In the root directory of the project, run:
+```bash
+make run
+```
 
+This will start the backend server by running the ```node ./ts/src/service.js```.
 
+You shall see some output like the following:
+```
+rpc bind merkle server: http://127.0.0.1:3030
+initialize mongoose ...
+start express server
+Server is running on http://0.0.0.0:3000
+connecting redis server: localhost
+bootstrapping ... (deploymode: false, remote: false, migrate: false)
+loading wasm application ...
+check merkel database connection ...
+initialize sequener queue ...
+waiting Count is: 0  perform draining ...
+initialize application merkle db ...
+```
 
+Congratulations! You have successfully started the zkWasm rollup application. However, in order to build your own rollup application, you need to understand the core components of the zkWasm rollup application.
 
 ## Step 4: The Code Overview
 
-Let's examine the core components of our zkWasm application. The project is structured into several key Rust files, each handling specific functionality.
+Let's examine the core components of our zkWasm application. This hello world rollup application is structured into several key Rust files, each handling specific functionality. 
 
-### Main Entry Point (`src/lib.rs`)
+### Server Side Code (Backend Code)
+
+#### Main Entry Point (`src/lib.rs`)
 
 ```rust
 use wasm_bindgen::prelude::*;
@@ -91,7 +120,7 @@ The above code includes the following key components:
 - `zkwasm_rest_abi`: Provides core zkWasm functionality
 - `create_zkwasm_apis!`: Macro that generates necessary API endpoints
 
-### Configuration (`src/config.rs`)
+#### Configuration (`src/config.rs`)
 
 ```rust
 use serde::Serialize;
@@ -122,9 +151,12 @@ The `Config` struct:
 
 - Defines application configuration
 - Provides JSON serialization for config values
-- Controls auto-tick behavior - the system will automatically advance its state through tick events, facilitating time-based state transitions in the zkWasm runtime
+- Controls auto-tick behavior - the system will automatically advance its state through tick events, facilitating time-based state transitions in the zkWasm runtime. 
 
-### Settlement Management (`src/settlement.rs`)
+!!! tip "Note"
+    Currently, the time interval is set to 5 seconds in the server side, which you can modify in the `service.ts` file in the `/src` directory of the `zkwasm-ts-server` package.
+
+#### Settlement Management (`src/settlement.rs`)
 
 ```rust
 use zkwasm_rest_abi::WithdrawInfo;
@@ -158,9 +190,12 @@ The `SettlementInfo` struct:
 - Converts settlement data to bytes for processing
 - Implements flush mechanism for batch processing
 
-### State Management (`src/state.rs`)
+!!! note "Note"
+    In the current architecture of zkWasm Rollup Application, the withdrawal requests from users are handled in the server side. When settlement is triggered, the server will collect all the withdrawals and send them with merkle tree root to the zkWasm protocol contract for verification. 
 
-#### 1. Player Data Structure
+#### State Management (`src/state.rs`)
+
+##### 1. Player Data Structure
 ```rust
 #[derive(Debug, Serialize)]
 pub struct PlayerData {
@@ -188,12 +223,12 @@ pub type HelloWorldPlayer = Player<PlayerData>;
 
 The `PlayerData` struct:
 
-- Defines player-specific data structure with a counter field
+- Defines player-specific data structure with a ```counter``` field
 - Implements `Default` trait for initializing new players with counter set to 0
 - Implements `StorageData` trait for data serialization and deserialization
 - Creates a type alias `HelloWorldPlayer` for Player with PlayerData
 
-#### 2. State Structure
+##### 2. State Structure
 ```rust
 #[derive(Serialize)]
 pub struct State {
@@ -247,9 +282,16 @@ impl State {
 The `State` struct:
 
 - Maintains global state with a counter field - The counter can be used to track the number of transactions processed
-- Provides methods for state manipulation and querying
+- Provides methods for state manipulation and querying, such as ```get_state```, ```store```
 - Implements serialization for state snapshots
-- Handles settlement flushing and state updates
+- Handles settlement flushing and state updates, such as ```flush_settlement```
+
+We can also notice that there is a global variable ```STATE``` with field ```counter``` in the code. This is the state of the zkWasm rollup application, which shall be distinguished from the ```counter``` field in the ```PlayerData``` struct:
+```rust
+pub static mut STATE: State = State {
+    counter: 0
+};
+```
 
 #### 3. Transaction Handler
 ```rust
@@ -325,6 +367,272 @@ The `Transaction` struct:
 - Provides transaction decoding and processing functionality
 - Uses pattern matching for command routing
 
+You may notice that the ```process``` method in the `Transaction` struct is the core method that handles the transaction processing:
+
+```rust
+pub fn process(&self, pkey: &[u64; 4], _rand: &[u64; 4]) -> u32 {
+    match self.command {
+        AUTOTICK => {
+            unsafe { STATE.tick() };
+            return 0;
+        },
+        INSTALL_PLAYER => self.install_player(pkey),
+        INC_COUNTER => self.inc_counter(pkey),
+        _ => {
+            return 0
+        }
+    }
+}
+```
+It receives the transaction command and then routes the transaction to the corresponding handler based on the command. In this case, we have three commands:
+
+- ```AUTOTICK```: Automatically tick the state of the rollup application, which increments the ```counter``` field in the ```State``` struct by 1
+- ```INSTALL_PLAYER```: Install a new player, which creates a new player with a unique ```pid``` and initializes its ```PlayerData```
+- ```INC_COUNTER```: Increment the counter of a player, which increments the ```counter``` field in the ```PlayerData``` struct by 1
+
+This process is the core logic of the zkWasm rollup application, which you can refer to implement your own application logic.
+
+### Client Side Code (Frontend Code)
+
+The client-side code is written in TypeScript and provides a convenient interface for interacting with the hello world zkWasm rollup application. Let's examine the key components:
+
+#### Constants and Helper Functions
+
+```typescript
+const CMD_INSTALL_PLAYER = 1n;
+const CMD_INC_COUNTER = 2n;
+
+function createCommand(nonce: bigint, command: bigint, feature: bigint) {
+    return (nonce << 16n) + (feature << 8n) + command;
+}
+```
+
+- Two command constants are defined for player installation and counter incrementing
+- `createCommand` helper function constructs command values by combining:
+    - `nonce`: Transaction sequence number
+    - `command`: Operation type (install or increment)
+    - `feature`: Additional features (currently unused)
+
+#### Player Class
+
+The `Player` class serves as the main interface for interacting with the rollup:
+
+```typescript
+export class Player {
+    processingKey: string;
+    rpc: ZKWasmAppRpc;
+
+    constructor(key: string, rpc: string) {
+        this.processingKey = key
+        this.rpc = new ZKWasmAppRpc(rpc);
+    }
+    // ...
+}
+```
+
+Key methods in the Player class:
+
+##### 1. State Query
+```typescript
+async getState(): Promise<any> {
+    let state:any = await this.rpc.queryState(this.processingKey);
+    return JSON.parse(state.data);
+}
+```
+The ```getState``` method:
+
+- Retrieves the current state for a player
+- Returns parsed JSON data containing player information
+
+##### 2. Nonce Management
+```typescript
+async getNonce(): Promise<bigint> {
+    let state:any = await this.rpc.queryState(this.processingKey);
+    let nonce = 0n;
+    if (state.data) {
+        let data = JSON.parse(state.data);
+        if (data.player) {
+            nonce = BigInt(data.player.nonce);
+        }
+    }
+    return nonce;
+}
+```
+
+The ```getNonce``` method:
+
+- Retrieves the current nonce (transaction sequence number) for a player
+- Essential for transaction ordering and replay protection
+
+##### 3. Player Registration
+```typescript
+async register() {
+    let nonce = await this.getNonce();
+    try {
+        let result = await this.rpc.sendTransaction(
+            new BigUint64Array([createCommand(nonce, CMD_INSTALL_PLAYER, 0n), 0n, 0n, 0n]),
+            this.processingKey
+        );
+        return result
+    } catch(e) {
+        if (e instanceof Error) {
+            console.log(e.message);
+        }
+    }
+}
+```
+
+The ```register``` method:
+
+- Registers a new player in the system
+- Creates and sends an installation transaction
+- Handles potential errors during registration
+
+##### 4. Counter Increment
+```typescript
+async incCounter() {
+    let nonce = await this.getNonce();
+    try {
+        let result = await this.rpc.sendTransaction(
+            new BigUint64Array([createCommand(nonce, CMD_INC_COUNTER, 0n), 0n, 0n, 0n]), 
+            this.processingKey
+        );
+        return result;
+    } catch(e) {
+        if (e instanceof Error) {
+            console.log(e.message);
+        }
+    }
+}
+```
+
+The ```incCounter``` method:
+
+- Increments the player's counter
+- Creates and sends an increment transaction
+- Handles potential errors during the operation
+
+#### Usage Example
+
+Here's how you might use the client-side API to interact or test with the hello world zkWasm rollup backend, this is also the way to integrate the API into your frontend application:
+
+```typescript
+// Initialize a player
+const player = new Player("playerKey123", "http://localhost:3000");
+
+// Register the player
+await player.register();
+
+// Get player state
+const state = await player.getState();
+console.log("Player state:", state);
+
+// Increment counter
+await player.incCounter();
+```
+
 ## Step 5: Implementing your own Rollup Application
+
+Now that you have a basic understanding of the zkWasm rollup application, you can start to implement your own application by referring to the hello world rollup application.
+
+Let's first complete the hello world rollup application by implementing the `inc_counter` method in `src/state.rs`. This method increments the `counter` field in the `PlayerData` struct by 1. You can use this pattern to implement similar state changes in your own rollup application.
+
+```rust
+pub fn inc_counter(&self, _pkey: &[u64; 4]) -> u32 {
+    // Convert player's public key to player ID
+    let pid = HelloWorldPlayer::pkey_to_pid(_pkey);
+    // Try to get the player instance using the ID
+    let player = HelloWorldPlayer::get_from_pid(&pid);
+    
+    // Match on the optional player result
+    match player {
+        // If player exists
+        Some(mut p) => {
+            // Increment the player's counter
+            p.data.counter += 1;
+            // Store the updated state
+            p.store();
+            // Return 0 to indicate success
+            0
+        },
+        // If player doesn't exist, return error
+        None => ERROR_PLAYER_NOT_EXIST
+    }
+}
+```
+
+Let's break down the key components of this implementation:
+
+#### 1. Player Identification
+When you want to access or modify the state of a player, you need to identify the player first. In the hello world rollup application, the player is identified by the player's ID, which is a unique identifier derived from the player's public key.
+
+- `HelloWorldPlayer::pkey_to_pid(_pkey)`: Converts the public key to a player ID
+- `HelloWorldPlayer::get_from_pid(&pid)`: Retrieves the player instance using the ID
+
+#### 2. State Management
+Remember that player may not exist, so you need to check if the player exists before accessing or modifying its state.
+
+- Uses pattern matching (`match`) to handle both existing and non-existing player cases
+- For existing players:
+    - Increments the counter: `p.data.counter += 1`
+    - Persists the change: `p.store()`
+    - Returns 0 to indicate success
+- For non-existing players:
+    - Returns `ERROR_PLAYER_NOT_EXIST`
+
+#### 3. Error Handling
+- Returns appropriate error codes based on the operation result
+- Uses the previously defined `ERROR_PLAYER_NOT_EXIST` constant
+
+This implementation demonstrates several important patterns for building your own rollup application:
+
+1. **State Access**: How to access and modify player-specific state
+2. **Error Handling**: How to handle various edge cases and error conditions
+3. **State Persistence**: How to properly store updated state
+4. **Player Management**: How to handle player existence checks
+
+When implementing your own rollup application, you can follow similar patterns to:
+
+- Define your own state structures
+- Implement state modification methods
+- Handle errors appropriately
+- Ensure proper state persistence
+
+### Modifying the Global State
+
+The global state of the rollup application is maintained in the ```STATE``` variable, which is a global variable. When you want to modify the global state, you need to update the ```STATE``` variable. For example, in process method in the ```Transaction``` struct, we have the following code:
+
+```rust
+match self.command {
+    AUTOTICK => {
+        unsafe { STATE.tick() };
+        return 0;
+    },
+    ...
+}
+```
+
+This is the way to modify the global state of the rollup application, and the tick method is defined in the ```State``` struct as:
+
+```rust
+pub fn tick(&mut self) {
+    self.counter += 1;
+}
+```
+
+Remember that any state modifications for players should be:
+
+- Atomic and consistent
+- Properly persisted using the `store()` method
+- Protected with appropriate existence checks
+- Accompanied by proper error handling
+
+However, for Global State, you don't need to consider the existence of players, and you can directly modify the ```STATE``` variable as it is defined as mutable.
+
+By following these patterns, you can implement various types of state changes in your own rollup application while maintaining consistency and reliability.
+
+
+
+
 
 

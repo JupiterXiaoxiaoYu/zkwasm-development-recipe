@@ -16,10 +16,22 @@
     3. Ensure that you check the option to install npm along with Node.js.
 
 !!! tip "Verify Installation"
-    After installation, verify Node.js and npm are properly installed:
+    After installation, verify Node.js, npm, and npx are properly installed:
     ```bash
     node --version
     npm --version
+    npx --version    # npx comes with npm 5.2.0+
+    ```
+
+!!! info "About npx"
+    - npx comes bundled with npm version 5.2.0 and higher
+    - If npx command is not found, update npm:
+    ```bash
+    npm install -g npm@latest
+    ```
+    - Or install npx explicitly:
+    ```bash
+    npm install -g npx
     ```
 
 !!! warning "Note for Windows Users"
