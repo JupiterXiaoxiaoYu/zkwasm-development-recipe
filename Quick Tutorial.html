@@ -1534,6 +1534,40 @@ It receives the transaction command and then routes the transaction to the corre
 </ul>
 </li>
 </ul>
+<p>You can customize the <code>createCommand</code> function to pack different types of data based on your application's needs. Here are some examples of how you might modify the bit layout:</p>
+<ol>
+<li>
+<p><strong>Game Commands</strong>:
+<div class="highlight"><pre><span></span><code><span class="c1">// 32 bits nonce + 8 bits gameType + 8 bits playerId + 16 bits command</span>
+<span class="kd">function</span><span class="w"> </span><span class="nx">createGameCommand</span><span class="p">(</span><span class="nx">nonce</span><span class="o">:</span><span class="w"> </span><span class="kt">bigint</span><span class="p">,</span><span class="w"> </span><span class="nx">gameType</span><span class="o">:</span><span class="w"> </span><span class="kt">bigint</span><span class="p">,</span><span class="w"> </span><span class="nx">playerId</span><span class="o">:</span><span class="w"> </span><span class="kt">bigint</span><span class="p">,</span><span class="w"> </span><span class="nx">command</span><span class="o">:</span><span class="w"> </span><span class="kt">bigint</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="nx">nonce</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mi">32n</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="nx">gameType</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mi">24n</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="nx">playerId</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mi">16n</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">command</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></p>
+</li>
+<li>
+<p><strong>Transaction Commands</strong>:
+<div class="highlight"><pre><span></span><code><span class="c1">// 32 bits nonce + 16 bits amount + 8 bits tokenId + 8 bits command</span>
+<span class="kd">function</span><span class="w"> </span><span class="nx">createTxCommand</span><span class="p">(</span><span class="nx">nonce</span><span class="o">:</span><span class="w"> </span><span class="kt">bigint</span><span class="p">,</span><span class="w"> </span><span class="nx">amount</span><span class="o">:</span><span class="w"> </span><span class="kt">bigint</span><span class="p">,</span><span class="w"> </span><span class="nx">tokenId</span><span class="o">:</span><span class="w"> </span><span class="kt">bigint</span><span class="p">,</span><span class="w"> </span><span class="nx">command</span><span class="o">:</span><span class="w"> </span><span class="kt">bigint</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="nx">nonce</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mi">32n</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="nx">amount</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mi">16n</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="nx">tokenId</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mi">8n</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">command</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></p>
+</li>
+<li>
+<p><strong>NFT Commands</strong>:
+<div class="highlight"><pre><span></span><code><span class="c1">// 16 bits nonce + 32 bits tokenId + 8 bits collection + 8 bits command</span>
+<span class="kd">function</span><span class="w"> </span><span class="nx">createNFTCommand</span><span class="p">(</span><span class="nx">nonce</span><span class="o">:</span><span class="w"> </span><span class="kt">bigint</span><span class="p">,</span><span class="w"> </span><span class="nx">tokenId</span><span class="o">:</span><span class="w"> </span><span class="kt">bigint</span><span class="p">,</span><span class="w"> </span><span class="nx">collection</span><span class="o">:</span><span class="w"> </span><span class="kt">bigint</span><span class="p">,</span><span class="w"> </span><span class="nx">command</span><span class="o">:</span><span class="w"> </span><span class="kt">bigint</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="nx">nonce</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mi">48n</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="nx">tokenId</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mi">16n</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="nx">collection</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mi">8n</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">command</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></p>
+</li>
+</ol>
+<p>When designing your command structure, consider:</p>
+<ul>
+<li>The size needed for each field</li>
+<li>Priority and access frequency of fields</li>
+<li>Future extensibility requirements</li>
+</ul>
+<p>Remember to provide corresponding extraction functions for unpacking the data when needed.</p>
 <h4 id="player-class">Player Class</h4>
 <p>The <code>Player</code> class serves as the main interface for interacting with the rollup:</p>
 <div class="highlight"><pre><span></span><code><span class="k">export</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nx">Player</span><span class="w"> </span><span class="p">{</span>
@@ -1624,7 +1658,7 @@ The <code>getState</code> method:</p>
 <h4 id="usage-example">Usage Example</h4>
 <p>Here's how you might use the client-side API to interact or test with the hello world zkWasm rollup backend, this is also the way to integrate the API into your frontend application:</p>
 <div class="highlight"><pre><span></span><code><span class="c1">// Initialize a player</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">player</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Player</span><span class="p">(</span><span class="s2">&quot;playerKey123&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;http://localhost:3000&quot;</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">player</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Player</span><span class="p">(</span><span class="s2">&quot;processingKey&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;http://localhost:3000&quot;</span><span class="p">);</span>
 
 <span class="c1">// Register the player</span>
 <span class="k">await</span><span class="w"> </span><span class="nx">player</span><span class="p">.</span><span class="nx">register</span><span class="p">();</span>
@@ -1636,6 +1670,10 @@ The <code>getState</code> method:</p>
 <span class="c1">// Increment counter</span>
 <span class="k">await</span><span class="w"> </span><span class="nx">player</span><span class="p">.</span><span class="nx">incCounter</span><span class="p">();</span>
 </code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You may notice that the "processingKey" is actually the key for accessing the zkWasm rollup application, it is required and used to sign the data in every transaction to the zkWasm rollup application. In real implementation, you need to generate a processingKey from the user's signature, which is derived from a unique message signed by the user's private key. Please remind your user to keep this key secure and never expose it to the public, as well as never signing a same message with the same private key.</p>
+</div>
 <h2 id="step-5-implementing-your-own-rollup-application">Step 5: Implementing your own Rollup Application</h2>
 <p>Now that you have a basic understanding of the zkWasm rollup application, you can start to implement your own application by referring to the hello world rollup application.</p>
 <p>Let's first complete the hello world rollup application by implementing the <code>inc_counter</code> method in <code>src/state.rs</code>. This method increments the <code>counter</code> field in the <code>PlayerData</code> struct by 1. You can use this pattern to implement similar state changes in your own rollup application.</p>
