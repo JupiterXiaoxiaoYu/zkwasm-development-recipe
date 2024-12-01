@@ -9,8 +9,10 @@
       
       
       
-        <link rel="prev" href="zkWasm%20Overview.html">
+        <link rel="prev" href="Setup%20Environment.html">
       
+      
+        <link rel="next" href="Core%20Concepts.html">
       
       
       <link rel="icon" href="assets/images/favicon.png">
@@ -246,14 +248,56 @@
       
   
   
+    
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Getting Started
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Getting Started
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
   
   
     <li class="md-nav__item">
-      <a href="Core%20Concepts.html" class="md-nav__link">
+      <a href="Setup%20Environment.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Core Concepts
+    Setup Environment
   </span>
   
 
@@ -261,29 +305,10 @@
     </li>
   
 
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="zkWasm%20Overview.html" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    zkWasm Overview
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
+              
+            
+              
+                
   
   
     
@@ -344,55 +369,28 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#prerequisites" class="md-nav__link">
+  <a href="#step-1-install-the-zkwasm-mini-rollup-service" class="md-nav__link">
     <span class="md-ellipsis">
-      Prerequisites
+      Step 1: Install the zkWasm Mini-Rollup service
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-1-setup-environment" class="md-nav__link">
-    <span class="md-ellipsis">
-      Step 1: Setup Environment
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Step 1: Setup Environment">
+    <nav class="md-nav" aria-label="Step 1: Install the zkWasm Mini-Rollup service">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#nodejs-setup" class="md-nav__link">
+  <a href="#1-get-the-zkwasm-mini-rollup-service" class="md-nav__link">
     <span class="md-ellipsis">
-      Node.js Setup
+      1. Get the zkWasm Mini-Rollup service
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#rust-setup" class="md-nav__link">
+  <a href="#2-start-the-zkwasm-mini-rollup-service" class="md-nav__link">
     <span class="md-ellipsis">
-      Rust Setup
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#install-make" class="md-nav__link">
-    <span class="md-ellipsis">
-      Install Make
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#get-the-template-project" class="md-nav__link">
-    <span class="md-ellipsis">
-      Get the Template Project
+      2. Start the zkWasm Mini-Rollup service
     </span>
   </a>
   
@@ -404,13 +402,41 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-2-the-code-overview" class="md-nav__link">
+  <a href="#step-2-get-the-template-project" class="md-nav__link">
     <span class="md-ellipsis">
-      Step 2: The Code Overview
+      Step 2: Get the Template Project
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Step 2: The Code Overview">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-3-run-the-rollup-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 3: Run the Rollup Application
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-4-the-code-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 4: The Code Overview
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 4: The Code Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#server-side-code-backend-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      Server Side Code (Backend Code)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Server Side Code (Backend Code)">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -473,6 +499,155 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#3-transaction-handler" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Transaction Handler
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#client-side-code-frontend-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      Client Side Code (Frontend Code)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Client Side Code (Frontend Code)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#constants-and-helper-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Constants and Helper Functions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#player-class" class="md-nav__link">
+    <span class="md-ellipsis">
+      Player Class
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Player Class">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-state-query" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. State Query
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-nonce-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Nonce Management
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-player-registration" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Player Registration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-counter-increment" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Counter Increment
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#usage-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Usage Example
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-5-implementing-your-own-rollup-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 5: Implementing your own Rollup Application
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 5: Implementing your own Rollup Application">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-player-identification" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Player Identification
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-state-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. State Management
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-error-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Error Handling
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modifying-the-global-state" class="md-nav__link">
+    <span class="md-ellipsis">
+      Modifying the Global State
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -481,6 +656,175 @@
     </ul>
   
 </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Core Documentation
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Core Documentation
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Core%20Concepts.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Core Concepts
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="zkWasm%20Overview.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    zkWasm Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Development Guide
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Development Guide
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="zkWasm%20Rust%20SDK.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    zkWasm Rust SDK
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
       
     </li>
   
@@ -522,55 +866,28 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#prerequisites" class="md-nav__link">
+  <a href="#step-1-install-the-zkwasm-mini-rollup-service" class="md-nav__link">
     <span class="md-ellipsis">
-      Prerequisites
+      Step 1: Install the zkWasm Mini-Rollup service
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-1-setup-environment" class="md-nav__link">
-    <span class="md-ellipsis">
-      Step 1: Setup Environment
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Step 1: Setup Environment">
+    <nav class="md-nav" aria-label="Step 1: Install the zkWasm Mini-Rollup service">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#nodejs-setup" class="md-nav__link">
+  <a href="#1-get-the-zkwasm-mini-rollup-service" class="md-nav__link">
     <span class="md-ellipsis">
-      Node.js Setup
+      1. Get the zkWasm Mini-Rollup service
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#rust-setup" class="md-nav__link">
+  <a href="#2-start-the-zkwasm-mini-rollup-service" class="md-nav__link">
     <span class="md-ellipsis">
-      Rust Setup
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#install-make" class="md-nav__link">
-    <span class="md-ellipsis">
-      Install Make
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#get-the-template-project" class="md-nav__link">
-    <span class="md-ellipsis">
-      Get the Template Project
+      2. Start the zkWasm Mini-Rollup service
     </span>
   </a>
   
@@ -582,13 +899,41 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-2-the-code-overview" class="md-nav__link">
+  <a href="#step-2-get-the-template-project" class="md-nav__link">
     <span class="md-ellipsis">
-      Step 2: The Code Overview
+      Step 2: Get the Template Project
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Step 2: The Code Overview">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-3-run-the-rollup-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 3: Run the Rollup Application
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-4-the-code-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 4: The Code Overview
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 4: The Code Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#server-side-code-backend-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      Server Side Code (Backend Code)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Server Side Code (Backend Code)">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -651,6 +996,155 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#3-transaction-handler" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Transaction Handler
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#client-side-code-frontend-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      Client Side Code (Frontend Code)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Client Side Code (Frontend Code)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#constants-and-helper-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Constants and Helper Functions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#player-class" class="md-nav__link">
+    <span class="md-ellipsis">
+      Player Class
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Player Class">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-state-query" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. State Query
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-nonce-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Nonce Management
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-player-registration" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Player Registration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-counter-increment" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Counter Increment
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#usage-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Usage Example
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-5-implementing-your-own-rollup-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 5: Implementing your own Rollup Application
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 5: Implementing your own Rollup Application">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-player-identification" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Player Identification
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-state-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. State Management
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-error-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Error Handling
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modifying-the-global-state" class="md-nav__link">
+    <span class="md-ellipsis">
+      Modifying the Global State
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -673,157 +1167,36 @@
 
 <h1 id="quick-tutorial">Quick Tutorial</h1>
 <h2 id="guideline">Guideline</h2>
-<p>This tutorial will guide you through the process of creating a simple zkWasm application in minutes.</p>
-<h2 id="prerequisites">Prerequisites</h2>
+<p>This tutorial will guide you through the process of creating a simple zkWasm application in minutes. Please make sure you have already setup the environment by following the <a href="Setup%20Environment.html">Setup Environment</a> guide.</p>
+<h2 id="step-1-install-the-zkwasm-mini-rollup-service">Step 1: Install the zkWasm Mini-Rollup service</h2>
+<p>The zkWasm Mini-Rollup service is a RESTful service that provides the zkWasm runtime environment. It provides the following functionalities:</p>
 <ul>
-<li>Basic knowledge of Rust programming language and Cargo.</li>
-<li>Basic knowledge of Makefile.</li>
-<li>Basic knowledge of TypeScript and Node.js.</li>
+<li>Serve the zkWasm runtime environment</li>
+<li>Provide the zkWasm REST API</li>
+<li>Maintain the zkWasm state through merkle tree enabled database and Redis</li>
+<li>Generate the witness from the merkle tree database for zkWasm verification</li>
+<li>Calculate the new merkle tree root when receiving the zkWasm transaction batch for settlement</li>
 </ul>
-<h2 id="step-1-setup-environment">Step 1: Setup Environment</h2>
-<h3 id="nodejs-setup">Node.js Setup</h3>
-<div class="admonition note">
-<p class="admonition-title">Install Node.js and npm</p>
-<p>To install Node.js and npm, follow these steps:</p>
-<ol>
-<li>Visit the <a href="https://nodejs.org/">Node.js download page</a> and download the LTS version for your operating system.</li>
-<li>Run the installer and follow the setup instructions.</li>
-<li>Ensure that you check the option to install npm along with Node.js.</li>
-</ol>
-</div>
-<div class="admonition tip">
-<p class="admonition-title">Verify Installation</p>
-<p>After installation, verify Node.js and npm are properly installed:
-<div class="highlight"><pre><span></span><code>node<span class="w"> </span>--version
-npm<span class="w"> </span>--version
-</code></pre></div></p>
-</div>
-<div class="admonition warning">
-<p class="admonition-title">Note for Windows Users</p>
-<p>If you encounter issues with permissions or paths, consider using <a href="https://github.com/coreybutler/nvm-windows">nvm-windows</a> to manage Node.js versions.</p>
-</div>
-<div class="admonition example">
-<p class="admonition-title">Using nvm for Node.js</p>
-<p>If you prefer using a version manager, you can use nvm (Node Version Manager):</p>
-<ul>
-<li>
-<p>For macOS/Linux:
-<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-o-<span class="w"> </span>https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>bash
-<span class="nb">source</span><span class="w"> </span>~/.bashrc
-nvm<span class="w"> </span>install<span class="w"> </span>--lts
-</code></pre></div></p>
-</li>
-<li>
-<p>For Windows, use <a href="https://github.com/coreybutler/nvm-windows">nvm-windows</a> and follow the installation instructions on the GitHub page.</p>
-</li>
-</ul>
-</div>
+<h3 id="1-get-the-zkwasm-mini-rollup-service">1. Get the zkWasm Mini-Rollup service</h3>
+<p>You can get the zkWasm Mini-Rollup service by cloning the repository:
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/DelphinusLab/zkwasm-mini-rollup.git
+<span class="nb">cd</span><span class="w"> </span>zkwasm-mini-rollup
+</code></pre></div>
+Or, download the zip file from the <a href="https://github.com/DelphinusLab/zkwasm-mini-rollup">Github page</a> and unzip it.</p>
+<h3 id="2-start-the-zkwasm-mini-rollup-service">2. Start the zkWasm Mini-Rollup service</h3>
+<p>In the root directory of the zkWasm Mini-Rollup service, run:
+<div class="highlight"><pre><span></span><code>docker-compose<span class="w"> </span>up
+</code></pre></div>
+Make sure your running environment has the permission to access the Docker daemon. This command will start a Docker container named <code>zkwasm-mini-rollup</code>.</p>
 <div class="admonition info">
-<p class="admonition-title">Package Manager Installation</p>
-<p>If you need to install package managers first:</p>
-<ul>
-<li>Homebrew (macOS): <a href="https://brew.sh/">Installation Guide</a></li>
-<li>apt (Ubuntu/Debian): Pre-installed, or use:
- <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt<span class="w"> </span>update<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>apt
-</code></pre></div></li>
-<li>Chocolatey (Windows): <a href="https://chocolatey.org/install">Installation Guide</a></li>
-</ul>
+<p class="admonition-title">Note</p>
+<p>One zkWasm Mini-Rollup service must correspond to one zkWasm rollup application. This will be improved in the future by supporting multiple rollup applications in one service.</p>
 </div>
-<h3 id="rust-setup">Rust Setup</h3>
-<div class="admonition note">
-<p class="admonition-title">Install Rust</p>
-<p>If you haven't installed Rust, you can install it using rustup:
-<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>--proto<span class="w"> </span><span class="s1">&#39;=https&#39;</span><span class="w"> </span>--tlsv1.2<span class="w"> </span>-sSf<span class="w"> </span>https://sh.rustup.rs<span class="w"> </span><span class="p">|</span><span class="w"> </span>sh
-</code></pre></div></p>
-</div>
-<div class="admonition tip">
-<p class="admonition-title">Verify Installation</p>
-<p>After installation, verify Rust and Cargo are properly installed:
-<div class="highlight"><pre><span></span><code>rustc<span class="w"> </span>--version
-cargo<span class="w"> </span>--version
-</code></pre></div></p>
-</div>
-<div class="admonition warning">
-<p class="admonition-title">Note for Windows Users</p>
-<p>If you're using Windows, we recommend:</p>
-<ol>
-<li>Using Windows Subsystem for Linux (WSL)</li>
-<li>Or installing Rust through the official installer from <a href="https://rustup.rs/">rustup.rs</a></li>
-</ol>
-</div>
-<div class="admonition example">
-<p class="admonition-title">Optional: IDE Setup</p>
-<p>We recommend using VS Code with the following extensions:</p>
-<ul>
-<li>rust-analyzer</li>
-<li>Even Better TOML</li>
-<li>CodeLLDB</li>
-</ul>
-</div>
-<h3 id="install-make">Install Make</h3>
-<div class="admonition note">
-<p class="admonition-title">Linux/macOS Users</p>
-<p>For Unix-based systems, Make is usually pre-installed. If not:</p>
-<p>Ubuntu/Debian:
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt<span class="w"> </span>update
-sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>build-essential
-</code></pre></div></p>
-<p>macOS:
-<div class="highlight"><pre><span></span><code>xcode-select<span class="w"> </span>--install
-</code></pre></div></p>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Windows Setup for Make</p>
-<p>Windows users have several options:</p>
-<ol>
-<li>
-<p>Using Chocolatey (Recommended):
-<div class="highlight"><pre><span></span><code>choco<span class="w"> </span>install<span class="w"> </span>make
-</code></pre></div></p>
-</li>
-<li>
-<p>Using MSYS2:
-<div class="highlight"><pre><span></span><code><span class="c1"># First install MSYS2 from https://www.msys2.org/</span>
-<span class="c1"># Then open MSYS2 terminal and run:</span>
-pacman<span class="w"> </span>-S<span class="w"> </span>make
-</code></pre></div></p>
-</li>
-<li>
-<p>Using WSL (Best Option):
-<div class="highlight"><pre><span></span><code><span class="c1"># Install WSL first</span>
-wsl<span class="w"> </span>--install
-
-<span class="c1"># After WSL is installed, open Ubuntu terminal and run:</span>
-sudo<span class="w"> </span>apt<span class="w"> </span>update
-sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>build-essential
-</code></pre></div></p>
-</li>
-</ol>
-</div>
-<div class="admonition tip">
-<p class="admonition-title">Verify Installation</p>
-<p>After installation, verify Make is properly installed:
-<div class="highlight"><pre><span></span><code>make<span class="w"> </span>--version
-</code></pre></div></p>
-</div>
-<div class="admonition info">
-<p class="admonition-title">Package Manager Installation</p>
-<p>If you need to install package managers first:</p>
-<ul>
-<li>Chocolatey: <a href="https://chocolatey.org/install">Installation Guide</a></li>
-<li>MSYS2: <a href="https://www.msys2.org/">Download Page</a></li>
-<li>WSL: <a href="https://learn.microsoft.com/en-us/windows/wsl/install">Microsoft Guide</a></li>
-</ul>
-<p>After installing the package manager, make sure you correctly setup the environment variables for the package manager.</p>
-</div>
-<h3 id="get-the-template-project">Get the Template Project</h3>
-<div class="admonition info">
-<p class="admonition-title">Clone Template</p>
-<p>Clone the example project to get started:
-<div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/riddles-are-us/helloworld-rollup
+<h2 id="step-2-get-the-template-project">Step 2: Get the Template Project</h2>
+<p>Clone the template project - The Hello World Rollup:
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/DelphinusLab/helloworld-rollup
 <span class="nb">cd</span><span class="w"> </span>helloworld-rollup
 </code></pre></div></p>
-</div>
 <div class="admonition tip">
 <p class="admonition-title">Project Structure</p>
 <p>The template includes:
@@ -835,23 +1208,41 @@ sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> <
 └── rust-toolchain # Rust version specification
 </code></pre></div></p>
 </div>
-<div class="admonition info">
-<p class="admonition-title">Install Dependencies for ts</p>
 <p>Install the dependencies for ts:
 <div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>ts
 npm<span class="w"> </span>install
 </code></pre></div></p>
-</div>
-<div class="admonition example">
-<p class="admonition-title">Build the Project</p>
+<p>After installing the dependencies, compile the ts code:
+<div class="highlight"><pre><span></span><code>npx<span class="w"> </span>tsc
+</code></pre></div>
+This will generate the js code in the <code>ts/</code> directory and facilitate the backend server running and testing.</p>
 <p>Build the project using make:
 <div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>..<span class="w">   </span><span class="c1">#Move to the root directory of the project</span>
 make<span class="w"> </span>build
 </code></pre></div></p>
-</div>
-<h2 id="step-2-the-code-overview">Step 2: The Code Overview</h2>
-<p>Let's examine the core components of our zkWasm application. The project is structured into several key Rust files, each handling specific functionality.</p>
-<h3 id="main-entry-point-srclibrs">Main Entry Point (<code>src/lib.rs</code>)</h3>
+<h2 id="step-3-run-the-rollup-application">Step 3: Run the Rollup Application</h2>
+<p>In the root directory of the project, run:
+<div class="highlight"><pre><span></span><code>make<span class="w"> </span>run
+</code></pre></div></p>
+<p>This will start the backend server by running the <code>node ./ts/src/service.js</code>.</p>
+<p>You shall see some output like the following:
+<div class="highlight"><pre><span></span><code>rpc bind merkle server: http://127.0.0.1:3030
+initialize mongoose ...
+start express server
+Server is running on http://0.0.0.0:3000
+connecting redis server: localhost
+bootstrapping ... (deploymode: false, remote: false, migrate: false)
+loading wasm application ...
+check merkel database connection ...
+initialize sequener queue ...
+waiting Count is: 0  perform draining ...
+initialize application merkle db ...
+</code></pre></div></p>
+<p>Congratulations! You have successfully started the zkWasm rollup application. However, in order to build your own rollup application, you need to understand the core components of the zkWasm rollup application.</p>
+<h2 id="step-4-the-code-overview">Step 4: The Code Overview</h2>
+<p>Let's examine the core components of our zkWasm application. This hello world rollup application is structured into several key Rust files, each handling specific functionality. </p>
+<h3 id="server-side-code-backend-code">Server Side Code (Backend Code)</h3>
+<h4 id="main-entry-point-srclibrs">Main Entry Point (<code>src/lib.rs</code>)</h4>
 <div class="highlight"><pre><span></span><code><span class="k">use</span><span class="w"> </span><span class="n">wasm_bindgen</span><span class="p">::</span><span class="n">prelude</span><span class="p">::</span><span class="o">*</span><span class="p">;</span>
 <span class="k">use</span><span class="w"> </span><span class="n">zkwasm_rest_abi</span><span class="p">::</span><span class="o">*</span><span class="p">;</span>
 <span class="k">pub</span><span class="w"> </span><span class="k">mod</span><span class="w"> </span><span class="nn">config</span><span class="p">;</span>
@@ -862,15 +1253,13 @@ make<span class="w"> </span>build
 <span class="k">use</span><span class="w"> </span><span class="k">crate</span><span class="p">::</span><span class="n">state</span><span class="p">::{</span><span class="n">State</span><span class="p">,</span><span class="w"> </span><span class="n">Transaction</span><span class="p">};</span>
 <span class="n">zkwasm_rest_abi</span><span class="p">::</span><span class="n">create_zkwasm_apis</span><span class="o">!</span><span class="p">(</span><span class="n">Transaction</span><span class="p">,</span><span class="w"> </span><span class="n">State</span><span class="p">,</span><span class="w"> </span><span class="n">Config</span><span class="p">);</span>
 </code></pre></div>
-<div class="admonition info">
-<p class="admonition-title">Key Components</p>
+<p>The above code includes the following key components:</p>
 <ul>
 <li><code>wasm_bindgen</code>: Enables Rust-JavaScript interoperability</li>
 <li><code>zkwasm_rest_abi</code>: Provides core zkWasm functionality</li>
 <li><code>create_zkwasm_apis!</code>: Macro that generates necessary API endpoints</li>
 </ul>
-</div>
-<h3 id="configuration-srcconfigrs">Configuration (<code>src/config.rs</code>)</h3>
+<h4 id="configuration-srcconfigrs">Configuration (<code>src/config.rs</code>)</h4>
 <div class="highlight"><pre><span></span><code><span class="k">use</span><span class="w"> </span><span class="n">serde</span><span class="p">::</span><span class="n">Serialize</span><span class="p">;</span>
 
 <span class="cp">#[derive(Serialize, Clone)]</span>
@@ -894,16 +1283,17 @@ make<span class="w"> </span>build
 <span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-<div class="admonition info">
-<p class="admonition-title">Configuration Details</p>
+<p>The <code>Config</code> struct:</p>
 <ul>
 <li>Defines application configuration</li>
-<li>Uses <code>lazy_static</code> for singleton pattern</li>
 <li>Provides JSON serialization for config values</li>
-<li>Controls auto-tick behavior</li>
+<li>Controls auto-tick behavior - the system will automatically advance its state through tick events, facilitating time-based state transitions in the zkWasm runtime. </li>
 </ul>
+<div class="admonition tip">
+<p class="admonition-title">Note</p>
+<p>Currently, the time interval is set to 5 seconds in the server side, which you can modify in the <code>service.ts</code> file in the <code>/src</code> directory of the <code>zkwasm-ts-server</code> package.</p>
 </div>
-<h3 id="settlement-management-srcsettlementrs">Settlement Management (<code>src/settlement.rs</code>)</h3>
+<h4 id="settlement-management-srcsettlementrs">Settlement Management (<code>src/settlement.rs</code>)</h4>
 <div class="highlight"><pre><span></span><code><span class="k">use</span><span class="w"> </span><span class="n">zkwasm_rest_abi</span><span class="p">::</span><span class="n">WithdrawInfo</span><span class="p">;</span>
 
 <span class="k">pub</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">SettlementInfo</span><span class="p">(</span><span class="nb">Vec</span><span class="o">&lt;</span><span class="n">WithdrawInfo</span><span class="o">&gt;</span><span class="p">);</span>
@@ -928,16 +1318,18 @@ make<span class="w"> </span>build
 <span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-<div class="admonition info">
-<p class="admonition-title">Important Notes</p>
+<p>The <code>SettlementInfo</code> struct:</p>
 <ul>
 <li>Handles withdrawal information</li>
 <li>Converts settlement data to bytes for processing</li>
 <li>Implements flush mechanism for batch processing</li>
 </ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In the current architecture of zkWasm Rollup Application, the withdrawal requests from users are handled in the server side. When settlement is triggered, the server will collect all the withdrawals and send them with merkle tree root to the zkWasm protocol contract for verification. </p>
 </div>
-<h3 id="state-management-srcstaters">State Management (<code>src/state.rs</code>)</h3>
-<h4 id="1-player-data-structure">1. Player Data Structure</h4>
+<h4 id="state-management-srcstaters">State Management (<code>src/state.rs</code>)</h4>
+<h5 id="1-player-data-structure">1. Player Data Structure</h5>
 <div class="highlight"><pre><span></span><code><span class="cp">#[derive(Debug, Serialize)]</span>
 <span class="k">pub</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">PlayerData</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">counter</span><span class="p">:</span><span class="w"> </span><span class="kt">u64</span><span class="p">,</span>
@@ -961,15 +1353,379 @@ make<span class="w"> </span>build
 
 <span class="k">pub</span><span class="w"> </span><span class="k">type</span><span class="w"> </span><span class="nc">HelloWorldPlayer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Player</span><span class="o">&lt;</span><span class="n">PlayerData</span><span class="o">&gt;</span><span class="p">;</span>
 </code></pre></div>
-<div class="admonition info">
-<p class="admonition-title">Player Management</p>
+<p>The <code>PlayerData</code> struct:</p>
 <ul>
-<li>Defines player-specific data structure, here we use <code>PlayerData</code> to store the player's counter.</li>
-<li>Implements serialization and storage traits</li>
-<li>Provides default values for new players</li>
+<li>Defines player-specific data structure with a <code>counter</code> field</li>
+<li>Implements <code>Default</code> trait for initializing new players with counter set to 0</li>
+<li>Implements <code>StorageData</code> trait for data serialization and deserialization</li>
+<li>Creates a type alias <code>HelloWorldPlayer</code> for Player with PlayerData</li>
 </ul>
-</div>
-<h4 id="2-state-structure">2. State Structure</h4>
+<h5 id="2-state-structure">2. State Structure</h5>
+<div class="highlight"><pre><span></span><code><span class="cp">#[derive(Serialize)]</span>
+<span class="k">pub</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">State</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">counter</span><span class="p">:</span><span class="w"> </span><span class="kt">u64</span>
+<span class="p">}</span>
+
+<span class="k">impl</span><span class="w"> </span><span class="n">State</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">get_state</span><span class="p">(</span><span class="n">pkey</span><span class="p">:</span><span class="w"> </span><span class="nb">Vec</span><span class="o">&lt;</span><span class="kt">u64</span><span class="o">&gt;</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nb">String</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">player</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HelloWorldPlayer</span><span class="p">::</span><span class="n">get_from_pid</span><span class="p">(</span><span class="o">&amp;</span><span class="n">HelloWorldPlayer</span><span class="p">::</span><span class="n">pkey_to_pid</span><span class="p">(</span><span class="o">&amp;</span><span class="n">pkey</span><span class="p">.</span><span class="n">try_into</span><span class="p">().</span><span class="n">unwrap</span><span class="p">()));</span>
+<span class="w">        </span><span class="n">serde_json</span><span class="p">::</span><span class="n">to_string</span><span class="p">(</span><span class="o">&amp;</span><span class="n">player</span><span class="p">).</span><span class="n">unwrap</span><span class="p">()</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">rand_seed</span><span class="p">()</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kt">u64</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="mi">0</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">store</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">initialize</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">new</span><span class="p">()</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nc">Self</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">State</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">counter</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">snapshot</span><span class="p">()</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nb">String</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">unsafe</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="o">&amp;</span><span class="n">STATE</span><span class="w"> </span><span class="p">};</span>
+<span class="w">        </span><span class="n">serde_json</span><span class="p">::</span><span class="n">to_string</span><span class="p">(</span><span class="o">&amp;</span><span class="n">state</span><span class="p">).</span><span class="n">unwrap</span><span class="p">()</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">preempt</span><span class="p">()</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">unsafe</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="o">&amp;</span><span class="n">STATE</span><span class="w"> </span><span class="p">};</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">state</span><span class="p">.</span><span class="n">counter</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">20</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">flush_settlement</span><span class="p">()</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nb">Vec</span><span class="o">&lt;</span><span class="kt">u8</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SettlementInfo</span><span class="p">::</span><span class="n">flush_settlement</span><span class="p">();</span>
+<span class="w">        </span><span class="k">unsafe</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">STATE</span><span class="p">.</span><span class="n">store</span><span class="p">()</span><span class="w"> </span><span class="p">};</span>
+<span class="w">        </span><span class="n">data</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">tick</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="bp">self</span><span class="p">.</span><span class="n">counter</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>The <code>State</code> struct:</p>
+<ul>
+<li>Maintains global state with a counter field - The counter can be used to track the number of transactions processed</li>
+<li>Provides methods for state manipulation and querying, such as <code>get_state</code>, <code>store</code></li>
+<li>Implements serialization for state snapshots</li>
+<li>Handles settlement flushing and state updates, such as <code>flush_settlement</code></li>
+</ul>
+<p>We can also notice that there is a global variable <code>STATE</code> with field <code>counter</code> in the code. This is the state of the zkWasm rollup application, which shall be distinguished from the <code>counter</code> field in the <code>PlayerData</code> struct:
+<div class="highlight"><pre><span></span><code><span class="k">pub</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">STATE</span><span class="p">:</span><span class="w"> </span><span class="nc">State</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">State</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">counter</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span>
+<span class="p">};</span>
+</code></pre></div></p>
+<h4 id="3-transaction-handler">3. Transaction Handler</h4>
+<div class="highlight"><pre><span></span><code><span class="k">pub</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">Transaction</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">command</span><span class="p">:</span><span class="w"> </span><span class="kt">u64</span><span class="p">,</span>
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">data</span><span class="p">:</span><span class="w"> </span><span class="nb">Vec</span><span class="o">&lt;</span><span class="kt">u64</span><span class="o">&gt;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="k">const</span><span class="w"> </span><span class="n">AUTOTICK</span><span class="p">:</span><span class="w"> </span><span class="kt">u64</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="k">const</span><span class="w"> </span><span class="n">INSTALL_PLAYER</span><span class="p">:</span><span class="w"> </span><span class="kt">u64</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="k">const</span><span class="w"> </span><span class="n">INC_COUNTER</span><span class="p">:</span><span class="w"> </span><span class="kt">u64</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+
+<span class="k">const</span><span class="w"> </span><span class="n">ERROR_PLAYER_ALREADY_EXIST</span><span class="p">:</span><span class="w"> </span><span class="kt">u32</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="k">const</span><span class="w"> </span><span class="n">ERROR_PLAYER_NOT_EXIST</span><span class="p">:</span><span class="w"> </span><span class="kt">u32</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+
+<span class="k">impl</span><span class="w"> </span><span class="n">Transaction</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">decode_error</span><span class="p">(</span><span class="n">e</span><span class="p">:</span><span class="w"> </span><span class="kt">u32</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kp">&amp;</span><span class="o">&#39;</span><span class="nb">static</span><span class="w"> </span><span class="kt">str</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">match</span><span class="w"> </span><span class="n">e</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">ERROR_PLAYER_NOT_EXIST</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s">&quot;PlayerNotExist&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="n">ERROR_PLAYER_ALREADY_EXIST</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s">&quot;PlayerAlreadyExist&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="n">_</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s">&quot;Unknown&quot;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">decode</span><span class="p">(</span><span class="n">params</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="kt">u64</span><span class="p">;</span><span class="w"> </span><span class="mi">4</span><span class="p">])</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nc">Self</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">command</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">params</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="mh">0xff</span><span class="p">;</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="fm">vec!</span><span class="p">[</span><span class="n">params</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="n">params</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="w"> </span><span class="n">params</span><span class="p">[</span><span class="mi">3</span><span class="p">]];</span><span class="w"> </span><span class="c1">// pkey[0], pkey[1], amount</span>
+<span class="w">        </span><span class="n">Transaction</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">command</span><span class="p">,</span>
+<span class="w">            </span><span class="n">data</span><span class="p">,</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">install_player</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">pkey</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="p">[</span><span class="kt">u64</span><span class="p">;</span><span class="w"> </span><span class="mi">4</span><span class="p">])</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kt">u32</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">zkwasm_rust_sdk</span><span class="p">::</span><span class="fm">dbg!</span><span class="p">(</span><span class="s">&quot;install </span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">pid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HelloWorldPlayer</span><span class="p">::</span><span class="n">pkey_to_pid</span><span class="p">(</span><span class="n">pkey</span><span class="p">);</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">player</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HelloWorldPlayer</span><span class="p">::</span><span class="n">get_from_pid</span><span class="p">(</span><span class="o">&amp;</span><span class="n">pid</span><span class="p">);</span>
+<span class="w">        </span><span class="k">match</span><span class="w"> </span><span class="n">player</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nb">Some</span><span class="p">(</span><span class="n">_</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">ERROR_PLAYER_ALREADY_EXIST</span><span class="p">,</span>
+<span class="w">            </span><span class="nb">None</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="kd">let</span><span class="w"> </span><span class="n">player</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HelloWorldPlayer</span><span class="p">::</span><span class="n">new_from_pid</span><span class="p">(</span><span class="n">pid</span><span class="p">);</span>
+<span class="w">                </span><span class="n">player</span><span class="p">.</span><span class="n">store</span><span class="p">();</span>
+<span class="w">                </span><span class="mi">0</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">inc_counter</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">_pkey</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="p">[</span><span class="kt">u64</span><span class="p">;</span><span class="w"> </span><span class="mi">4</span><span class="p">])</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kt">u32</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="fm">todo!</span><span class="p">()</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">process</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">pkey</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="p">[</span><span class="kt">u64</span><span class="p">;</span><span class="w"> </span><span class="mi">4</span><span class="p">],</span><span class="w"> </span><span class="n">_rand</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="p">[</span><span class="kt">u64</span><span class="p">;</span><span class="w"> </span><span class="mi">4</span><span class="p">])</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kt">u32</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">match</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">command</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">AUTOTICK</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="k">unsafe</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">STATE</span><span class="p">.</span><span class="n">tick</span><span class="p">()</span><span class="w"> </span><span class="p">};</span>
+<span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="n">INSTALL_PLAYER</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">install_player</span><span class="p">(</span><span class="n">pkey</span><span class="p">),</span>
+<span class="w">            </span><span class="n">INC_COUNTER</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">inc_counter</span><span class="p">(</span><span class="n">pkey</span><span class="p">),</span>
+<span class="w">            </span><span class="n">_</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>The <code>Transaction</code> struct:</p>
+<ul>
+<li>Defines transaction structure and command types</li>
+<li>Handles player installation and counter increment operations (todo)</li>
+<li>Implements error handling with specific error codes</li>
+<li>Provides transaction decoding and processing functionality</li>
+<li>Uses pattern matching for command routing</li>
+</ul>
+<p>You may notice that the <code>process</code> method in the <code>Transaction</code> struct is the core method that handles the transaction processing:</p>
+<p><div class="highlight"><pre><span></span><code><span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">process</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">pkey</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="p">[</span><span class="kt">u64</span><span class="p">;</span><span class="w"> </span><span class="mi">4</span><span class="p">],</span><span class="w"> </span><span class="n">_rand</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="p">[</span><span class="kt">u64</span><span class="p">;</span><span class="w"> </span><span class="mi">4</span><span class="p">])</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kt">u32</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">match</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">command</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">AUTOTICK</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">unsafe</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">STATE</span><span class="p">.</span><span class="n">tick</span><span class="p">()</span><span class="w"> </span><span class="p">};</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="n">INSTALL_PLAYER</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">install_player</span><span class="p">(</span><span class="n">pkey</span><span class="p">),</span>
+<span class="w">        </span><span class="n">INC_COUNTER</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">inc_counter</span><span class="p">(</span><span class="n">pkey</span><span class="p">),</span>
+<span class="w">        </span><span class="n">_</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+It receives the transaction command and then routes the transaction to the corresponding handler based on the command. In this case, we have three commands:</p>
+<ul>
+<li><code>AUTOTICK</code>: Automatically tick the state of the rollup application, which increments the <code>counter</code> field in the <code>State</code> struct by 1</li>
+<li><code>INSTALL_PLAYER</code>: Install a new player, which creates a new player with a unique <code>pid</code> and initializes its <code>PlayerData</code></li>
+<li><code>INC_COUNTER</code>: Increment the counter of a player, which increments the <code>counter</code> field in the <code>PlayerData</code> struct by 1</li>
+</ul>
+<p>This process is the core logic of the zkWasm rollup application, which you can refer to implement your own application logic.</p>
+<h3 id="client-side-code-frontend-code">Client Side Code (Frontend Code)</h3>
+<p>The client-side code is written in TypeScript and provides a convenient interface for interacting with the hello world zkWasm rollup application. Let's examine the key components:</p>
+<h4 id="constants-and-helper-functions">Constants and Helper Functions</h4>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">CMD_INSTALL_PLAYER</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1n</span><span class="p">;</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">CMD_INC_COUNTER</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2n</span><span class="p">;</span>
+
+<span class="kd">function</span><span class="w"> </span><span class="nx">createCommand</span><span class="p">(</span><span class="nx">nonce</span><span class="o">:</span><span class="w"> </span><span class="kt">bigint</span><span class="p">,</span><span class="w"> </span><span class="nx">command</span><span class="o">:</span><span class="w"> </span><span class="kt">bigint</span><span class="p">,</span><span class="w"> </span><span class="nx">feature</span><span class="o">:</span><span class="w"> </span><span class="kt">bigint</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="nx">nonce</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mi">16n</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="nx">feature</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mi">8n</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">command</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<ul>
+<li>Two command constants are defined for player installation and counter incrementing</li>
+<li><code>createCommand</code> helper function constructs command values by combining:<ul>
+<li><code>nonce</code>: Transaction sequence number</li>
+<li><code>command</code>: Operation type (install or increment)</li>
+<li><code>feature</code>: Additional features (currently unused)</li>
+</ul>
+</li>
+</ul>
+<h4 id="player-class">Player Class</h4>
+<p>The <code>Player</code> class serves as the main interface for interacting with the rollup:</p>
+<div class="highlight"><pre><span></span><code><span class="k">export</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nx">Player</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">processingKey</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">rpc</span><span class="o">:</span><span class="w"> </span><span class="kt">ZKWasmAppRpc</span><span class="p">;</span>
+
+<span class="w">    </span><span class="kr">constructor</span><span class="p">(</span><span class="nx">key</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="nx">rpc</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="nx">processingKey</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">key</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="nx">rpc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">ZKWasmAppRpc</span><span class="p">(</span><span class="nx">rpc</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="c1">// ...</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Key methods in the Player class:</p>
+<h5 id="1-state-query">1. State Query</h5>
+<p><div class="highlight"><pre><span></span><code><span class="k">async</span><span class="w"> </span><span class="nx">getState</span><span class="p">()</span><span class="o">:</span><span class="w"> </span><span class="nb">Promise</span><span class="o">&lt;</span><span class="nx">any</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">state</span><span class="o">:</span><span class="kt">any</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">rpc</span><span class="p">.</span><span class="nx">queryState</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">processingKey</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">state</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+The <code>getState</code> method:</p>
+<ul>
+<li>Retrieves the current state for a player</li>
+<li>Returns parsed JSON data containing player information</li>
+</ul>
+<h5 id="2-nonce-management">2. Nonce Management</h5>
+<div class="highlight"><pre><span></span><code><span class="k">async</span><span class="w"> </span><span class="nx">getNonce</span><span class="p">()</span><span class="o">:</span><span class="w"> </span><span class="nb">Promise</span><span class="o">&lt;</span><span class="nx">bigint</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">state</span><span class="o">:</span><span class="kt">any</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">rpc</span><span class="p">.</span><span class="nx">queryState</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">processingKey</span><span class="p">);</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">nonce</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0n</span><span class="p">;</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">state</span><span class="p">.</span><span class="nx">data</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="nx">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">state</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">player</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">nonce</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">BigInt</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">player</span><span class="p">.</span><span class="nx">nonce</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">nonce</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>The <code>getNonce</code> method:</p>
+<ul>
+<li>Retrieves the current nonce (transaction sequence number) for a player</li>
+<li>Essential for transaction ordering and replay protection</li>
+</ul>
+<h5 id="3-player-registration">3. Player Registration</h5>
+<div class="highlight"><pre><span></span><code><span class="k">async</span><span class="w"> </span><span class="nx">register</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">nonce</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">getNonce</span><span class="p">();</span>
+<span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="nx">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">rpc</span><span class="p">.</span><span class="nx">sendTransaction</span><span class="p">(</span>
+<span class="w">            </span><span class="ow">new</span><span class="w"> </span><span class="nb">BigUint64Array</span><span class="p">([</span><span class="nx">createCommand</span><span class="p">(</span><span class="nx">nonce</span><span class="p">,</span><span class="w"> </span><span class="nx">CMD_INSTALL_PLAYER</span><span class="p">,</span><span class="w"> </span><span class="mi">0n</span><span class="p">),</span><span class="w"> </span><span class="mi">0n</span><span class="p">,</span><span class="w"> </span><span class="mi">0n</span><span class="p">,</span><span class="w"> </span><span class="mi">0n</span><span class="p">]),</span>
+<span class="w">            </span><span class="k">this</span><span class="p">.</span><span class="nx">processingKey</span>
+<span class="w">        </span><span class="p">);</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">result</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">e</span><span class="w"> </span><span class="ow">instanceof</span><span class="w"> </span><span class="ne">Error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">message</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>The <code>register</code> method:</p>
+<ul>
+<li>Registers a new player in the system</li>
+<li>Creates and sends an installation transaction</li>
+<li>Handles potential errors during registration</li>
+</ul>
+<h5 id="4-counter-increment">4. Counter Increment</h5>
+<div class="highlight"><pre><span></span><code><span class="k">async</span><span class="w"> </span><span class="nx">incCounter</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">nonce</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">getNonce</span><span class="p">();</span>
+<span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="nx">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">rpc</span><span class="p">.</span><span class="nx">sendTransaction</span><span class="p">(</span>
+<span class="w">            </span><span class="ow">new</span><span class="w"> </span><span class="nb">BigUint64Array</span><span class="p">([</span><span class="nx">createCommand</span><span class="p">(</span><span class="nx">nonce</span><span class="p">,</span><span class="w"> </span><span class="nx">CMD_INC_COUNTER</span><span class="p">,</span><span class="w"> </span><span class="mi">0n</span><span class="p">),</span><span class="w"> </span><span class="mi">0n</span><span class="p">,</span><span class="w"> </span><span class="mi">0n</span><span class="p">,</span><span class="w"> </span><span class="mi">0n</span><span class="p">]),</span><span class="w"> </span>
+<span class="w">            </span><span class="k">this</span><span class="p">.</span><span class="nx">processingKey</span>
+<span class="w">        </span><span class="p">);</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">result</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">e</span><span class="w"> </span><span class="ow">instanceof</span><span class="w"> </span><span class="ne">Error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">message</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>The <code>incCounter</code> method:</p>
+<ul>
+<li>Increments the player's counter</li>
+<li>Creates and sends an increment transaction</li>
+<li>Handles potential errors during the operation</li>
+</ul>
+<h4 id="usage-example">Usage Example</h4>
+<p>Here's how you might use the client-side API to interact or test with the hello world zkWasm rollup backend, this is also the way to integrate the API into your frontend application:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// Initialize a player</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">player</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Player</span><span class="p">(</span><span class="s2">&quot;playerKey123&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;http://localhost:3000&quot;</span><span class="p">);</span>
+
+<span class="c1">// Register the player</span>
+<span class="k">await</span><span class="w"> </span><span class="nx">player</span><span class="p">.</span><span class="nx">register</span><span class="p">();</span>
+
+<span class="c1">// Get player state</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">player</span><span class="p">.</span><span class="nx">getState</span><span class="p">();</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Player state:&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">state</span><span class="p">);</span>
+
+<span class="c1">// Increment counter</span>
+<span class="k">await</span><span class="w"> </span><span class="nx">player</span><span class="p">.</span><span class="nx">incCounter</span><span class="p">();</span>
+</code></pre></div>
+<h2 id="step-5-implementing-your-own-rollup-application">Step 5: Implementing your own Rollup Application</h2>
+<p>Now that you have a basic understanding of the zkWasm rollup application, you can start to implement your own application by referring to the hello world rollup application.</p>
+<p>Let's first complete the hello world rollup application by implementing the <code>inc_counter</code> method in <code>src/state.rs</code>. This method increments the <code>counter</code> field in the <code>PlayerData</code> struct by 1. You can use this pattern to implement similar state changes in your own rollup application.</p>
+<div class="highlight"><pre><span></span><code><span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">inc_counter</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">_pkey</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="p">[</span><span class="kt">u64</span><span class="p">;</span><span class="w"> </span><span class="mi">4</span><span class="p">])</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kt">u32</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Convert player&#39;s public key to player ID</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">pid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HelloWorldPlayer</span><span class="p">::</span><span class="n">pkey_to_pid</span><span class="p">(</span><span class="n">_pkey</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">// Try to get the player instance using the ID</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">player</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HelloWorldPlayer</span><span class="p">::</span><span class="n">get_from_pid</span><span class="p">(</span><span class="o">&amp;</span><span class="n">pid</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// Match on the optional player result</span>
+<span class="w">    </span><span class="k">match</span><span class="w"> </span><span class="n">player</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// If player exists</span>
+<span class="w">        </span><span class="nb">Some</span><span class="p">(</span><span class="k">mut</span><span class="w"> </span><span class="n">p</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="c1">// Increment the player&#39;s counter</span>
+<span class="w">            </span><span class="n">p</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">counter</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">            </span><span class="c1">// Store the updated state</span>
+<span class="w">            </span><span class="n">p</span><span class="p">.</span><span class="n">store</span><span class="p">();</span>
+<span class="w">            </span><span class="c1">// Return 0 to indicate success</span>
+<span class="w">            </span><span class="mi">0</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="c1">// If player doesn&#39;t exist, return error</span>
+<span class="w">        </span><span class="nb">None</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">ERROR_PLAYER_NOT_EXIST</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Let's break down the key components of this implementation:</p>
+<h4 id="1-player-identification">1. Player Identification</h4>
+<p>When you want to access or modify the state of a player, you need to identify the player first. In the hello world rollup application, the player is identified by the player's ID, which is a unique identifier derived from the player's public key.</p>
+<ul>
+<li><code>HelloWorldPlayer::pkey_to_pid(_pkey)</code>: Converts the public key to a player ID</li>
+<li><code>HelloWorldPlayer::get_from_pid(&amp;pid)</code>: Retrieves the player instance using the ID</li>
+</ul>
+<h4 id="2-state-management">2. State Management</h4>
+<p>Remember that player may not exist, so you need to check if the player exists before accessing or modifying its state.</p>
+<ul>
+<li>Uses pattern matching (<code>match</code>) to handle both existing and non-existing player cases</li>
+<li>For existing players:<ul>
+<li>Increments the counter: <code>p.data.counter += 1</code></li>
+<li>Persists the change: <code>p.store()</code></li>
+<li>Returns 0 to indicate success</li>
+</ul>
+</li>
+<li>For non-existing players:<ul>
+<li>Returns <code>ERROR_PLAYER_NOT_EXIST</code></li>
+</ul>
+</li>
+</ul>
+<h4 id="3-error-handling">3. Error Handling</h4>
+<ul>
+<li>Returns appropriate error codes based on the operation result</li>
+<li>Uses the previously defined <code>ERROR_PLAYER_NOT_EXIST</code> constant</li>
+</ul>
+<p>This implementation demonstrates several important patterns for building your own rollup application:</p>
+<ol>
+<li><strong>State Access</strong>: How to access and modify player-specific state</li>
+<li><strong>Error Handling</strong>: How to handle various edge cases and error conditions</li>
+<li><strong>State Persistence</strong>: How to properly store updated state</li>
+<li><strong>Player Management</strong>: How to handle player existence checks</li>
+</ol>
+<p>When implementing your own rollup application, you can follow similar patterns to:</p>
+<ul>
+<li>Define your own state structures</li>
+<li>Implement state modification methods</li>
+<li>Handle errors appropriately</li>
+<li>Ensure proper state persistence</li>
+</ul>
+<h3 id="modifying-the-global-state">Modifying the Global State</h3>
+<p>The global state of the rollup application is maintained in the <code>STATE</code> variable, which is a global variable. When you want to modify the global state, you need to update the <code>STATE</code> variable. For example, in process method in the <code>Transaction</code> struct, we have the following code:</p>
+<div class="highlight"><pre><span></span><code><span class="k">match</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">command</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">AUTOTICK</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">unsafe</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">STATE</span><span class="p">.</span><span class="n">tick</span><span class="p">()</span><span class="w"> </span><span class="p">};</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="o">..</span><span class="p">.</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>This is the way to modify the global state of the rollup application, and the tick method is defined in the <code>State</code> struct as:</p>
+<div class="highlight"><pre><span></span><code><span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">tick</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="bp">self</span><span class="p">.</span><span class="n">counter</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Remember that any state modifications for players should be:</p>
+<ul>
+<li>Atomic and consistent</li>
+<li>Properly persisted using the <code>store()</code> method</li>
+<li>Protected with appropriate existence checks</li>
+<li>Accompanied by proper error handling</li>
+</ul>
+<p>However, for Global State, you don't need to consider the existence of players, and you can directly modify the <code>STATE</code> variable as it is defined as mutable.</p>
+<p>By following these patterns, you can implement various types of state changes in your own rollup application while maintaining consistency and reliability.</p>
 
 
 

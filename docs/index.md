@@ -69,9 +69,27 @@ Here are a few steps you should follow to ensure a great development experience:
 ## Getting Started
 
 <div class="grid-wrapper">
+    <a href="Quick%20Tutorial.html" class="grid-box">
+        <h3>🚀 Quick Tutorial</h3>
+        <p>Get started quickly with a hands-on tutorial</p>
+        <span class="grid-link">Start Building →</span>
+    </a>
+    
     <a href="Core%20Concepts.html" class="grid-box">
         <h3>🔰 Core Concepts</h3>
-        <p>Learn the core concepts of zkWasm development</p>
+        <p>Learn the fundamental concepts of blockchain application development</p>
+        <span class="grid-link">Start Learning →</span>
+    </a>
+    
+    <a href="Setup%20Environment.html" class="grid-box">
+        <h3>⚙️ Setup Guide</h3>
+        <p>Set up your development environment</p>
+        <span class="grid-link">Get Ready →</span>
+    </a>
+
+    <a href="zkWasm%20Overview.html" class="grid-box">
+        <h3>🚀 zkWasm Overview</h3>
+        <p>Learn the basics of zkWasm</p>
         <span class="grid-link">Start Learning →</span>
     </a>
 </div>
@@ -80,48 +98,67 @@ Here are a few steps you should follow to ensure a great development experience:
 .grid-wrapper {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-    margin: 20px 0;
+    gap: 24px;
+    margin: 32px 0;
 }
 
 .grid-box {
     display: block;
-    padding: 20px;
-    background: #f8f9fa;
-    border: 1px solid #e1e4e5;
-    border-radius: 4px;
-    text-align: center;
+    padding: 24px;
+    background: #ffffff;
+    border: 1px solid #e1e4e8;
+    border-radius: 8px;
+    text-align: left;
     text-decoration: none;
     color: inherit;
-    transition: all 0.2s ease;
+    transition: all 0.3s ease;
 }
 
 .grid-box:hover {
-    border-color: #2980b9;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    border-color: var(--md-primary-fg-color);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     text-decoration: none;
     transform: translateY(-2px);
 }
 
 .grid-box h3 {
     margin-top: 0;
-    color: #2980b9;
+    margin-bottom: 12px;
+    color: var(--md-primary-fg-color);
+    font-size: 1.2rem;
+}
+
+.grid-box p {
+    color: #586069;
+    margin-bottom: 16px;
+    line-height: 1.5;
 }
 
 .grid-link {
-    display: inline-block;
-    margin-top: 10px;
-    color: #2980b9;
-    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+    color: var(--md-primary-fg-color);
+    font-weight: 500;
+    font-size: 0.9rem;
 }
 
-/* 防止链接文本被装饰 */
-.grid-box:hover .grid-link {
-    text-decoration: none;
+.grid-link:after {
+    content: "→";
+    margin-left: 4px;
+    transition: transform 0.2s ease;
 }
 
-/* 确保段落文本颜色正确 */
-.grid-box p {
-    color: #333;
+.grid-box:hover .grid-link:after {
+    transform: translateX(4px);
+}
+
+/* Dark mode support */
+[data-md-color-scheme="slate"] .grid-box {
+    background: #2b2b2b;
+    border-color: #404040;
+}
+
+[data-md-color-scheme="slate"] .grid-box p {
+    color: #9e9e9e;
 }
 </style>

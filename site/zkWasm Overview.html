@@ -12,7 +12,7 @@
         <link rel="prev" href="Core%20Concepts.html">
       
       
-        <link rel="next" href="Quick%20Tutorial.html">
+        <link rel="next" href="zkWasm%20Rust%20SDK.html">
       
       
       <link rel="icon" href="assets/images/favicon.png">
@@ -250,6 +250,139 @@
   
   
   
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Getting Started
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Getting Started
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Setup%20Environment.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Setup Environment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Quick%20Tutorial.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Quick Tutorial
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Core Documentation
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Core Documentation
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
     <li class="md-nav__item">
       <a href="Core%20Concepts.html" class="md-nav__link">
         
@@ -263,9 +396,10 @@
     </li>
   
 
-    
-      
-      
+              
+            
+              
+                
   
   
     
@@ -409,9 +543,26 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#6-architecture-of-a-zkwasm-rollup-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Architecture of a zkWasm Rollup Application
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
       
     </li>
   
@@ -423,16 +574,66 @@
   
   
   
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Development Guide
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Development Guide
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
     <li class="md-nav__item">
-      <a href="Quick%20Tutorial.html" class="md-nav__link">
+      <a href="zkWasm%20Rust%20SDK.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Quick Tutorial
+    zkWasm Rust SDK
   </span>
   
 
       </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -551,6 +752,15 @@
   <a href="#5-development-process-and-best-practices" class="md-nav__link">
     <span class="md-ellipsis">
       5. Development Process and Best Practices
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-architecture-of-a-zkwasm-rollup-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Architecture of a zkWasm Rollup Application
     </span>
   </a>
   
@@ -987,6 +1197,8 @@
 <p>Developing applications for zkWasm requires careful attention to state management and performance optimization. State changes should be minimized when possible, as each state transition must be proved in the zero-knowledge system. Related operations should be batched together when possible to reduce the number of state transitions and improve proof generation efficiency.</p>
 <p>Besides, memory management plays a crucial role in zkWasm application performance. The linear memory model of WebAssembly must be used efficiently, with careful attention paid to memory layout and access patterns. Global variables should be used judiciously, as they affect the state that must be tracked and proved.</p>
 <p>Error handling in zkWasm applications requires special consideration due to the zero-knowledge context. Errors must be handled in a way that doesn't leak information about private data while still providing useful feedback about what went wrong. This often involves careful design of error conditions and appropriate use of public and private inputs. We will cover more about error handling in practice in the later chapters.</p>
+<h2 id="6-architecture-of-a-zkwasm-rollup-application">6. Architecture of a zkWasm Rollup Application</h2>
+<p><img alt="Architecture of a zkWasm Rollup Application" src="media/monitor-architecture.png" /></p>
 
 
 
