@@ -1,0 +1,1384 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="zkWasm%20Overview.html">
+      
+      
+      
+      <link rel="icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.45">
+    
+    
+      
+        <title>zkWasm Rust SDK - zkWasm Development Recipe</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.0253249f.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="stylesheets/extra.css">
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="pink">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#zkwasm-rust-sdk" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="index.html" title="zkWasm Development Recipe" class="md-header__button md-logo" aria-label="zkWasm Development Recipe" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            zkWasm Development Recipe
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              zkWasm Rust SDK
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="pink"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="lime"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="index.html" title="zkWasm Development Recipe" class="md-nav__button md-logo" aria-label="zkWasm Development Recipe" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    zkWasm Development Recipe
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Getting Started
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Getting Started
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Setup%20Environment.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Setup Environment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Quick%20Tutorial.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Quick Tutorial
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Core Documentation
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Core Documentation
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Core%20Concepts.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Core Concepts
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="zkWasm%20Overview.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    zkWasm Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Development Guide
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Development Guide
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    zkWasm Rust SDK
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="zkWasm%20Rust%20SDK.html" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    zkWasm Rust SDK
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#core-components-overview-of-zkwasm-rust-sdk" class="md-nav__link">
+    <span class="md-ellipsis">
+      Core Components Overview of zkWasm Rust SDK
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Core Components Overview of zkWasm Rust SDK">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-storage-and-state-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Storage and State Management
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Storage and State Management">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#merkle-tree-state" class="md-nav__link">
+    <span class="md-ellipsis">
+      Merkle Tree State
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#storagedata-trait" class="md-nav__link">
+    <span class="md-ellipsis">
+      StorageData Trait
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-player-management-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Player Management System
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Player Management System">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#player-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Player Structure
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#player-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Player Operations
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-zkwasm-rest-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. ZkWasm REST API
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. ZkWasm REST API">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#system-architecture-and-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      System Architecture and Flow
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="System Architecture and Flow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-initialization-phase" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Initialization Phase
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-transaction-processing-phase" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Transaction Processing Phase
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-preemption-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Preemption Check
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-state-finalization" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. State Finalization
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rollup-development-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Rollup Development Requirements
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Rollup Development Requirements">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-state-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. State Implementation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-transaction-processing" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Transaction Processing
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-configuration-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Configuration Management
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-rollup-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example Rollup Flow
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#function-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Function Overview
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Function Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-transaction-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Transaction Handling
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-state-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. State Management
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-configuration-and-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Configuration and Control
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#core-components-overview-of-zkwasm-rust-sdk" class="md-nav__link">
+    <span class="md-ellipsis">
+      Core Components Overview of zkWasm Rust SDK
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Core Components Overview of zkWasm Rust SDK">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-storage-and-state-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Storage and State Management
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Storage and State Management">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#merkle-tree-state" class="md-nav__link">
+    <span class="md-ellipsis">
+      Merkle Tree State
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#storagedata-trait" class="md-nav__link">
+    <span class="md-ellipsis">
+      StorageData Trait
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-player-management-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Player Management System
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Player Management System">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#player-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Player Structure
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#player-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Player Operations
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-zkwasm-rest-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. ZkWasm REST API
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. ZkWasm REST API">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#system-architecture-and-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      System Architecture and Flow
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="System Architecture and Flow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-initialization-phase" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Initialization Phase
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-transaction-processing-phase" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Transaction Processing Phase
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-preemption-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Preemption Check
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-state-finalization" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. State Finalization
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rollup-development-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Rollup Development Requirements
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Rollup Development Requirements">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-state-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. State Implementation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-transaction-processing" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Transaction Processing
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-configuration-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Configuration Management
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-rollup-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example Rollup Flow
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#function-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Function Overview
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Function Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-transaction-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Transaction Handling
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-state-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. State Management
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-configuration-and-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Configuration and Control
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="zkwasm-rust-sdk">zkWasm Rust SDK</h1>
+<h2 id="core-components-overview-of-zkwasm-rust-sdk">Core Components Overview of zkWasm Rust SDK</h2>
+<p>The zkWasm Rust SDK provides essential building blocks for developing zero-knowledge WebAssembly applications. Let's explore the key components.</p>
+<h3 id="1-storage-and-state-management">1. Storage and State Management</h3>
+<h4 id="merkle-tree-state">Merkle Tree State</h4>
+<div class="highlight"><pre><span></span><code><span class="k">pub</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">MERKLE_MAP</span><span class="p">:</span><span class="w"> </span><span class="nc">KeyValueMap</span><span class="o">&lt;</span><span class="n">Merkle</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">KeyValueMap</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">merkle</span><span class="p">:</span><span class="w"> </span><span class="nc">Merkle</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">root</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="o">..</span><span class="p">.]</span><span class="w"> </span><span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div>
+<ul>
+<li>Manages application state using a Merkle tree structure</li>
+<li>Provides cryptographic verification of state changes</li>
+<li>Uses a key-value store for efficient data access</li>
+</ul>
+<h4 id="storagedata-trait">StorageData Trait</h4>
+<div class="highlight"><pre><span></span><code><span class="k">pub</span><span class="w"> </span><span class="k">trait</span><span class="w"> </span><span class="n">StorageData</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">from_data</span><span class="p">(</span><span class="n">u64data</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="nc">mut</span><span class="w"> </span><span class="n">IterMut</span><span class="o">&lt;</span><span class="kt">u64</span><span class="o">&gt;</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nc">Self</span><span class="p">;</span>
+<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">to_data</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">u64data</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="nc">mut</span><span class="w"> </span><span class="nb">Vec</span><span class="o">&lt;</span><span class="kt">u64</span><span class="o">&gt;</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+<ul>
+<li>Defines interface for serializing/deserializing state data</li>
+<li>Enables custom data structures to be stored in Merkle tree</li>
+<li>Provides consistent data handling across the application</li>
+</ul>
+<h3 id="2-player-management-system">2. Player Management System</h3>
+<p>When developing a zkWasm application, you need to manage players (or users) and their associated data. The player management system is essential for tracking user accounts and their state.</p>
+<h4 id="player-structure">Player Structure</h4>
+<p><div class="highlight"><pre><span></span><code><span class="cp">#[derive(Debug, Serialize)]</span>
+<span class="k">pub</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">Player</span><span class="o">&lt;</span><span class="n">T</span><span class="p">:</span><span class="w"> </span><span class="nc">StorageData</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nb">Default</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">player_id</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="kt">u64</span><span class="p">;</span><span class="w"> </span><span class="mi">2</span><span class="p">],</span>
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">nonce</span><span class="p">:</span><span class="w"> </span><span class="kt">u64</span><span class="p">,</span>
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">data</span><span class="p">:</span><span class="w"> </span><span class="nc">T</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre></div>
+Key features:</p>
+<ul>
+<li>Generic implementation allowing custom player data</li>
+<li>Built-in nonce management for transaction ordering</li>
+<li>Serializable for state persistence</li>
+<li><code>StorageData</code> trait bounds ensuring proper state handling</li>
+</ul>
+<h4 id="player-operations">Player Operations</h4>
+<div class="highlight"><pre><span></span><code><span class="k">impl</span><span class="o">&lt;</span><span class="n">T</span><span class="p">:</span><span class="w"> </span><span class="nc">StorageData</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nb">Default</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Player</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">store</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="o">..</span><span class="p">.</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">new_from_pid</span><span class="p">(</span><span class="n">pid</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="kt">u64</span><span class="p">;</span><span class="w"> </span><span class="mi">2</span><span class="p">])</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nc">Self</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="o">..</span><span class="p">.</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">get_from_pid</span><span class="p">(</span><span class="n">pid</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="p">[</span><span class="kt">u64</span><span class="p">;</span><span class="w"> </span><span class="mi">2</span><span class="p">])</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nb">Option</span><span class="o">&lt;</span><span class="bp">Self</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="o">..</span><span class="p">.</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">get_and_check_nonce</span><span class="p">(</span><span class="n">pid</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="p">[</span><span class="kt">u64</span><span class="p">;</span><span class="w"> </span><span class="mi">2</span><span class="p">],</span><span class="w"> </span><span class="n">nonce</span><span class="p">:</span><span class="w"> </span><span class="kt">u64</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nc">Self</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="o">..</span><span class="p">.</span><span class="w"> </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<ul>
+<li>State persistence with Merkle tree integration</li>
+<li>Player creation and retrieval functionality</li>
+<li>Nonce validation and management</li>
+</ul>
+<h3 id="3-zkwasm-rest-api">3. ZkWasm REST API</h3>
+<p>In the Application side, this macro generates essential WebAssembly bindings for zkWasm applications:
+<div class="highlight"><pre><span></span><code><span class="n">zkwasm_rest_abi</span><span class="p">::</span><span class="n">create_zkwasm_apis</span><span class="o">!</span><span class="p">(</span><span class="n">Transaction</span><span class="p">,</span><span class="w"> </span><span class="n">State</span><span class="p">,</span><span class="w"> </span><span class="n">Config</span><span class="p">);</span>
+</code></pre></div></p>
+<h4 id="system-architecture-and-flow">System Architecture and Flow</h4>
+<p><img alt="zkWasm System Architecture" src="media/minirollup-bundled.png" /></p>
+<p>Now we delve into the REST service API to see how it supports the zkWasm rollup Application. Above figure shows the system execution flow of zkWasm rollup application, and below we will explain each phase in detail.</p>
+<h5 id="1-initialization-phase"><strong>1. Initialization Phase</strong></h5>
+<p>The initialization phase in zkWasm rollup serves two critical purposes:</p>
+<ul>
+<li>Loading previous chunk's finalized state</li>
+<li>Setting up new execution environment for transactions</li>
+</ul>
+<p><div class="highlight"><pre><span></span><code><span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">initialize</span><span class="p">(</span><span class="n">root</span><span class="p">:</span><span class="w"> </span><span class="nb">Vec</span><span class="o">&lt;</span><span class="kt">u64</span><span class="o">&gt;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Load initial Merkle root state</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">merkle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">zkwasm_rust_sdk</span><span class="p">::</span><span class="n">Merkle</span><span class="p">::</span><span class="n">load</span><span class="p">([</span><span class="n">root</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="n">root</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="n">root</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="w"> </span><span class="n">root</span><span class="p">[</span><span class="mi">3</span><span class="p">]]);</span>
+<span class="w">    </span><span class="n">MERKLE_MAP</span><span class="p">.</span><span class="n">merkle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">merkle</span><span class="p">;</span>
+<span class="w">    </span><span class="cp">$S</span><span class="p">::</span><span class="n">initialize</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div>
+The code above:</p>
+<ul>
+<li>Loads initial state from provided Merkle root</li>
+<li>Sets up state for new transaction input bundle</li>
+<li>Called at the start of each transaction chunk processing</li>
+</ul>
+<h5 id="2-transaction-processing-phase"><strong>2. Transaction Processing Phase</strong></h5>
+<p>The transaction processing phase in zkWasm rollup fulfills three essential roles:</p>
+<ul>
+<li>Sequential execution of user transactions</li>
+<li>Maintaining state consistency during updates</li>
+<li>Accumulating settlement information for later batching</li>
+</ul>
+<p><div class="highlight"><pre><span></span><code><span class="c1">// In zkmain()</span>
+<span class="k">for</span><span class="w"> </span><span class="n">_</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">0</span><span class="o">..</span><span class="n">tx_length</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">params</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Vec</span><span class="p">::</span><span class="n">with_capacity</span><span class="p">(</span><span class="mi">24</span><span class="p">);</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">_</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">0</span><span class="o">..</span><span class="mi">24</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">params</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="k">unsafe</span><span class="w"> </span><span class="p">{</span><span class="n">wasm_input</span><span class="p">(</span><span class="mi">0</span><span class="p">)});</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="n">verify_tx_signature</span><span class="p">(</span><span class="n">params</span><span class="p">.</span><span class="n">clone</span><span class="p">());</span>
+<span class="w">    </span><span class="n">handle_tx</span><span class="p">(</span><span class="n">params</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+The code above:</p>
+<ul>
+<li>Processes transactions until preemption point</li>
+<li>Each transaction verified and executed sequentially</li>
+<li>State updates tracked in Merkle tree</li>
+</ul>
+<h5 id="3-preemption-check"><strong>3. Preemption Check</strong></h5>
+<p>The preemption mechanism in zkWasm rollup serves two vital functions:</p>
+<ul>
+<li>Controlling chunk size for computational efficiency</li>
+<li>Ensuring deterministic chunk boundaries</li>
+</ul>
+<p><div class="highlight"><pre><span></span><code><span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">preempt</span><span class="p">()</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="cp">$S</span><span class="p">::</span><span class="n">preempt</span><span class="p">()</span><span class="w">  </span><span class="c1">// Check if state reached preemption point</span>
+<span class="p">}</span>
+</code></pre></div>
+The code above:</p>
+<ul>
+<li>Determines when to stop processing transactions</li>
+<li>Usually based on state conditions or limits, such as a counter threshold</li>
+<li>Critical for chunk management</li>
+</ul>
+<p><div class="highlight"><pre><span></span><code><span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">preempt</span><span class="p">()</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">unsafe</span><span class="w"> </span><span class="p">{</span><span class="o">&amp;</span><span class="n">STATE</span><span class="p">};</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">state</span><span class="p">.</span><span class="n">counter</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">20</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+For example, in code above, if the counter is greater than 20, the preemption point is reached and the transaction processing will stop.</p>
+<h5 id="4-state-finalization"><strong>4. State Finalization</strong></h5>
+<p>The finalization phase in zkWasm rollup serves two critical purposes:</p>
+<ul>
+<li>Processing all pending settlements</li>
+<li>Generating verifiable outputs for the chain</li>
+</ul>
+<p>The finalize() function in zkWasm API triggers the settlement process:
+<div class="highlight"><pre><span></span><code><span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">finalize</span><span class="p">()</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nb">Vec</span><span class="o">&lt;</span><span class="kt">u8</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">unsafe</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="cp">$S</span><span class="p">::</span><span class="n">flush_settlement</span><span class="p">()</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<p>Here's an Example, in the circuit's main function (zkmain()), the finalization produces two key outputs:</p>
+<ul>
+<li>New State Root (root)<ul>
+<li>4 u64 values representing the Merkle root</li>
+<li>Captures final state after all transactions</li>
+<li>Used to initialize next chunk's state</li>
+</ul>
+</li>
+<li>Settlement Hash (txdata)<ul>
+<li>4 u64 values containing SHA256 hash</li>
+<li>Computed from all withdrawals/settlements</li>
+<li>Used for on-chain verification of batched operations    </li>
+</ul>
+</li>
+</ul>
+<p><div class="highlight"><pre><span></span><code><span class="c1">// Step 1: Get settlement data the same way as in the finalize() function</span>
+<span class="kd">let</span><span class="w"> </span><span class="n">bytes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="cp">$S</span><span class="p">::</span><span class="n">flush_settlement</span><span class="p">();</span>
+
+<span class="c1">// Step 2: Generate transaction info hash</span>
+<span class="kd">let</span><span class="w"> </span><span class="n">txdata</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">conclude_tx_info</span><span class="p">(</span><span class="n">bytes</span><span class="p">.</span><span class="n">as_slice</span><span class="p">());</span>
+<span class="c1">// txdata is [u64; 4] - contains SHA256 hash of settlement data</span>
+
+<span class="c1">// Step 3: Get final Merkle root</span>
+<span class="kd">let</span><span class="w"> </span><span class="n">root</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">merkle_ref</span><span class="p">.</span><span class="n">merkle</span><span class="p">.</span><span class="n">root</span><span class="p">;</span><span class="w">  </span><span class="c1">// [u64; 4]</span>
+
+<span class="c1">// Step 4: Output all data</span>
+<span class="k">unsafe</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Output Merkle root (4 u64 values)</span>
+<span class="w">    </span><span class="n">wasm_output</span><span class="p">(</span><span class="n">root</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+<span class="w">    </span><span class="n">wasm_output</span><span class="p">(</span><span class="n">root</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+<span class="w">    </span><span class="n">wasm_output</span><span class="p">(</span><span class="n">root</span><span class="p">[</span><span class="mi">2</span><span class="p">]);</span>
+<span class="w">    </span><span class="n">wasm_output</span><span class="p">(</span><span class="n">root</span><span class="p">[</span><span class="mi">3</span><span class="p">]);</span>
+
+<span class="w">    </span><span class="c1">// Output transaction data hash (4 u64 values)</span>
+<span class="w">    </span><span class="n">wasm_output</span><span class="p">(</span><span class="n">txdata</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+<span class="w">    </span><span class="n">wasm_output</span><span class="p">(</span><span class="n">txdata</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+<span class="w">    </span><span class="n">wasm_output</span><span class="p">(</span><span class="n">txdata</span><span class="p">[</span><span class="mi">2</span><span class="p">]);</span>
+<span class="w">    </span><span class="n">wasm_output</span><span class="p">(</span><span class="n">txdata</span><span class="p">[</span><span class="mi">3</span><span class="p">]);</span>
+<span class="p">}</span>
+</code></pre></div>
+The code above:</p>
+<ul>
+<li>Generates new Merkle root for next chunk</li>
+<li>Outputs settlement information</li>
+<li>Ensures state consistency across chunks</li>
+</ul>
+<h4 id="rollup-development-requirements">Rollup Development Requirements</h4>
+<p>In application side, the following requirements shall be met:</p>
+<h5 id="1-state-implementation"><strong>1. State Implementation</strong></h5>
+<div class="highlight"><pre><span></span><code><span class="k">impl</span><span class="w"> </span><span class="n">State</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">preempt</span><span class="p">()</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="o">..</span><span class="p">.</span><span class="w"> </span><span class="p">}</span><span class="w">  </span><span class="c1">// Define chunk boundary conditions</span>
+<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">initialize</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="o">..</span><span class="p">.</span><span class="w"> </span><span class="p">}</span><span class="w">        </span><span class="c1">// Setup initial state</span>
+<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">flush_settlement</span><span class="p">()</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nb">Vec</span><span class="o">&lt;</span><span class="kt">u8</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="o">..</span><span class="p">.</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="c1">// Prepare state updates</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>And some other functions can be implemented in the <code>State</code> trait.
+<div class="highlight"><pre><span></span><code><span class="k">pub</span><span class="w"> </span><span class="k">trait</span><span class="w"> </span><span class="n">State</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">preempt</span><span class="p">()</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kt">bool</span><span class="p">;</span>
+<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">initialize</span><span class="p">();</span>
+<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">flush_settlement</span><span class="p">()</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nb">Vec</span><span class="o">&lt;</span><span class="kt">u8</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="w">    </span><span class="c1">// Some other functions</span>
+<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">get_state</span><span class="p">(</span><span class="n">pid</span><span class="p">:</span><span class="w"> </span><span class="nb">Vec</span><span class="o">&lt;</span><span class="kt">u64</span><span class="o">&gt;</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nb">String</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="o">..</span><span class="p">.</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="c1">// Get state for specific player ID</span>
+<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">snapshot</span><span class="p">()</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nb">String</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="o">..</span><span class="p">.</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="c1">// Get current global state</span>
+<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">tick</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="o">..</span><span class="p">.</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="c1">// Update state if auto-tick is enabled</span>
+<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">store</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="o">..</span><span class="p">.</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="c1">// Store state to Merkle tree</span>
+<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">new</span><span class="p">()</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nc">Self</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="o">..</span><span class="p">.</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="c1">// Create new state instance</span>
+<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">rand_seed</span><span class="p">()</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kt">u64</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="o">..</span><span class="p">.</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="c1">// Generate random seed</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<h5 id="2-transaction-processing"><strong>2. Transaction Processing</strong></h5>
+<div class="highlight"><pre><span></span><code><span class="k">impl</span><span class="w"> </span><span class="n">Transaction</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">decode</span><span class="p">(</span><span class="n">command</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="kt">u64</span><span class="p">;</span><span class="w"> </span><span class="mi">4</span><span class="p">])</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nc">Self</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="o">..</span><span class="p">.</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="c1">// Decode Command      </span>
+<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">process</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">user_address</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="p">[</span><span class="kt">u64</span><span class="p">;</span><span class="w"> </span><span class="mi">4</span><span class="p">],</span><span class="w"> </span><span class="n">sig_r</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="p">[</span><span class="kt">u64</span><span class="p">;</span><span class="w"> </span><span class="mi">4</span><span class="p">])</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kt">u32</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="o">..</span><span class="p">.</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="c1">// Process Transaction</span>
+<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">install_player</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">pkey</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="p">[</span><span class="kt">u64</span><span class="p">;</span><span class="w"> </span><span class="mi">4</span><span class="p">])</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kt">u32</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="o">..</span><span class="p">.</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="c1">// Create player / user Account</span>
+<span class="p">}</span>
+</code></pre></div>
+<h5 id="3-configuration-management"><strong>3. Configuration Management</strong></h5>
+<div class="highlight"><pre><span></span><code><span class="k">impl</span><span class="w"> </span><span class="n">Config</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">autotick</span><span class="p">()</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="o">..</span><span class="p">.</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="c1">// Auto-tick configuration</span>
+<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">to_json_string</span><span class="p">()</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nb">String</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="o">..</span><span class="p">.</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="c1">// Convert to JSON string</span>
+<span class="p">}</span>
+</code></pre></div>
+<h4 id="example-rollup-flow">Example Rollup Flow</h4>
+<div class="highlight"><pre><span></span><code><span class="c1">// 1. Initialize state with previous Merkle root</span>
+<span class="n">initialize</span><span class="p">(</span><span class="n">previous_root</span><span class="p">);</span>
+
+<span class="c1">// 2. Process transaction batch</span>
+<span class="k">while</span><span class="w"> </span><span class="o">!</span><span class="n">preempt</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">verify_tx_signature</span><span class="p">(</span><span class="n">params</span><span class="p">);</span>
+<span class="w">    </span><span class="n">handle_tx</span><span class="p">(</span><span class="n">params</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// 3. Generate new Merkle root and settlement data</span>
+<span class="n">finalize</span><span class="p">();</span>
+<span class="c1">// ...</span>
+</code></pre></div>
+<h4 id="function-overview">Function Overview</h4>
+<h5 id="1-transaction-handling"><strong>1. Transaction Handling</strong></h5>
+<div class="highlight"><pre><span></span><code><span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">handle_tx</span><span class="p">(</span><span class="n">params</span><span class="p">:</span><span class="w"> </span><span class="nb">Vec</span><span class="o">&lt;</span><span class="kt">u64</span><span class="o">&gt;</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kt">u32</span><span class="w"> </span><span class="c1">// Process transaction</span>
+</code></pre></div>
+<ul>
+<li>Params format (24 u64 values)<ul>
+<li>[0-3]: Command data</li>
+<li>[4-7]: User address</li>
+<li>[20-23]: Signature data</li>
+</ul>
+</li>
+<li>Returns error code (0 for success)</li>
+</ul>
+<h5 id="2-state-management"><strong>2. State Management</strong></h5>
+<div class="highlight"><pre><span></span><code><span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">get_state</span><span class="p">(</span><span class="n">pid</span><span class="p">:</span><span class="w"> </span><span class="nb">Vec</span><span class="o">&lt;</span><span class="kt">u64</span><span class="o">&gt;</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nb">String</span><span class="w"> </span><span class="c1">// Get state for specific player ID</span>
+<span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">snapshot</span><span class="p">()</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nb">String</span><span class="w"> </span><span class="c1">// Get current global state</span>
+</code></pre></div>
+<ul>
+<li><code>get_state</code>: Retrieves state for specific player ID</li>
+<li><code>snapshot</code>: Gets current global state</li>
+<li>Both return JSON-formatted strings</li>
+</ul>
+<h5 id="3-configuration-and-control"><strong>3. Configuration and Control</strong></h5>
+<div class="highlight"><pre><span></span><code><span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">get_config</span><span class="p">()</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nb">String</span><span class="w"> </span><span class="c1">// Get configuration</span>
+<span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">preempt</span><span class="p">()</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kt">bool</span><span class="w">  </span><span class="c1">// Preemption check</span>
+<span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">autotick</span><span class="p">()</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="c1">// Auto-tick configuration</span>
+<span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">randSeed</span><span class="p">()</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kt">u64</span><span class="w">  </span><span class="c1">// Random seed</span>
+</code></pre></div>
+<ul>
+<li>Configuration retrieval and system controls</li>
+<li>All WebAssembly-exposed functions</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": ".", "features": ["navigation.instant", "navigation.tracking", "navigation.sections", "navigation.expand", "navigation.top", "search.suggest", "content.code.copy", "search.highlight"], "search": "assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+    
+  </body>
+</html>
