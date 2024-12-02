@@ -10,6 +10,9 @@ You can import the SDK in your rollup application by adding the following line t
 zkwasm-rust-sdk = { git = "https://github.com/DelphinusLab/zkWasm-rust.git", default-features = true }
 ```
 
+
+### 1. Usage of zkWasm Rust SDK
+
 You can view the available modules in the [lib.rs](https://github.com/DelphinusLab/zkWasm-rust/blob/main/src/lib.rs) file.
 
 For example, if you want to use the Merkel Tree, you can import it as follows:
@@ -21,15 +24,23 @@ And then you can use the Merkel Tree in your code:
 let merkle = zkwasm_rust_sdk::Merkle::new();
 ```
 
+#### Debugging
 if you want to debug the state, you can insert the following code into your rust code:
 ```rust
 zkwasm_rust_sdk::dbg!("debug message");
 ```
 
+#### Condition Check
+if you want to check the condition, you can insert the following code into your rust code:
+```rust
+unsafe { zkwasm_rust_sdk::require(condition); }
+```
+
+---
 
 Let's explore the key components through the following example, the zkwasm Rest ABI, which defines the interface between the zkWasm rollup and zkWasm Application Server using zkWasm Rust SDK. You can view the full code in [zkwasm-mini-rollup/abi/src/lib.rs](https://github.com/DelphinusLab/zkwasm-mini-rollup/blob/main/abi/src/lib.rs) file.
 
-### 1. Import Key Modules
+### 2. Import Key Modules
 In the example code, we import the following modules from the zkWasm Rust SDK:
 
 ```rust
@@ -42,7 +53,7 @@ use zkwasm_rust_sdk::Merkle;
 ```
 Let's explore how these modules are used in the following sections.
 
-### 1. Storage and State Management
+### 3. Storage and State Management
 
 #### Merkle Tree State
 ```rust
@@ -67,7 +78,7 @@ pub trait StorageData {
 - Enables custom data structures to be stored in Merkle tree
 - Provides consistent data handling across the application
 
-### 2. Player Management System
+### 4. Player Management System
 When developing a zkWasm application, you need to manage players (or users) and their associated data. The player management system is essential for tracking user accounts and their state.
 
 #### Player Structure
@@ -100,7 +111,7 @@ impl<T: StorageData + Default> Player<T> {
 - Player creation and retrieval functionality
 - Nonce validation and management
 
-### 3. ZkWasm REST ABI
+### 5. ZkWasm REST ABI
 
 In the Application side, this macro from zkwasm_rest_abi generates essential WebAssembly bindings for zkWasm applications:
 ```rust
@@ -111,7 +122,7 @@ zkwasm_rest_abi::create_zkwasm_apis!(Transaction, State, Config);
 
 ![zkWasm System Architecture](./media/minirollup-bundled.png)
 
-Now we delve into the REST service ABI to see how it supports the zkWasm rollup Application. Above figure shows the system execution flow of zkWasm rollup application, and below we will explain each phase in detail.
+Now we delve into the REST service ABI to see how it constructs the framework for the zkWasm rollup Application. Above figure shows the system execution flow of zkWasm rollup application, and below we will explain each phase in detail.
 
 ##### **1. Initialization Phase**
 
