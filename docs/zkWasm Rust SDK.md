@@ -1,7 +1,46 @@
-# zkWasm Rust SDK
-## Core Components Overview of zkWasm Rust SDK
+# zkWasm Rust SDK and Rest ABI
+## Overview of zkWasm Rust SDK and Rest ABI
 
-The zkWasm Rust SDK provides essential building blocks for developing zero-knowledge WebAssembly applications. Let's explore the key components.
+The zkWasm Rust SDK provides essential building blocks for developing zero-knowledge WebAssembly applications. Such as Host(Builtin) Functions like Input/Output, Merkel Tree, Poseidon Signature, etc, and also some useful traits for state management and trace such as key-value pair storage, debug print, etc.
+
+You can import the SDK in your rollup application by adding the following line to your ```Cargo.toml``` file:
+```toml
+[dependencies]
+...
+zkwasm-rust-sdk = { git = "https://github.com/DelphinusLab/zkWasm-rust.git", default-features = true }
+```
+
+You can view the available modules in the [lib.rs](https://github.com/DelphinusLab/zkWasm-rust/blob/main/src/lib.rs) file.
+
+for example, if you want to use the Merkel Tree, you can import it as follows:
+```rust
+use zkwasm_rust_sdk::Merkle;
+```
+And then you can use the Merkel Tree in your code:
+```rust
+let merkle = zkwasm_rust_sdk::Merkle::new();
+```
+
+if you want to debug the state, you can insert the following code into your rust code:
+```rust
+zkwasm_rust_sdk::dbg!("debug message");
+```
+
+
+Let's explore the key components through the following example, the zkwasm Rest ABI, which defines the interface between the zkWasm rollup and zkWasm Application Server using zkWasm Rust SDK. You can view the full code in [zkwasm-mini-rollup/abi/src/lib.rs](https://github.com/DelphinusLab/zkwasm-mini-rollup/blob/main/abi/src/lib.rs) file.
+
+### 1. Import Key Modules
+In the example code, we import the following modules from the zkWasm Rust SDK:
+
+```rust
+...
+use zkwasm_rust_sdk::jubjub::BabyJubjubPoint;
+use zkwasm_rust_sdk::jubjub::JubjubSignature;
+use zkwasm_rust_sdk::kvpair::KeyValueMap;
+use zkwasm_rust_sdk::Merkle;
+...
+```
+Let's explore how these modules are used in the following sections.
 
 ### 1. Storage and State Management
 
@@ -61,9 +100,9 @@ impl<T: StorageData + Default> Player<T> {
 - Player creation and retrieval functionality
 - Nonce validation and management
 
-### 3. ZkWasm REST API
+### 3. ZkWasm REST ABI
 
-In the Application side, this macro generates essential WebAssembly bindings for zkWasm applications:
+In the Application side, this macro from zkwasm_rest_abi generates essential WebAssembly bindings for zkWasm applications:
 ```rust
 zkwasm_rest_abi::create_zkwasm_apis!(Transaction, State, Config);
 ```
@@ -72,7 +111,7 @@ zkwasm_rest_abi::create_zkwasm_apis!(Transaction, State, Config);
 
 ![zkWasm System Architecture](./media/minirollup-bundled.png)
 
-Now we delve into the REST service API to see how it supports the zkWasm rollup Application. Above figure shows the system execution flow of zkWasm rollup application, and below we will explain each phase in detail.
+Now we delve into the REST service ABI to see how it supports the zkWasm rollup Application. Above figure shows the system execution flow of zkWasm rollup application, and below we will explain each phase in detail.
 
 ##### **1. Initialization Phase**
 
@@ -206,7 +245,7 @@ The code above:
 
 #### Rollup Development Requirements
 
-In application side, the following requirements shall be met:
+In application side, the following requirements (API) shall be met to ensure the rollup process works properly:
 
 ##### **1. State Implementation**
 ```rust

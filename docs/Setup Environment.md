@@ -87,6 +87,48 @@
     - Even Better TOML
     - CodeLLDB
 
+## WebAssembly Tools Setup
+
+### Install wasm-pack
+
+!!! note "Install wasm-pack"
+    wasm-pack is a tool for building Rust-generated WebAssembly packages.
+    ```bash
+    # Install wasm-pack using Cargo
+    cargo install wasm-pack
+    ```
+
+!!! tip "Verify Installation"
+    After installation, verify wasm-pack is properly installed:
+    ```bash
+    wasm-pack --version
+    ```
+
+### Install wasm-opt
+
+!!! note "Install wasm-opt"
+    You can install wasm-opt using Cargo:
+    ```bash
+    cargo install wasm-opt
+    ```
+
+    Alternatively, you can install it as part of the Binaryen toolkit:
+
+    1. Download from [GitHub](https://github.com/WebAssembly/binaryen/releases)
+    2. Extract and add to PATH:
+    
+    ```bash
+    wget https://github.com/WebAssembly/binaryen/releases/download/version_109/binaryen-version_109-x86_64-linux.tar.gz
+    tar -xzf binaryen-version_109-x86_64-linux.tar.gz
+    export PATH=$PATH:$(pwd)/binaryen-version_109/bin
+    ```
+
+!!! tip "Verify Installation"
+    After installation, verify wasm-opt is properly installed:
+    ```bash
+    wasm-opt --version
+    ```
+
 ## Install Make
 
 !!! note "Linux/macOS Users"
