@@ -72,7 +72,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#zkwasm-rust-sdk" class="md-skip">
+        <a href="#zkwasm-rust-sdk-and-rest-abi" class="md-skip">
           Skip to content
         </a>
       
@@ -519,14 +519,23 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#core-components-overview-of-zkwasm-rust-sdk" class="md-nav__link">
+  <a href="#overview-of-zkwasm-rust-sdk-and-rest-abi" class="md-nav__link">
     <span class="md-ellipsis">
-      Core Components Overview of zkWasm Rust SDK
+      Overview of zkWasm Rust SDK and Rest ABI
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Core Components Overview of zkWasm Rust SDK">
+    <nav class="md-nav" aria-label="Overview of zkWasm Rust SDK and Rest ABI">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-import-key-modules" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Import Key Modules
+    </span>
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#1-storage-and-state-management" class="md-nav__link">
@@ -595,13 +604,13 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#3-zkwasm-rest-api" class="md-nav__link">
+  <a href="#3-zkwasm-rest-abi" class="md-nav__link">
     <span class="md-ellipsis">
-      3. ZkWasm REST API
+      3. ZkWasm REST ABI
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="3. ZkWasm REST API">
+    <nav class="md-nav" aria-label="3. ZkWasm REST ABI">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -801,14 +810,23 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#core-components-overview-of-zkwasm-rust-sdk" class="md-nav__link">
+  <a href="#overview-of-zkwasm-rust-sdk-and-rest-abi" class="md-nav__link">
     <span class="md-ellipsis">
-      Core Components Overview of zkWasm Rust SDK
+      Overview of zkWasm Rust SDK and Rest ABI
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Core Components Overview of zkWasm Rust SDK">
+    <nav class="md-nav" aria-label="Overview of zkWasm Rust SDK and Rest ABI">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-import-key-modules" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Import Key Modules
+    </span>
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#1-storage-and-state-management" class="md-nav__link">
@@ -877,13 +895,13 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#3-zkwasm-rest-api" class="md-nav__link">
+  <a href="#3-zkwasm-rest-abi" class="md-nav__link">
     <span class="md-ellipsis">
-      3. ZkWasm REST API
+      3. ZkWasm REST ABI
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="3. ZkWasm REST API">
+    <nav class="md-nav" aria-label="3. ZkWasm REST ABI">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1055,9 +1073,35 @@
                   
 
 
-<h1 id="zkwasm-rust-sdk">zkWasm Rust SDK</h1>
-<h2 id="core-components-overview-of-zkwasm-rust-sdk">Core Components Overview of zkWasm Rust SDK</h2>
-<p>The zkWasm Rust SDK provides essential building blocks for developing zero-knowledge WebAssembly applications. Let's explore the key components.</p>
+<h1 id="zkwasm-rust-sdk-and-rest-abi">zkWasm Rust SDK and Rest ABI</h1>
+<h2 id="overview-of-zkwasm-rust-sdk-and-rest-abi">Overview of zkWasm Rust SDK and Rest ABI</h2>
+<p>The zkWasm Rust SDK provides essential building blocks for developing zero-knowledge WebAssembly applications. Such as Host(Builtin) Functions like Input/Output, Merkel Tree, Poseidon Signature, etc, and also some useful traits for state management and trace such as key-value pair storage, debug print, etc.</p>
+<p>You can import the SDK in your rollup application by adding the following line to your <code>Cargo.toml</code> file:
+<div class="highlight"><pre><span></span><code><span class="k">[dependencies]</span>
+<span class="p">...</span>
+<span class="n">zkwasm-rust-sdk</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">git</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s2">&quot;https://github.com/DelphinusLab/zkWasm-rust.git&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">default-features</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div></p>
+<p>You can view the available modules in the <a href="https://github.com/DelphinusLab/zkWasm-rust/blob/main/src/lib.rs">lib.rs</a> file.</p>
+<p>for example, if you want to use the Merkel Tree, you can import it as follows:
+<div class="highlight"><pre><span></span><code><span class="k">use</span><span class="w"> </span><span class="n">zkwasm_rust_sdk</span><span class="p">::</span><span class="n">Merkle</span><span class="p">;</span>
+</code></pre></div>
+And then you can use the Merkel Tree in your code:
+<div class="highlight"><pre><span></span><code><span class="kd">let</span><span class="w"> </span><span class="n">merkle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">zkwasm_rust_sdk</span><span class="p">::</span><span class="n">Merkle</span><span class="p">::</span><span class="n">new</span><span class="p">();</span>
+</code></pre></div></p>
+<p>if you want to debug the state, you can insert the following code into your rust code:
+<div class="highlight"><pre><span></span><code><span class="n">zkwasm_rust_sdk</span><span class="p">::</span><span class="fm">dbg!</span><span class="p">(</span><span class="s">&quot;debug message&quot;</span><span class="p">);</span>
+</code></pre></div></p>
+<p>Let's explore the key components through the following example, the zkwasm Rest ABI, which defines the interface between the zkWasm rollup and zkWasm Application Server using zkWasm Rust SDK. You can view the full code in <a href="https://github.com/DelphinusLab/zkwasm-mini-rollup/blob/main/abi/src/lib.rs">zkwasm-mini-rollup/abi/src/lib.rs</a> file.</p>
+<h3 id="1-import-key-modules">1. Import Key Modules</h3>
+<p>In the example code, we import the following modules from the zkWasm Rust SDK:</p>
+<p><div class="highlight"><pre><span></span><code><span class="o">..</span><span class="p">.</span>
+<span class="k">use</span><span class="w"> </span><span class="n">zkwasm_rust_sdk</span><span class="p">::</span><span class="n">jubjub</span><span class="p">::</span><span class="n">BabyJubjubPoint</span><span class="p">;</span>
+<span class="k">use</span><span class="w"> </span><span class="n">zkwasm_rust_sdk</span><span class="p">::</span><span class="n">jubjub</span><span class="p">::</span><span class="n">JubjubSignature</span><span class="p">;</span>
+<span class="k">use</span><span class="w"> </span><span class="n">zkwasm_rust_sdk</span><span class="p">::</span><span class="n">kvpair</span><span class="p">::</span><span class="n">KeyValueMap</span><span class="p">;</span>
+<span class="k">use</span><span class="w"> </span><span class="n">zkwasm_rust_sdk</span><span class="p">::</span><span class="n">Merkle</span><span class="p">;</span>
+<span class="o">..</span><span class="p">.</span>
+</code></pre></div>
+Let's explore how these modules are used in the following sections.</p>
 <h3 id="1-storage-and-state-management">1. Storage and State Management</h3>
 <h4 id="merkle-tree-state">Merkle Tree State</h4>
 <div class="highlight"><pre><span></span><code><span class="k">pub</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">MERKLE_MAP</span><span class="p">:</span><span class="w"> </span><span class="nc">KeyValueMap</span><span class="o">&lt;</span><span class="n">Merkle</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">KeyValueMap</span><span class="w"> </span><span class="p">{</span>
@@ -1110,13 +1154,13 @@ Key features:</p>
 <li>Player creation and retrieval functionality</li>
 <li>Nonce validation and management</li>
 </ul>
-<h3 id="3-zkwasm-rest-api">3. ZkWasm REST API</h3>
-<p>In the Application side, this macro generates essential WebAssembly bindings for zkWasm applications:
+<h3 id="3-zkwasm-rest-abi">3. ZkWasm REST ABI</h3>
+<p>In the Application side, this macro from zkwasm_rest_abi generates essential WebAssembly bindings for zkWasm applications:
 <div class="highlight"><pre><span></span><code><span class="n">zkwasm_rest_abi</span><span class="p">::</span><span class="n">create_zkwasm_apis</span><span class="o">!</span><span class="p">(</span><span class="n">Transaction</span><span class="p">,</span><span class="w"> </span><span class="n">State</span><span class="p">,</span><span class="w"> </span><span class="n">Config</span><span class="p">);</span>
 </code></pre></div></p>
 <h4 id="system-architecture-and-flow">System Architecture and Flow</h4>
 <p><img alt="zkWasm System Architecture" src="media/minirollup-bundled.png" /></p>
-<p>Now we delve into the REST service API to see how it supports the zkWasm rollup Application. Above figure shows the system execution flow of zkWasm rollup application, and below we will explain each phase in detail.</p>
+<p>Now we delve into the REST service ABI to see how it supports the zkWasm rollup Application. Above figure shows the system execution flow of zkWasm rollup application, and below we will explain each phase in detail.</p>
 <h5 id="1-initialization-phase"><strong>1. Initialization Phase</strong></h5>
 <p>The initialization phase in zkWasm rollup serves two critical purposes:</p>
 <ul>
@@ -1241,7 +1285,7 @@ The code above:</p>
 <li>Ensures state consistency across chunks</li>
 </ul>
 <h4 id="rollup-development-requirements">Rollup Development Requirements</h4>
-<p>In application side, the following requirements shall be met:</p>
+<p>In application side, the following requirements (API) shall be met to ensure the rollup process works properly:</p>
 <h5 id="1-state-implementation"><strong>1. State Implementation</strong></h5>
 <div class="highlight"><pre><span></span><code><span class="k">impl</span><span class="w"> </span><span class="n">State</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">preempt</span><span class="p">()</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="o">..</span><span class="p">.</span><span class="w"> </span><span class="p">}</span><span class="w">  </span><span class="c1">// Define chunk boundary conditions</span>

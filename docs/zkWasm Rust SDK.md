@@ -12,7 +12,7 @@ zkwasm-rust-sdk = { git = "https://github.com/DelphinusLab/zkWasm-rust.git", def
 
 You can view the available modules in the [lib.rs](https://github.com/DelphinusLab/zkWasm-rust/blob/main/src/lib.rs) file.
 
-for example, if you want to use the Merkel Tree, you can import it as follows:
+For example, if you want to use the Merkel Tree, you can import it as follows:
 ```rust
 use zkwasm_rust_sdk::Merkle;
 ```

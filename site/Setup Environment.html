@@ -366,6 +366,39 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#webassembly-tools-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      WebAssembly Tools Setup
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="WebAssembly Tools Setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#install-wasm-pack" class="md-nav__link">
+    <span class="md-ellipsis">
+      Install wasm-pack
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#install-wasm-opt" class="md-nav__link">
+    <span class="md-ellipsis">
+      Install wasm-opt
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#install-make" class="md-nav__link">
     <span class="md-ellipsis">
       Install Make
@@ -635,6 +668,39 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#webassembly-tools-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      WebAssembly Tools Setup
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="WebAssembly Tools Setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#install-wasm-pack" class="md-nav__link">
+    <span class="md-ellipsis">
+      Install wasm-pack
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#install-wasm-opt" class="md-nav__link">
+    <span class="md-ellipsis">
+      Install wasm-opt
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#install-make" class="md-nav__link">
     <span class="md-ellipsis">
       Install Make
@@ -766,6 +832,43 @@ cargo<span class="w"> </span>--version
 <li>Even Better TOML</li>
 <li>CodeLLDB</li>
 </ul>
+</div>
+<h2 id="webassembly-tools-setup">WebAssembly Tools Setup</h2>
+<h3 id="install-wasm-pack">Install wasm-pack</h3>
+<div class="admonition note">
+<p class="admonition-title">Install wasm-pack</p>
+<p>wasm-pack is a tool for building Rust-generated WebAssembly packages.
+<div class="highlight"><pre><span></span><code><span class="c1"># Install wasm-pack using Cargo</span>
+cargo<span class="w"> </span>install<span class="w"> </span>wasm-pack
+</code></pre></div></p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Verify Installation</p>
+<p>After installation, verify wasm-pack is properly installed:
+<div class="highlight"><pre><span></span><code>wasm-pack<span class="w"> </span>--version
+</code></pre></div></p>
+</div>
+<h3 id="install-wasm-opt">Install wasm-opt</h3>
+<div class="admonition note">
+<p class="admonition-title">Install wasm-opt</p>
+<p>You can install wasm-opt using Cargo:
+<div class="highlight"><pre><span></span><code>cargo<span class="w"> </span>install<span class="w"> </span>wasm-opt
+</code></pre></div></p>
+<p>Alternatively, you can install it as part of the Binaryen toolkit:</p>
+<ol>
+<li>Download from <a href="https://github.com/WebAssembly/binaryen/releases">GitHub</a></li>
+<li>Extract and add to PATH:</li>
+</ol>
+<div class="highlight"><pre><span></span><code>wget<span class="w"> </span>https://github.com/WebAssembly/binaryen/releases/download/version_109/binaryen-version_109-x86_64-linux.tar.gz
+tar<span class="w"> </span>-xzf<span class="w"> </span>binaryen-version_109-x86_64-linux.tar.gz
+<span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>/binaryen-version_109/bin
+</code></pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Verify Installation</p>
+<p>After installation, verify wasm-opt is properly installed:
+<div class="highlight"><pre><span></span><code>wasm-opt<span class="w"> </span>--version
+</code></pre></div></p>
 </div>
 <h2 id="install-make">Install Make</h2>
 <div class="admonition note">
