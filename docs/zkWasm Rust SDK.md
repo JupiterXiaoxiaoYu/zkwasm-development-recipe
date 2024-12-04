@@ -198,10 +198,10 @@ The code above:
 ```rust
 pub fn preempt() -> bool {
     let state = unsafe {&STATE};
-    return state.counter >= 20;
+    return state.counter % 20 == 0;  
 }
 ```
-For example, in code above, if the counter is greater than 20, the preemption point is reached and the transaction processing will stop.
+For example, in code above, if the counter is divisible by 20 (every 20 transactions), the preemption point is reached and the transaction processing will stop.
 
 ##### **4. State Finalization**
 The finalization phase in zkWasm rollup serves two critical purposes:
