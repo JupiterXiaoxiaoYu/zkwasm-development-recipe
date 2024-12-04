@@ -519,13 +519,13 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#overview-of-zkwasm-rust-sdk-and-rest-abi" class="md-nav__link">
+  <a href="#overview-of-zkwasm-rust-sdk-and-rest-service-abi" class="md-nav__link">
     <span class="md-ellipsis">
-      Overview of zkWasm Rust SDK and Rest ABI
+      Overview of zkWasm Rust SDK and REST Service ABI
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Overview of zkWasm Rust SDK and Rest ABI">
+    <nav class="md-nav" aria-label="Overview of zkWasm Rust SDK and REST Service ABI">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -639,11 +639,11 @@
           <li class="md-nav__item">
   <a href="#5-zkwasm-rest-abi" class="md-nav__link">
     <span class="md-ellipsis">
-      5. ZkWasm REST ABI
+      5. zkWasm REST ABI
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="5. ZkWasm REST ABI">
+    <nav class="md-nav" aria-label="5. zkWasm REST ABI">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -843,13 +843,13 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#overview-of-zkwasm-rust-sdk-and-rest-abi" class="md-nav__link">
+  <a href="#overview-of-zkwasm-rust-sdk-and-rest-service-abi" class="md-nav__link">
     <span class="md-ellipsis">
-      Overview of zkWasm Rust SDK and Rest ABI
+      Overview of zkWasm Rust SDK and REST Service ABI
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Overview of zkWasm Rust SDK and Rest ABI">
+    <nav class="md-nav" aria-label="Overview of zkWasm Rust SDK and REST Service ABI">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -963,11 +963,11 @@
           <li class="md-nav__item">
   <a href="#5-zkwasm-rest-abi" class="md-nav__link">
     <span class="md-ellipsis">
-      5. ZkWasm REST ABI
+      5. zkWasm REST ABI
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="5. ZkWasm REST ABI">
+    <nav class="md-nav" aria-label="5. zkWasm REST ABI">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1139,8 +1139,8 @@
                   
 
 
-<h1 id="zkwasm-rust-sdk-and-rest-abi">zkWasm Rust SDK and Rest ABI</h1>
-<h2 id="overview-of-zkwasm-rust-sdk-and-rest-abi">Overview of zkWasm Rust SDK and Rest ABI</h2>
+<h1 id="zkwasm-rust-sdk-and-rest-abi">zkWasm Rust SDK and REST ABI</h1>
+<h2 id="overview-of-zkwasm-rust-sdk-and-rest-service-abi">Overview of zkWasm Rust SDK and REST Service ABI</h2>
 <p>The zkWasm Rust SDK provides essential building blocks for developing zero-knowledge WebAssembly applications. Such as Host(Builtin) Functions like Input/Output, Merkel Tree, Poseidon Signature, etc, and also some useful traits for state management and trace such as key-value pair storage, debug print, etc.</p>
 <p>You can import the SDK in your rollup application by adding the following line to your <code>Cargo.toml</code> file:
 <div class="highlight"><pre><span></span><code><span class="k">[dependencies]</span>
@@ -1164,7 +1164,7 @@ And then you can use the Merkel Tree in your code:
 <div class="highlight"><pre><span></span><code><span class="k">unsafe</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">zkwasm_rust_sdk</span><span class="p">::</span><span class="n">require</span><span class="p">(</span><span class="n">condition</span><span class="p">);</span><span class="w"> </span><span class="p">}</span>
 </code></pre></div></p>
 <hr />
-<p>Let's explore the key components through the following example, the zkwasm Rest ABI, which defines the interface between the zkWasm rollup and zkWasm Application Server using zkWasm Rust SDK. You can view the full code in <a href="https://github.com/DelphinusLab/zkwasm-mini-rollup/blob/main/abi/src/lib.rs">zkwasm-mini-rollup/abi/src/lib.rs</a> file.</p>
+<p>Let's explore the key components through the following example, the zkwasm REST ABI, which defines the interface between the zkWasm rollup and zkWasm Application Server using zkWasm Rust SDK. You can view the full code in <a href="https://github.com/DelphinusLab/zkwasm-mini-rollup/blob/main/abi/src/lib.rs">zkwasm-mini-rollup/abi/src/lib.rs</a> file.</p>
 <h3 id="2-import-key-modules">2. Import Key Modules</h3>
 <p>In the example code, we import the following modules from the zkWasm Rust SDK:</p>
 <p><div class="highlight"><pre><span></span><code><span class="o">..</span><span class="p">.</span>
@@ -1176,6 +1176,7 @@ And then you can use the Merkel Tree in your code:
 </code></pre></div>
 Let's explore how these modules are used in the following sections.</p>
 <h3 id="3-storage-and-state-management">3. Storage and State Management</h3>
+<p>The storage and state management system provides the foundation for maintaining application data. It consists of two main components: a Merkle tree for state verification and retrieval, and a key-value store for efficient data access.</p>
 <h4 id="merkle-tree-state">Merkle Tree State</h4>
 <div class="highlight"><pre><span></span><code><span class="k">pub</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">MERKLE_MAP</span><span class="p">:</span><span class="w"> </span><span class="nc">KeyValueMap</span><span class="o">&lt;</span><span class="n">Merkle</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">KeyValueMap</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="n">merkle</span><span class="p">:</span><span class="w"> </span><span class="nc">Merkle</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">root</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="o">..</span><span class="p">.]</span><span class="w"> </span><span class="p">}</span>
@@ -1227,8 +1228,14 @@ Key features:</p>
 <li>Player creation and retrieval functionality</li>
 <li>Nonce validation and management</li>
 </ul>
-<h3 id="5-zkwasm-rest-abi">5. ZkWasm REST ABI</h3>
-<p>In the Application side, this macro from zkwasm_rest_abi generates essential WebAssembly bindings for zkWasm applications:
+<h3 id="5-zkwasm-rest-abi">5. zkWasm REST ABI</h3>
+<p>zkWasm REST service ABI is the convention between the sequencer (implemented in typescript) and the provable application. It contains three parts:</p>
+<ul>
+<li>Transaction</li>
+<li>State</li>
+<li>Config</li>
+</ul>
+<p>In the Application side, this macro from zkwasm_rest_abi generates essential bindings for zkWasm applications:
 <div class="highlight"><pre><span></span><code><span class="n">zkwasm_rest_abi</span><span class="p">::</span><span class="n">create_zkwasm_apis</span><span class="o">!</span><span class="p">(</span><span class="n">Transaction</span><span class="p">,</span><span class="w"> </span><span class="n">State</span><span class="p">,</span><span class="w"> </span><span class="n">Config</span><span class="p">);</span>
 </code></pre></div></p>
 <h4 id="system-architecture-and-flow">System Architecture and Flow</h4>
@@ -1311,7 +1318,7 @@ For example, in code above, if the counter is greater than 20, the preemption po
 <span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div></p>
-<p>Here's an Example, in the circuit's main function (zkmain()), the finalization produces two key outputs:</p>
+<p>Here's an example from <code>abi/src/lib.rs</code> that demonstrates how the bundled logic is implemented within the <code>zkmain</code> function. The finalization process produces two key outputs:</p>
 <ul>
 <li>New State Root (root)<ul>
 <li>4 u64 values representing the Merkle root</li>
@@ -1326,6 +1333,7 @@ For example, in code above, if the counter is greater than 20, the preemption po
 </ul>
 </li>
 </ul>
+<p>Here's the template structure:</p>
 <p><div class="highlight"><pre><span></span><code><span class="c1">// Step 1: Get settlement data the same way as in the finalize() function</span>
 <span class="kd">let</span><span class="w"> </span><span class="n">bytes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="cp">$S</span><span class="p">::</span><span class="n">flush_settlement</span><span class="p">();</span>
 
@@ -1407,6 +1415,7 @@ The code above:</p>
 <span class="n">finalize</span><span class="p">();</span>
 <span class="c1">// ...</span>
 </code></pre></div>
+<p>At the beginning of each chunk, the state is initialized. After the initialization, an array of transactions are handled until the state reaches its preemption point. After the preemption point is reached, the state is stored and the bundle outputs the new merkle root which will be used for the following bundle. Based on this template, we can implement a few APIs for the whole application to work as a rollup.</p>
 <h4 id="function-overview">Function Overview</h4>
 <h5 id="1-transaction-handling"><strong>1. Transaction Handling</strong></h5>
 <div class="highlight"><pre><span></span><code><span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">handle_tx</span><span class="p">(</span><span class="n">params</span><span class="p">:</span><span class="w"> </span><span class="nb">Vec</span><span class="o">&lt;</span><span class="kt">u64</span><span class="o">&gt;</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kt">u32</span><span class="w"> </span><span class="c1">// Process transaction</span>
