@@ -273,23 +273,23 @@ In application side, the following requirements (API) shall be met to ensure the
 impl State {
     fn preempt() -> bool { ... }  // Define chunk boundary conditions
     fn initialize() { ... }        // Setup initial state
-    fn flush_settlement() -> Vec<u8> { ... } // Prepare state updates
+    fn flush_settlement() -> Vec<u8> { ... } // Get the settlement info
 }
 ```
 
 And some other functions can be implemented in the `State` trait.
 ```rust
 pub trait State {
-    fn preempt() -> bool;
-    fn initialize();
-    fn flush_settlement() -> Vec<u8>;
+    fn preempt() -> bool; // Define chunk boundary conditions and check if the state reaches the preemption point
+    fn initialize(); // Initialize the state at beginning
+    fn flush_settlement() -> Vec<u8>; // Get the settlement info
     // Some other functions
     fn get_state(pid: Vec<u64>) -> String { ... } // Get state for specific player ID
     fn snapshot() -> String { ... } // Get current global state
     fn tick(&mut self) { ... } // Update state if auto-tick is enabled
     fn store(&self) { ... } // Store state to Merkle tree
     fn new() -> Self { ... } // Create new state instance
-    fn rand_seed() -> u64 { ... } // Generate random seed
+    fn rand_seed() -> u64 { ... } // Get the current hash of the random seed
 }
 ```
 
@@ -299,6 +299,7 @@ impl Transaction {
     fn decode(command: [u64; 4]) -> Self { ... } // Decode Command      
     fn process(&self, user_address: &[u64; 4], sig_r: &[u64; 4]) -> u32 { ... } // Process Transaction
     fn install_player(&self, pkey: &[u64; 4]) -> u32 { ... } // Create player / user Account
+    fn decode_error(e) // Decode error code to description
 }
 ```
 
@@ -354,9 +355,9 @@ pub fn snapshot() -> String // Get current global state
 ##### **3. Configuration and Control**
 ```rust
 pub fn get_config() -> String // Get configuration
-pub fn preempt() -> bool  // Preemption check
+pub fn preempt() -> bool  // Preemption check (whether to generate proof at this stage)
 pub fn autotick() -> bool // Auto-tick configuration
-pub fn randSeed() -> u64  // Random seed
+pub fn randSeed() -> u64  // Get the current hash of the random seed
 ```
 
 - Configuration retrieval and system controls
