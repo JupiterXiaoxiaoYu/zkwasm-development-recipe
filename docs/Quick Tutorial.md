@@ -7,7 +7,7 @@ This tutorial will guide you through the process of creating a simple zkWasm app
 The zkWasm Mini-Rollup service is a RESTful service that provides the zkWasm runtime environment. It provides the following functionalities:
 
 - Serve the zkWasm runtime environment
-- Provide the zkWasm REST API
+- Provide the zkWasm REST ABI
 - Maintain the zkWasm state through merkle tree enabled database and Redis
 - Generate the witness from the merkle tree database for zkWasm verification
 - Calculate the new merkle tree root when receiving the zkWasm transaction batch for settlement
@@ -728,7 +728,7 @@ Let's back to the root directory of the hello world rollup application, and run:
 ```bash
 DEPLOY=TRUE IMAGE="YOUR_MD5_HASH" make run
 ```
-This will tell the server to automatically submit proof tasks to zkWasm Hub when `preempt` method (defined in `src/state.rs`) is triggered. 
+This will tell the server to automatically submit proof tasks to zkWasm Hub when `preempt` method (defined in `src/state.rs`) is triggered. More details about the `preempt` method please refer to [zkWasm Rust SDK](https://jupiterxiaoxiaoyu.github.io/zkwasm-development-recipe/zkWasm%20Rust%20SDK.html#3-preemption-check).
 
 Now we have deployed our rollup application onto zkWasm Hub, and it is ready to be used. You can find the tasks related to your rollup application in the zkWasm Hub Explorer by searching your application md5 hash:
 
