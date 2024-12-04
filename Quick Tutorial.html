@@ -653,6 +653,39 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#step-6-interacting-with-zkwasm-hub" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 6: Interacting with zkWasm Hub
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 6: Interacting with zkWasm Hub">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#submit-your-rollup-application-image-to-zkwasm-hub" class="md-nav__link">
+    <span class="md-ellipsis">
+      Submit your rollup application image to zkWasm Hub
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deploy-your-rollup-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deploy your rollup application
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1150,6 +1183,39 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#step-6-interacting-with-zkwasm-hub" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 6: Interacting with zkWasm Hub
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 6: Interacting with zkWasm Hub">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#submit-your-rollup-application-image-to-zkwasm-hub" class="md-nav__link">
+    <span class="md-ellipsis">
+      Submit your rollup application image to zkWasm Hub
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deploy-your-rollup-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deploy your rollup application
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1395,7 +1461,7 @@ initialize application merkle db ...
 
 <span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">preempt</span><span class="p">()</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">unsafe</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="o">&amp;</span><span class="n">STATE</span><span class="w"> </span><span class="p">};</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">state</span><span class="p">.</span><span class="n">counter</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">20</span><span class="p">;</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">state</span><span class="p">.</span><span class="n">counter</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mi">20</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span>
 <span class="w">    </span><span class="p">}</span>
 
 <span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">flush_settlement</span><span class="p">()</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nb">Vec</span><span class="o">&lt;</span><span class="kt">u8</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
@@ -1764,6 +1830,54 @@ The <code>getState</code> method:</p>
 </ul>
 <p>However, for Global State, you don't need to consider the existence of players, and you can directly modify the <code>STATE</code> variable as it is defined as mutable.</p>
 <p>By following these patterns, you can implement various types of state changes in your own rollup application while maintaining consistency and reliability.</p>
+<h2 id="step-6-interacting-with-zkwasm-hub">Step 6: Interacting with zkWasm Hub</h2>
+<p>zkWasm Hub is a hosted cloud service provided by DelphinusLab for finding and sharing zkWasm application images. Using zkWasm Hub, developers can access it using public rest services and create their own private zkWasm space. zkWasm Hub provides automated proving and batching service for applications' workloads with customizable WASM extensions (via WASM host application interfaces). Moreover, users can distribute their GitHub applications onto zkWasm Hub by its auto compilation and updating service. Overall, it provides:</p>
+<ol>
+<li>Application image deployment and setup</li>
+<li>Batching and generating zkWasm proofs for applications</li>
+</ol>
+<p>zkWasm Hub operates through a permissionless proving node pool, allowing anyone to participate and provide proving services for applications using the ZKWasm cloud service.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This section aims to provide a easy hands-on way to interact with zkWasm Hub. For more details, please refer to:</p>
+<ul>
+<li><a href="https://github.com/DelphinusLab/zkWasm-service-cli">zkWasm Service CLI</a></li>
+<li><a href="https://github.com/DelphinusLab/zkWasm-service-helper">zkWasm Service Helper</a></li>
+</ul>
+</div>
+<h3 id="submit-your-rollup-application-image-to-zkwasm-hub">Submit your rollup application image to zkWasm Hub</h3>
+<p>Let's back to our hello world rollup application, and see how to interact with zkWasm Hub.</p>
+<p>In the root directory of the hello world rollup application, if you haven't built the modified application, run:</p>
+<div class="highlight"><pre><span></span><code>make<span class="w"> </span>build
+</code></pre></div>
+<p>then, we go to the <code>ts</code> directory and run:</p>
+<div class="highlight"><pre><span></span><code>./publish.sh
+</code></pre></div>
+<p>or</p>
+<div class="highlight"><pre><span></span><code>sh<span class="w"> </span>publish.sh
+</code></pre></div>
+<p>And you may expect the following output:</p>
+<div class="highlight"><pre><span></span><code>Begin<span class="w"> </span>adding<span class="w"> </span>image<span class="w"> </span><span class="k">for</span><span class="w">  </span>.../helloworld-rollup/ts/node_modules/zkwasm-ts-server/src/application/application_bg.wasm
+msg<span class="w"> </span>is:<span class="w"> </span>application_bg.<span class="o">(</span>....<span class="o">)</span>
+Run<span class="w"> </span>success.
+signature<span class="w"> </span>is:<span class="w"> </span>...
+get<span class="w"> </span>addNewWasmImage<span class="w"> </span>response:<span class="w"> </span><span class="o">[</span>object<span class="w"> </span>Object<span class="o">]</span>
+Add<span class="w"> </span>Image<span class="w"> </span>Response<span class="w"> </span><span class="o">{</span>
+<span class="w">  </span>md5:<span class="w"> </span><span class="s1">&#39;...&#39;</span>,
+<span class="w">  </span>id:<span class="w"> </span><span class="s1">&#39;...&#39;</span>
+<span class="o">}</span>
+Finish<span class="w"> </span>addNewWasmImage!
+</code></pre></div>
+<p>You shall record the <code>md5</code> value, which will be used when submitting the proof task to zkWasm Hub via your application server.</p>
+<h3 id="deploy-your-rollup-application">Deploy your rollup application</h3>
+<p>Let's back to the root directory of the hello world rollup application, and run:</p>
+<p><div class="highlight"><pre><span></span><code><span class="nv">DEPLOY</span><span class="o">=</span>TRUE<span class="w"> </span><span class="nv">IMAGE</span><span class="o">=</span><span class="s2">&quot;YOUR_MD5_HASH&quot;</span><span class="w"> </span>make<span class="w"> </span>run
+</code></pre></div>
+This will tell the server to automatically submit proof tasks to zkWasm Hub when <code>preempt</code> method (defined in <code>src/state.rs</code>) is triggered. </p>
+<p>Now we have deployed our rollup application onto zkWasm Hub, and it is ready to be used. You can find the tasks related to your rollup application in the zkWasm Hub Explorer by searching your application md5 hash:</p>
+<ul>
+<li><a href="https://explorer.zkwasmhub.com/">zkWasm Hub Explorer</a></li>
+</ul>
 
 
 
