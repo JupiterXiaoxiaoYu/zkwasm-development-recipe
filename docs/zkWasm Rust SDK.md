@@ -1,5 +1,5 @@
-# zkWasm Rust SDK and Rest ABI
-## Overview of zkWasm Rust SDK and Rest ABI
+# zkWasm Rust SDK and REST ABI
+## Overview of zkWasm Rust SDK and REST Service ABI
 
 The zkWasm Rust SDK provides essential building blocks for developing zero-knowledge WebAssembly applications. Such as Host(Builtin) Functions like Input/Output, Merkel Tree, Poseidon Signature, etc, and also some useful traits for state management and trace such as key-value pair storage, debug print, etc.
 
@@ -38,7 +38,7 @@ unsafe { zkwasm_rust_sdk::require(condition); }
 
 ---
 
-Let's explore the key components through the following example, the zkwasm Rest ABI, which defines the interface between the zkWasm rollup and zkWasm Application Server using zkWasm Rust SDK. You can view the full code in [zkwasm-mini-rollup/abi/src/lib.rs](https://github.com/DelphinusLab/zkwasm-mini-rollup/blob/main/abi/src/lib.rs) file.
+Let's explore the key components through the following example, the zkwasm REST ABI, which defines the interface between the zkWasm rollup and zkWasm Application Server using zkWasm Rust SDK. You can view the full code in [zkwasm-mini-rollup/abi/src/lib.rs](https://github.com/DelphinusLab/zkwasm-mini-rollup/blob/main/abi/src/lib.rs) file.
 
 ### 2. Import Key Modules
 In the example code, we import the following modules from the zkWasm Rust SDK:
@@ -54,6 +54,8 @@ use zkwasm_rust_sdk::Merkle;
 Let's explore how these modules are used in the following sections.
 
 ### 3. Storage and State Management
+
+The storage and state management system provides the foundation for maintaining application data. It consists of two main components: a Merkle tree for state verification and retrieval, and a key-value store for efficient data access.
 
 #### Merkle Tree State
 ```rust
@@ -111,9 +113,15 @@ impl<T: StorageData + Default> Player<T> {
 - Player creation and retrieval functionality
 - Nonce validation and management
 
-### 5. ZkWasm REST ABI
+### 5. zkWasm REST ABI
 
-In the Application side, this macro from zkwasm_rest_abi generates essential WebAssembly bindings for zkWasm applications:
+zkWasm REST service ABI is the convention between the sequencer (implemented in typescript) and the provable application. It contains three parts:
+
+- Transaction
+- State
+- Config
+
+In the Application side, this macro from zkwasm_rest_abi generates essential bindings for zkWasm applications:
 ```rust
 zkwasm_rest_abi::create_zkwasm_apis!(Transaction, State, Config);
 ```
@@ -210,7 +218,7 @@ pub fn finalize() -> Vec<u8> {
 }
 ```
 
-Here's an Example, in the circuit's main function (zkmain()), the finalization produces two key outputs:
+Here's an example from `abi/src/lib.rs` that demonstrates how the bundled logic is implemented within the `zkmain` function. The finalization process produces two key outputs:
 
 - New State Root (root)
     - 4 u64 values representing the Merkle root
@@ -220,6 +228,8 @@ Here's an Example, in the circuit's main function (zkmain()), the finalization p
     - 4 u64 values containing SHA256 hash
     - Computed from all withdrawals/settlements
     - Used for on-chain verification of batched operations    
+
+Here's the template structure:
 
 ```rust
 // Step 1: Get settlement data the same way as in the finalize() function
@@ -315,6 +325,8 @@ while !preempt() {
 finalize();
 // ...
 ```
+
+At the beginning of each chunk, the state is initialized. After the initialization, an array of transactions are handled until the state reaches its preemption point. After the preemption point is reached, the state is stored and the bundle outputs the new merkle root which will be used for the following bundle. Based on this template, we can implement a few APIs for the whole application to work as a rollup.
 
 #### Function Overview
 
