@@ -264,7 +264,7 @@ impl State {
 
     pub fn preempt() -> bool {
         let state = unsafe { &STATE };
-        return state.counter >= 20;
+        return state.counter % 20 == 0; 
     }
 
     pub fn flush_settlement() -> Vec<u8> {
@@ -666,6 +666,79 @@ Remember that any state modifications for players should be:
 However, for Global State, you don't need to consider the existence of players, and you can directly modify the ```STATE``` variable as it is defined as mutable.
 
 By following these patterns, you can implement various types of state changes in your own rollup application while maintaining consistency and reliability.
+
+## Step 6: Interacting with zkWasm Hub
+
+zkWasm Hub is a hosted cloud service provided by DelphinusLab for finding and sharing zkWasm application images. Using zkWasm Hub, developers can access it using public rest services and create their own private zkWasm space. zkWasm Hub provides automated proving and batching service for applications' workloads with customizable WASM extensions (via WASM host application interfaces). Moreover, users can distribute their GitHub applications onto zkWasm Hub by its auto compilation and updating service. Overall, it provides:
+
+1. Application image deployment and setup
+2. Batching and generating zkWasm proofs for applications
+
+zkWasm Hub operates through a permissionless proving node pool, allowing anyone to participate and provide proving services for applications using the ZKWasm cloud service.
+
+!!! note "Note"
+    This section aims to provide a easy hands-on way to interact with zkWasm Hub. For more details, please refer to:
+
+    - [zkWasm Service CLI](https://github.com/DelphinusLab/zkWasm-service-cli)
+    - [zkWasm Service Helper](https://github.com/DelphinusLab/zkWasm-service-helper)
+
+### Submit your rollup application image to zkWasm Hub
+
+Let's back to our hello world rollup application, and see how to interact with zkWasm Hub.
+
+In the root directory of the hello world rollup application, if you haven't built the modified application, run:
+
+```bash
+make build
+```
+
+then, we go to the `ts` directory and run:
+
+```bash
+./publish.sh
+```
+
+or
+
+```bash
+sh publish.sh
+```
+
+And you may expect the following output:
+
+```bash
+Begin adding image for  .../helloworld-rollup/ts/node_modules/zkwasm-ts-server/src/application/application_bg.wasm
+msg is: application_bg.(....)
+Run success.
+signature is: ...
+get addNewWasmImage response: [object Object]
+Add Image Response {
+  md5: '...',
+  id: '...'
+}
+Finish addNewWasmImage!
+```
+
+You shall record the `md5` value, which will be used when submitting the proof task to zkWasm Hub via your application server.
+
+### Deploy your rollup application
+
+Let's back to the root directory of the hello world rollup application, and run:
+
+```bash
+DEPLOY=TRUE IMAGE="YOUR_MD5_HASH" make run
+```
+This will tell the server to automatically submit proof tasks to zkWasm Hub when `preempt` method (defined in `src/state.rs`) is triggered. 
+
+Now we have deployed our rollup application onto zkWasm Hub, and it is ready to be used. You can find the tasks related to your rollup application in the zkWasm Hub Explorer by searching your application md5 hash:
+
+- [zkWasm Hub Explorer](https://explorer.zkwasmhub.com/)
+
+
+
+
+
+
 
 
 
