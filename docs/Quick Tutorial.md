@@ -674,7 +674,7 @@ zkWasm Hub is a hosted cloud service provided by DelphinusLab for finding and sh
 1. Application image deployment and setup
 2. Batching and generating zkWasm proofs for applications
 
-zkWasm Hub operates through a permissionless proving node pool, allowing anyone to participate and provide proving services for applications using the ZKWasm cloud service.
+zkWasm Hub operates through a permissionless proving node pool, allowing anyone to participate and provide proving services for applications using the zkWasm cloud service.
 
 !!! note "Note"
     This section aims to provide a easy hands-on way to interact with zkWasm Hub. For more details, please refer to:
