@@ -1238,7 +1238,7 @@
 <p>The zkWasm Mini-Rollup service is a RESTful service that provides the zkWasm runtime environment. It provides the following functionalities:</p>
 <ul>
 <li>Serve the zkWasm runtime environment</li>
-<li>Provide the zkWasm REST API</li>
+<li>Provide the zkWasm REST ABI</li>
 <li>Maintain the zkWasm state through merkle tree enabled database and Redis</li>
 <li>Generate the witness from the merkle tree database for zkWasm verification</li>
 <li>Calculate the new merkle tree root when receiving the zkWasm transaction batch for settlement</li>
@@ -1299,7 +1299,7 @@ Server is running on http://0.0.0.0:3000
 connecting redis server: localhost
 bootstrapping ... (deploymode: false, remote: false, migrate: false)
 loading wasm application ...
-check merkel database connection ...
+check merkle database connection ...
 initialize sequener queue ...
 waiting Count is: 0  perform draining ...
 initialize application merkle db ...
@@ -1873,7 +1873,7 @@ Finish<span class="w"> </span>addNewWasmImage!
 <p>Let's back to the root directory of the hello world rollup application, and run:</p>
 <p><div class="highlight"><pre><span></span><code><span class="nv">DEPLOY</span><span class="o">=</span>TRUE<span class="w"> </span><span class="nv">IMAGE</span><span class="o">=</span><span class="s2">&quot;YOUR_MD5_HASH&quot;</span><span class="w"> </span>make<span class="w"> </span>run
 </code></pre></div>
-This will tell the server to automatically submit proof tasks to zkWasm Hub when <code>preempt</code> method (defined in <code>src/state.rs</code>) is triggered. </p>
+This will tell the server to automatically submit proof tasks to zkWasm Hub when <code>preempt</code> method (defined in <code>src/state.rs</code>) is triggered. More details about the <code>preempt</code> method please refer to <a href="https://jupiterxiaoxiaoyu.github.io/zkwasm-development-recipe/zkWasm%20Rust%20SDK.html#3-preemption-check">zkWasm Rust SDK</a>.</p>
 <p>Now we have deployed our rollup application onto zkWasm Hub, and it is ready to be used. You can find the tasks related to your rollup application in the zkWasm Hub Explorer by searching your application md5 hash:</p>
 <ul>
 <li><a href="https://explorer.zkwasmhub.com/">zkWasm Hub Explorer</a></li>

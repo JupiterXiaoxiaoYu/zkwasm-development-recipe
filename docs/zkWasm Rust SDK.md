@@ -1,7 +1,7 @@
 # zkWasm Rust SDK and REST ABI
 ## Overview of zkWasm Rust SDK and REST Service ABI
 
-The zkWasm Rust SDK provides essential building blocks for developing zero-knowledge WebAssembly applications. Such as Host(Builtin) Functions like Input/Output, Merkel Tree, Poseidon Signature, etc, and also some useful traits for state management and trace such as key-value pair storage, debug print, etc.
+The zkWasm Rust SDK provides essential building blocks for developing zero-knowledge WebAssembly applications. Such as Host(Builtin) Functions like Input/Output, Merkle Tree, Poseidon Signature, etc, and also some useful traits for state management and trace such as key-value pair storage, debug print, etc.
 
 You can import the SDK in your rollup application by adding the following line to your ```Cargo.toml``` file:
 ```toml
@@ -15,11 +15,11 @@ zkwasm-rust-sdk = { git = "https://github.com/DelphinusLab/zkWasm-rust.git", def
 
 You can view the available modules in the [lib.rs](https://github.com/DelphinusLab/zkWasm-rust/blob/main/src/lib.rs) file.
 
-For example, if you want to use the Merkel Tree, you can import it as follows:
+For example, if you want to use the Merkle Tree, you can import it as follows:
 ```rust
 use zkwasm_rust_sdk::Merkle;
 ```
-And then you can use the Merkel Tree in your code:
+And then you can use the Merkle Tree in your code:
 ```rust
 let merkle = zkwasm_rust_sdk::Merkle::new();
 ```
