@@ -1141,7 +1141,7 @@
 
 <h1 id="zkwasm-rust-sdk-and-rest-abi">zkWasm Rust SDK and REST ABI</h1>
 <h2 id="overview-of-zkwasm-rust-sdk-and-rest-service-abi">Overview of zkWasm Rust SDK and REST Service ABI</h2>
-<p>The zkWasm Rust SDK provides essential building blocks for developing zero-knowledge WebAssembly applications. Such as Host(Builtin) Functions like Input/Output, Merkel Tree, Poseidon Signature, etc, and also some useful traits for state management and trace such as key-value pair storage, debug print, etc.</p>
+<p>The zkWasm Rust SDK provides essential building blocks for developing zero-knowledge WebAssembly applications. Such as Host(Builtin) Functions like Input/Output, Merkle Tree, Poseidon Signature, etc, and also some useful traits for state management and trace such as key-value pair storage, debug print, etc.</p>
 <p>You can import the SDK in your rollup application by adding the following line to your <code>Cargo.toml</code> file:
 <div class="highlight"><pre><span></span><code><span class="k">[dependencies]</span>
 <span class="p">...</span>
@@ -1149,10 +1149,10 @@
 </code></pre></div></p>
 <h3 id="1-usage-of-zkwasm-rust-sdk">1. Usage of zkWasm Rust SDK</h3>
 <p>You can view the available modules in the <a href="https://github.com/DelphinusLab/zkWasm-rust/blob/main/src/lib.rs">lib.rs</a> file.</p>
-<p>For example, if you want to use the Merkel Tree, you can import it as follows:
+<p>For example, if you want to use the Merkle Tree, you can import it as follows:
 <div class="highlight"><pre><span></span><code><span class="k">use</span><span class="w"> </span><span class="n">zkwasm_rust_sdk</span><span class="p">::</span><span class="n">Merkle</span><span class="p">;</span>
 </code></pre></div>
-And then you can use the Merkel Tree in your code:
+And then you can use the Merkle Tree in your code:
 <div class="highlight"><pre><span></span><code><span class="kd">let</span><span class="w"> </span><span class="n">merkle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">zkwasm_rust_sdk</span><span class="p">::</span><span class="n">Merkle</span><span class="p">::</span><span class="n">new</span><span class="p">();</span>
 </code></pre></div></p>
 <h4 id="debugging">Debugging</h4>
