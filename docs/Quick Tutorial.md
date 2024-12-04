@@ -724,7 +724,6 @@ You shall record the `md5` value, which will be used when submitting the proof t
 ### Deploy your rollup application
 
 Let's back to the root directory of the hello world rollup application, and run:
-
 ```bash
 DEPLOY=TRUE IMAGE="YOUR_MD5_HASH" make run
 ```
@@ -733,6 +732,46 @@ This will tell the server to automatically submit proof tasks to zkWasm Hub when
 Now we have deployed our rollup application onto zkWasm Hub, and it is ready to be used. You can find the tasks related to your rollup application in the zkWasm Hub Explorer by searching your application md5 hash:
 
 - [zkWasm Hub Explorer](https://explorer.zkwasmhub.com/)
+
+### Restore the State
+
+After shutting down and restarting the server or rollup application, you may find that the state has been reset to its initial value. This happens because the server initializes the merkle tree root to the initial value on each startup. There are two ways to restore the state:
+
+1. **Using zkWasm Hub (Recommended)**
+   
+   If you are using zkWasm Hub to generate proofs, start the server with:
+   ```bash
+   DEPLOY=TRUE IMAGE="YOUR_MD5_HASH" REMOTE=TRUE make run
+   ```
+   This command will retrieve the merkle tree root from the last proof task and restore the state from the rollup database.
+
+2. **Manual Configuration (For Testing)**
+   
+   If you're testing without zkWasm Hub, you can manually set the merkle tree root in `ts\node_modules\zkwasm-ts-server\src\service.js`:
+   ```javascript
+   let merkle_root = new BigUint64Array([
+       14789582351289948625n,
+       10919489180071018470n,
+       10309858136294505219n,
+       2839580074036780766n,
+   ]);
+   ```
+   
+   You can find your last merkle root in the server terminal output:
+   ```bash
+   wasmdbg:>>>  query root: [14789582351289948625, 10919489180071018470, 10309858136294505219, 2839580074036780766]   
+   last root: BigUint64Array(4) [
+     14789582351289948625n,
+     10919489180071018470n,
+     10309858136294505219n,
+     2839580074036780766n
+   ]
+   ```
+
+   After setting the merkle root, start the server from the root directory:
+   ```bash
+   make run
+   ```
 
 
 
