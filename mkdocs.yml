@@ -9,6 +9,7 @@ nav:
     - zkWasm Overview: zkWasm Overview.md
   - Development Guide:
     - zkWasm Rust SDK: zkWasm Rust SDK.md
+    - zkWasm Mini Rollup: zkWasm Mini Rollup.md
 theme:
   name: material
   palette:

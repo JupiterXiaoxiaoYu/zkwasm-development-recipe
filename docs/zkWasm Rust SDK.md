@@ -1,5 +1,5 @@
 # zkWasm Rust SDK and REST ABI
-## Overview of zkWasm Rust SDK and REST Service ABI
+## Overview of [zkWasm Rust SDK](https://github.com/DelphinusLab/zkWasm-rust) and [REST Service ABI](https://github.com/DelphinusLab/zkwasm-mini-rollup/blob/main/abi/src/lib.rs)
 
 The zkWasm Rust SDK provides essential building blocks for developing zero-knowledge WebAssembly applications. Such as Host(Builtin) Functions like Input/Output, Merkle Tree, Poseidon Signature, etc, and also some useful traits for state management and trace such as key-value pair storage, debug print, etc.
 
