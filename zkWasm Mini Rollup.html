@@ -2351,8 +2351,8 @@ IMAGE = YOUR_IMAGE_HASH
 </code></pre></div>
 The above code: </p>
 <ul>
-<li>CLI: Defines the path to the zkWASM CLI executable</li>
-<li>PARAMS: Specifies the parameter directory containing necessary proving parameters</li>
+<li><code>CLI</code>: Defines the path to the zkWASM CLI executable</li>
+<li><code>PARAMS</code>: Specifies the parameter directory containing necessary proving parameters</li>
 </ul>
 <h5 id="file-configuration">File Configuration</h5>
 <div class="highlight"><pre><span></span><code><span class="nx">fs</span><span class="p">.</span><span class="nx">appendFileSync</span><span class="p">(</span><span class="s1">&#39;run-image.sh&#39;</span><span class="p">,</span><span class="w"> </span><span class="sb">`IMAGE=image.wasm\n`</span><span class="p">);</span>
@@ -2360,17 +2360,17 @@ The above code: </p>
 </code></pre></div>
 <p>The above code:</p>
 <ul>
-<li>IMAGE: Specifies the WASM binary to be executed</li>
-<li>OUTPUT: Defines the directory for proof generation output</li>
+<li><code>IMAGE</code>: Specifies the WASM binary to be executed</li>
+<li><code>OUTPUT</code>: Defines the directory for proof generation output</li>
 </ul>
 <h5 id="cli-command-construction">CLI Command Construction</h5>
 <div class="highlight"><pre><span></span><code><span class="nx">fs</span><span class="p">.</span><span class="nx">appendFileSync</span><span class="p">(</span><span class="s1">&#39;run-image.sh&#39;</span><span class="p">,</span><span class="w"> </span><span class="sb">`$CLI --params $PARAMS test dry-run --wasm $IMAGE \\\n`</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;utf-8&#39;</span><span class="p">);</span>
 </code></pre></div>
 <p>The above code constructs the base command with:</p>
 <ul>
-<li>test dry-run: Executes in test mode for debugging</li>
-<li>--params: Points to proving parameters</li>
-<li>--wasm: Specifies the WASM image to execute</li>
+<li><code>test dry-run</code>: Executes in test mode for debugging</li>
+<li><code>--params</code>: Points to proving parameters</li>
+<li><code>--wasm</code>: Specifies the WASM image to execute</li>
 </ul>
 <h5 id="input-parameters">Input Parameters</h5>
 <p><div class="highlight"><pre><span></span><code><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kd">const</span><span class="w"> </span><span class="nx">p</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nx">public_inputs</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
