@@ -850,13 +850,13 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#settlement-tssettlets" class="md-nav__link">
+  <a href="#rollup-settlement-monitor-tssettlets" class="md-nav__link">
     <span class="md-ellipsis">
-      Settlement (ts/settle.ts)
+      Rollup Settlement Monitor (ts/settle.ts)
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Settlement (ts/settle.ts)">
+    <nav class="md-nav" aria-label="Rollup Settlement Monitor (ts/settle.ts)">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1324,13 +1324,13 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#settlement-tssettlets" class="md-nav__link">
+  <a href="#rollup-settlement-monitor-tssettlets" class="md-nav__link">
     <span class="md-ellipsis">
-      Settlement (ts/settle.ts)
+      Rollup Settlement Monitor (ts/settle.ts)
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Settlement (ts/settle.ts)">
+    <nav class="md-nav" aria-label="Rollup Settlement Monitor (ts/settle.ts)">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1820,8 +1820,9 @@ These contexts are thread-safe and globally accessible throughout your applicati
 <span class="w">    </span><span class="k">await</span><span class="w"> </span><span class="nx">initApplication</span><span class="p">(</span><span class="nx">bootstrap</span><span class="p">);</span>
 <span class="p">}</span>
 </code></pre></div></p>
+<p>It bootstraps WASM by implementing zkWasm's host interfaces which are another WASM image that is preloaded before loading the main WASM image. The implementation of these host APIs can be found in ts/src/bootstrap/ which is compiled from the rust bootstrap code in host directory.</p>
 <h3 id="bootstrap-tsbootstrap">Bootstrap (ts/bootstrap)</h3>
-<p>The Bootstrap system in zkWasm Mini Rollup serves as the critical bridge between the TypeScript service layer and the WebAssembly-based host environment. It provides the necessary bindings and initialization logic to enable seamless communication between different components of the system.</p>
+<p>The Bootstrap process, as mentioned above, serves as the critical bridge between the service layer and the WebAssembly-based host environment. It provides the necessary bindings and initialization logic to enable seamless communication between different components.</p>
 <div class="highlight"><pre><span></span><code>bootstrap/
 ├── bootstrap.d.ts     # TypeScript definitions for WASM bindings
 ├── bootstrap.js       # Main bootstrap implementation
@@ -1830,7 +1831,7 @@ These contexts are thread-safe and globally accessible throughout your applicati
 └── rpcbind.js        # RPC binding implementation
 </code></pre></div>
 <h4 id="host-function-bindings">Host Function Bindings</h4>
-<p>The bootstrap system directly interfaces with the host environment (/host directory) by providing TypeScript bindings for the core host functions:</p>
+<p>The bootstrap directly interfaces with the host environment (/host directory) by providing TypeScript bindings for the core host functions:</p>
 <div class="highlight"><pre><span></span><code>// Host function bindings examples
 export function cache_set_mode(mode: bigint): void;
 export function cache_store_data(data: bigint): void;
@@ -1843,6 +1844,7 @@ export function cache_fetch_data(): bigint;
 <span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">cache_store_data</span><span class="p">(</span><span class="n">data</span><span class="p">:</span><span class="w"> </span><span class="kt">u64</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="o">..</span><span class="p">.</span><span class="w"> </span><span class="p">}</span>
 <span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">cache_fetch_data</span><span class="p">()</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kt">u64</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="o">..</span><span class="p">.</span><span class="w"> </span><span class="p">}</span>
 </code></pre></div>
+<p>And the bootstrap will be compiled into WASM binary and preloaded before loading the main WASM image to provide the host functions for the application.</p>
 <h4 id="database-operations">Database Operations</h4>
 <p>The zkWasm Mini Rollup system implements a multi-layered RPC architecture for database operations, consisting of three main components:</p>
 <ol>
@@ -2114,7 +2116,7 @@ When the rollup reaches its preemption point, indicating a batch is ready for pr
 <span class="nx">application</span><span class="p">.</span><span class="nx">initialize</span><span class="p">(</span><span class="nx">merkle_root</span><span class="p">);</span>
 </code></pre></div>
 <h3 id="serve-endpoints-tsservicets">Serve Endpoints (ts/service.ts)</h3>
-<p>Once the WASM application is initialized, we start the minirollup PRC server using nodejs express. It contains four endpoints.</p>
+<p>Once the main WASM application is initialized, we start the minirollup PRC server using nodejs express. It contains four endpoints.</p>
 <ol>
 <li>
 <p>query: This endpoint allows user to query their current state and the game public state:
@@ -2240,7 +2242,7 @@ This endpoint will add transactions into the global job sequencer where each job
 <span class="w">  </span><span class="p">}</span>
 </code></pre></div></p>
 <p>You can find more concrete examples in the state implementation of <a href="https://github.com/riddles-are-us/zkwasm-automata/blob/main/src/state.rs">automata game</a>.</p>
-<h3 id="settlement-tssettlets">Settlement (ts/settle.ts)</h3>
+<h3 id="rollup-settlement-monitor-tssettlets">Rollup Settlement Monitor (ts/settle.ts)</h3>
 <p>The settlement module handles the crucial process of finalizing transactions on the blockchain. It verifies proofs and processes withdrawals through a series of carefully orchestrated steps.</p>
 <h4 id="environment-setup">Environment Setup</h4>
 <p>In order to run the settle.ts script, you need to firstly set enviroment variables in .env in the root directory of your application:</p>
