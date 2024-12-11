@@ -1,0 +1,2457 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="zkWasm%20Rust%20SDK.html">
+      
+      
+      
+      <link rel="icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.45">
+    
+    
+      
+        <title>zkWasm Mini Rollup - zkWasm Development Recipe</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.0253249f.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="stylesheets/extra.css">
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="pink">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#zkwasm-mini-rollup-overview" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="index.html" title="zkWasm Development Recipe" class="md-header__button md-logo" aria-label="zkWasm Development Recipe" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            zkWasm Development Recipe
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              zkWasm Mini Rollup
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="pink"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="lime"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="index.html" title="zkWasm Development Recipe" class="md-nav__button md-logo" aria-label="zkWasm Development Recipe" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    zkWasm Development Recipe
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Getting Started
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Getting Started
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Setup%20Environment.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Setup Environment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Quick%20Tutorial.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Quick Tutorial
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Core Documentation
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Core Documentation
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Core%20Concepts.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Core Concepts
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="zkWasm%20Overview.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    zkWasm Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Development Guide
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Development Guide
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="zkWasm%20Rust%20SDK.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    zkWasm Rust SDK
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    zkWasm Mini Rollup
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="zkWasm%20Mini%20Rollup.html" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    zkWasm Mini Rollup
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#zkwasm-mini-rollup-package-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      zkWasm Mini Rollup Package Structure
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#host-environment-host" class="md-nav__link">
+    <span class="md-ellipsis">
+      Host Environment (/host)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Host Environment (/host)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#core-context-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      Core Context System
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-cache-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Data Cache Operations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#state-management-and-cryptographic-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      State Management and Cryptographic Operations
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="State Management and Cryptographic Operations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#poseidon-hash-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Poseidon Hash Operations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#merkle-tree-state-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      Merkle Tree State Management
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#database-service-dbservice" class="md-nav__link">
+    <span class="md-ellipsis">
+      Database Service (/dbservice)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Database Service (/dbservice)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      Architecture
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#core-data-structures" class="md-nav__link">
+    <span class="md-ellipsis">
+      Core Data Structures
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#json-rpc-api-endpoints" class="md-nav__link">
+    <span class="md-ellipsis">
+      JSON-RPC API Endpoints
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="JSON-RPC API Endpoints">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#merkle-tree-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Merkle Tree Operations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-record-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Data Record Operations
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#server-implementation-zkwasm-ts-server-ts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Server Implementation (zkWasm-ts-Server) (/ts)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Server Implementation (zkWasm-ts-Server) (/ts)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#core-service-architecture-tsservicets" class="md-nav__link">
+    <span class="md-ellipsis">
+      Core Service Architecture (ts/service.ts)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bootstrap-tsbootstrap" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bootstrap (ts/bootstrap)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bootstrap (ts/bootstrap)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#host-function-bindings" class="md-nav__link">
+    <span class="md-ellipsis">
+      Host Function Bindings
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#database-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Database Operations
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#server-configuration-tsservicets" class="md-nav__link">
+    <span class="md-ellipsis">
+      Server Configuration (ts/service.ts)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Server Configuration (ts/service.ts)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#migrate" class="md-nav__link">
+    <span class="md-ellipsis">
+      Migrate
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#restore" class="md-nav__link">
+    <span class="md-ellipsis">
+      Restore
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sequencer-tsservicets" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sequencer (ts/service.ts)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sequencer (ts/service.ts)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#timetick-transaction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Timetick transaction
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#transaction-processing-worker-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Transaction Processing Worker Implementation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Transaction Processing Worker Implementation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#automatic-timetick-transaction-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Automatic Timetick Transaction Flow
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#user-transaction-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      User Transaction Flow
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#transaction-installation-rollup" class="md-nav__link">
+    <span class="md-ellipsis">
+      Transaction Installation (Rollup)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#serve-endpoints-tsservicets" class="md-nav__link">
+    <span class="md-ellipsis">
+      Serve Endpoints (ts/service.ts)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#server-admin-operations-tsinit_adminjs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Server Admin Operations (ts/init_admin.js)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#settlement-tssettlets" class="md-nav__link">
+    <span class="md-ellipsis">
+      Settlement (ts/settle.ts)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Settlement (ts/settle.ts)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#environment-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      Environment Setup
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#settlement-process" class="md-nav__link">
+    <span class="md-ellipsis">
+      Settlement Process
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#proof-task-debugging-tsreproducets" class="md-nav__link">
+    <span class="md-ellipsis">
+      Proof Task Debugging (ts/reproduce.ts)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Proof Task Debugging (ts/reproduce.ts)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#task-retrieval" class="md-nav__link">
+    <span class="md-ellipsis">
+      Task Retrieval
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#replay-the-task" class="md-nav__link">
+    <span class="md-ellipsis">
+      Replay the Task
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Replay the Task">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#environment-setup_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Environment Setup
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#file-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      File Configuration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cli-command-construction" class="md-nav__link">
+    <span class="md-ellipsis">
+      CLI Command Construction
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#input-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Input Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#output-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Output Configuration
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#zkwasm-mini-rollup-package-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      zkWasm Mini Rollup Package Structure
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#host-environment-host" class="md-nav__link">
+    <span class="md-ellipsis">
+      Host Environment (/host)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Host Environment (/host)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#core-context-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      Core Context System
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-cache-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Data Cache Operations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#state-management-and-cryptographic-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      State Management and Cryptographic Operations
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="State Management and Cryptographic Operations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#poseidon-hash-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Poseidon Hash Operations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#merkle-tree-state-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      Merkle Tree State Management
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#database-service-dbservice" class="md-nav__link">
+    <span class="md-ellipsis">
+      Database Service (/dbservice)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Database Service (/dbservice)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      Architecture
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#core-data-structures" class="md-nav__link">
+    <span class="md-ellipsis">
+      Core Data Structures
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#json-rpc-api-endpoints" class="md-nav__link">
+    <span class="md-ellipsis">
+      JSON-RPC API Endpoints
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="JSON-RPC API Endpoints">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#merkle-tree-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Merkle Tree Operations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-record-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Data Record Operations
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#server-implementation-zkwasm-ts-server-ts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Server Implementation (zkWasm-ts-Server) (/ts)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Server Implementation (zkWasm-ts-Server) (/ts)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#core-service-architecture-tsservicets" class="md-nav__link">
+    <span class="md-ellipsis">
+      Core Service Architecture (ts/service.ts)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bootstrap-tsbootstrap" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bootstrap (ts/bootstrap)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bootstrap (ts/bootstrap)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#host-function-bindings" class="md-nav__link">
+    <span class="md-ellipsis">
+      Host Function Bindings
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#database-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Database Operations
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#server-configuration-tsservicets" class="md-nav__link">
+    <span class="md-ellipsis">
+      Server Configuration (ts/service.ts)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Server Configuration (ts/service.ts)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#migrate" class="md-nav__link">
+    <span class="md-ellipsis">
+      Migrate
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#restore" class="md-nav__link">
+    <span class="md-ellipsis">
+      Restore
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sequencer-tsservicets" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sequencer (ts/service.ts)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sequencer (ts/service.ts)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#timetick-transaction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Timetick transaction
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#transaction-processing-worker-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Transaction Processing Worker Implementation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Transaction Processing Worker Implementation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#automatic-timetick-transaction-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Automatic Timetick Transaction Flow
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#user-transaction-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      User Transaction Flow
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#transaction-installation-rollup" class="md-nav__link">
+    <span class="md-ellipsis">
+      Transaction Installation (Rollup)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#serve-endpoints-tsservicets" class="md-nav__link">
+    <span class="md-ellipsis">
+      Serve Endpoints (ts/service.ts)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#server-admin-operations-tsinit_adminjs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Server Admin Operations (ts/init_admin.js)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#settlement-tssettlets" class="md-nav__link">
+    <span class="md-ellipsis">
+      Settlement (ts/settle.ts)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Settlement (ts/settle.ts)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#environment-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      Environment Setup
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#settlement-process" class="md-nav__link">
+    <span class="md-ellipsis">
+      Settlement Process
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#proof-task-debugging-tsreproducets" class="md-nav__link">
+    <span class="md-ellipsis">
+      Proof Task Debugging (ts/reproduce.ts)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Proof Task Debugging (ts/reproduce.ts)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#task-retrieval" class="md-nav__link">
+    <span class="md-ellipsis">
+      Task Retrieval
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#replay-the-task" class="md-nav__link">
+    <span class="md-ellipsis">
+      Replay the Task
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Replay the Task">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#environment-setup_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Environment Setup
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#file-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      File Configuration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cli-command-construction" class="md-nav__link">
+    <span class="md-ellipsis">
+      CLI Command Construction
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#input-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Input Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#output-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Output Configuration
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="zkwasm-mini-rollup-overview">zkWasm Mini Rollup Overview</h1>
+<p>As a rest service, zkWasm Mini Rollup provides a way for transaction handling and state management (i.e. Database service) for zkWasm server side applications. </p>
+<p>You may have delved into the details of how its ABI constructs the execution flow of rollup through <a href="https://github.com/DelphinusLab/zkWasm-rust">zkWasm Rust SDK</a>. Now we will walk through other implementation details of zkWasm Mini Rollup.</p>
+<h2 id="zkwasm-mini-rollup-package-structure">zkWasm Mini Rollup Package Structure</h2>
+<p>Remind that <a href="https://github.com/DelphinusLab/zkwasm-mini-rollup">zkWasm Mini Rollup Repository</a> is a monorepo that contains multiple packages:</p>
+<div class="highlight"><pre><span></span><code>- ABI (Application Binary Interface)
+  - Location: /abi
+  - Purpose: Defines the interface between the WASM application and the host environment
+  - Key Features:
+    - Implements the bundled logic within the zkmain function
+    - Handles transaction verification and processing
+    - Manages state transitions and merkle tree operations
+
+- Host Environment
+  - Location: /host
+  - Purpose: Provides the runtime environment for the WASM application
+  - Components:
+    - WASM bootstrap implementation
+    - Host API interfaces
+    - Runtime service management
+
+- Database Service
+  - Location: /dbservice
+  - Purpose: Manages data persistence and state management
+  - Features:
+    - Database interface implementations
+    - State management utilities
+    - Data persistence layer
+
+- TypeScript Server Implementation
+  - Location: /ts
+  - Purpose: Frontend toolkit and service implementation
+  - Components:
+    - REST service implementation
+    - WASM bootstrapping
+    - Worker thread management
+
+- Convention
+  - Location: /convention
+  - Purpose: Defines shared utilities for application development
+  - Contents:
+    - Common interfaces
+    - Shared types and constants
+    - Project-wide utilities
+</code></pre></div>
+<p>As we have covered the ABI in <a href="https://github.com/DelphinusLab/zkWasm-rust">zkWasm Rust SDK</a>, we will focus on the other packages.</p>
+<h2 id="host-environment-host">Host Environment (/host)</h2>
+<p>The Host Environment provides the foundational runtime infrastructure for zkWasm applications, implementing essential services for cryptographic operations, state management, and WebAssembly integration. It serves as the critical bridge between WebAssembly applications and the underlying system resources. </p>
+<p>You can find the implementation in the <code>/host</code> directory of the zkWasm Mini Rollup repository. The main components are organized as follows:</p>
+<div class="highlight"><pre><span></span><code>host/
+├── src/
+│   ├── context/     // Context management implementations
+│   ├── jubjub.rs    // Elliptic curve operations
+│   ├── poseidon.rs  // Hash function implementation
+│   └── lib.rs       // Core API and WebAssembly bindings
+</code></pre></div>
+<h3 id="core-context-system">Core Context System</h3>
+<p>The context system forms the backbone of the Host Environment, managing different execution contexts through thread-safe implementations. Here's how to use the various contexts:</p>
+<p><div class="highlight"><pre><span></span><code><span class="k">use</span><span class="w"> </span><span class="n">std</span><span class="p">::</span><span class="n">sync</span><span class="p">::</span><span class="n">Mutex</span><span class="p">;</span>
+<span class="k">use</span><span class="w"> </span><span class="n">context</span><span class="p">::{</span>
+<span class="w">    </span><span class="n">datacache</span><span class="p">::</span><span class="n">CacheContext</span><span class="p">,</span>
+<span class="w">    </span><span class="n">jubjub</span><span class="p">::</span><span class="n">sum</span><span class="p">::</span><span class="n">BabyJubjubSumContext</span><span class="p">,</span>
+<span class="w">    </span><span class="n">merkle</span><span class="p">::</span><span class="n">MerkleContext</span><span class="p">,</span>
+<span class="w">    </span><span class="n">poseidon</span><span class="p">::</span><span class="n">PoseidonContext</span>
+<span class="p">};</span>
+
+<span class="c1">// Global context initialization</span>
+<span class="n">lazy_static</span><span class="p">::</span><span class="n">lazy_static</span><span class="o">!</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// CacheContext: Manages temporary data storage during proof generation</span>
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">ref</span><span class="w"> </span><span class="n">DATACACHE_CONTEXT</span><span class="p">:</span><span class="w"> </span><span class="nc">Mutex</span><span class="o">&lt;</span><span class="n">CacheContext</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Mutex</span><span class="p">::</span><span class="n">new</span><span class="p">(</span><span class="n">CacheContext</span><span class="p">::</span><span class="n">new</span><span class="p">());</span>
+
+<span class="w">    </span><span class="c1">// MerkleContext: Handles state tree operations for your application&#39;s state</span>
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">ref</span><span class="w"> </span><span class="n">MERKLE_CONTEXT</span><span class="p">:</span><span class="w"> </span><span class="nc">Mutex</span><span class="o">&lt;</span><span class="n">MerkleContext</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Mutex</span><span class="p">::</span><span class="n">new</span><span class="p">(</span><span class="n">MerkleContext</span><span class="p">::</span><span class="n">new</span><span class="p">(</span><span class="mi">0</span><span class="p">));</span>
+
+<span class="w">    </span><span class="c1">// PoseidonContext: Provides cryptographic hash functions for state commitment</span>
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">ref</span><span class="w"> </span><span class="n">POSEIDON_CONTEXT</span><span class="p">:</span><span class="w"> </span><span class="nc">Mutex</span><span class="o">&lt;</span><span class="n">PoseidonContext</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Mutex</span><span class="p">::</span><span class="n">new</span><span class="p">(</span><span class="n">PoseidonContext</span><span class="p">::</span><span class="n">default</span><span class="p">(</span><span class="mi">0</span><span class="p">));</span>
+
+<span class="w">    </span><span class="c1">// JubjubContext: Manages elliptic curve operations for signatures</span>
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">ref</span><span class="w"> </span><span class="n">JUBJUB_CONTEXT</span><span class="p">:</span><span class="w"> </span><span class="nc">Mutex</span><span class="o">&lt;</span><span class="n">BabyJubjubSumContext</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Mutex</span><span class="p">::</span><span class="n">new</span><span class="p">(</span><span class="n">BabyJubjubSumContext</span><span class="p">::</span><span class="n">default</span><span class="p">(</span><span class="mi">0</span><span class="p">));</span>
+<span class="p">}</span>
+</code></pre></div>
+These contexts are thread-safe and globally accessible throughout your application's runtime.</p>
+<h3 id="data-cache-operations">Data Cache Operations</h3>
+<p>The data cache system provides temporary storage during proof generation:</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#[wasm_bindgen]</span>
+<span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">cache_set_mode</span><span class="p">(</span><span class="n">mode</span><span class="p">:</span><span class="w"> </span><span class="kt">u64</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Set the cache mode: STORE_MODE for writing, READ_MODE for reading</span>
+<span class="w">    </span><span class="n">DATACACHE_CONTEXT</span><span class="p">.</span><span class="n">lock</span><span class="p">().</span><span class="n">unwrap</span><span class="p">().</span><span class="n">set_mode</span><span class="p">(</span><span class="n">mode</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="cp">#[wasm_bindgen]</span>
+<span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">cache_store_data</span><span class="p">(</span><span class="n">data</span><span class="p">:</span><span class="w"> </span><span class="kt">u64</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Store a piece of data in the cache</span>
+<span class="w">    </span><span class="n">DATACACHE_CONTEXT</span><span class="p">.</span><span class="n">lock</span><span class="p">().</span><span class="n">unwrap</span><span class="p">().</span><span class="n">store_data</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="cp">#[wasm_bindgen]</span>
+<span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">cache_fetch_data</span><span class="p">()</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kt">u64</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Retrieve data from the cache</span>
+<span class="w">    </span><span class="n">DATACACHE_CONTEXT</span><span class="p">.</span><span class="n">lock</span><span class="p">().</span><span class="n">unwrap</span><span class="p">().</span><span class="n">fetch_data</span><span class="p">()</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="state-management-and-cryptographic-operations">State Management and Cryptographic Operations</h3>
+<h4 id="poseidon-hash-operations">Poseidon Hash Operations</h4>
+<div class="highlight"><pre><span></span><code><span class="cp">#[wasm_bindgen]</span>
+<span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">poseidon_new</span><span class="p">(</span><span class="n">arg</span><span class="p">:</span><span class="w"> </span><span class="kt">u64</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Initialize a new Poseidon hash computation</span>
+<span class="w">    </span><span class="c1">// arg: size of the input to be hashed</span>
+<span class="w">    </span><span class="n">POSEIDON_CONTEXT</span><span class="p">.</span><span class="n">lock</span><span class="p">().</span><span class="n">unwrap</span><span class="p">().</span><span class="n">poseidon_new</span><span class="p">(</span><span class="n">arg</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="kt">usize</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="cp">#[wasm_bindgen]</span>
+<span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">poseidon_push</span><span class="p">(</span><span class="n">arg</span><span class="p">:</span><span class="w"> </span><span class="kt">u64</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Add a value to the current hash computation</span>
+<span class="w">    </span><span class="c1">// Used to build up the state that needs to be hashed</span>
+<span class="w">    </span><span class="n">POSEIDON_CONTEXT</span><span class="p">.</span><span class="n">lock</span><span class="p">().</span><span class="n">unwrap</span><span class="p">().</span><span class="n">poseidon_push</span><span class="p">(</span><span class="n">arg</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="cp">#[wasm_bindgen]</span>
+<span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">poseidon_finalize</span><span class="p">()</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kt">u64</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Complete the hash computation and return the result</span>
+<span class="w">    </span><span class="c1">// The hash can be used as a commitment to the state</span>
+<span class="w">    </span><span class="n">POSEIDON_CONTEXT</span><span class="p">.</span><span class="n">lock</span><span class="p">().</span><span class="n">unwrap</span><span class="p">().</span><span class="n">poseidon_finalize</span><span class="p">()</span>
+<span class="p">}</span>
+</code></pre></div>
+<h4 id="merkle-tree-state-management">Merkle Tree State Management</h4>
+<div class="highlight"><pre><span></span><code><span class="cp">#[wasm_bindgen]</span>
+<span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">merkle_setroot</span><span class="p">(</span><span class="n">arg</span><span class="p">:</span><span class="w"> </span><span class="kt">u64</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Set the root of the Merkle tree</span>
+<span class="w">    </span><span class="c1">// Used when initializing your application&#39;s state</span>
+<span class="w">    </span><span class="n">MERKLE_CONTEXT</span><span class="p">.</span><span class="n">lock</span><span class="p">().</span><span class="n">unwrap</span><span class="p">().</span><span class="n">set_root</span><span class="p">(</span><span class="n">arg</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="cp">#[wasm_bindgen]</span>
+<span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">merkle_get</span><span class="p">()</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kt">u64</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Get the current value at the selected Merkle tree node</span>
+<span class="w">    </span><span class="c1">// Used to read state values from your application</span>
+<span class="w">    </span><span class="n">MERKLE_CONTEXT</span><span class="p">.</span><span class="n">lock</span><span class="p">().</span><span class="n">unwrap</span><span class="p">().</span><span class="n">get</span><span class="p">()</span>
+<span class="p">}</span>
+
+<span class="cp">#[wasm_bindgen]</span>
+<span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">merkle_set</span><span class="p">(</span><span class="n">arg</span><span class="p">:</span><span class="w"> </span><span class="kt">u64</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Update a value in the Merkle tree</span>
+<span class="w">    </span><span class="c1">// Used when your application modifies its state</span>
+<span class="w">    </span><span class="n">MERKLE_CONTEXT</span><span class="p">.</span><span class="n">lock</span><span class="p">().</span><span class="n">unwrap</span><span class="p">().</span><span class="n">set</span><span class="p">(</span><span class="n">arg</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>For host functions, you can also refer to <a href="zkWasm%20Overview.html#3-host-builtin-functions">zkWasm Overview</a></p>
+</div>
+<h2 id="database-service-dbservice">Database Service (/dbservice)</h2>
+<p>The Database Service is a crucial component of the zkWasm Mini Rollup system, providing persistent storage and state management for zkWasm applications. It implements a MongoDB-based Merkle tree structure for secure and verifiable state storage, along with JSON-RPC endpoints for state access and modification.</p>
+<h3 id="architecture">Architecture</h3>
+<p>The Database Service consists of three main components:</p>
+<ol>
+<li>
+<p>Merkle Tree Storage</p>
+<ul>
+<li>Implements a MongoDB-backed Merkle tree</li>
+<li>Provides cryptographic verification of state</li>
+<li>Supports efficient state updates and proofs</li>
+</ul>
+</li>
+<li>
+<p>Data Hash Records</p>
+<ul>
+<li>Stores arbitrary data with hash verification</li>
+<li>Maintains data integrity through cryptographic hashing</li>
+<li>Enables efficient data retrieval</li>
+</ul>
+</li>
+<li>
+<p>JSON-RPC Interface</p>
+<ul>
+<li>Exposes state management endpoints</li>
+<li>Handles concurrent state updates</li>
+<li>Provides performance metrics</li>
+</ul>
+</li>
+</ol>
+<h3 id="core-data-structures">Core Data Structures</h3>
+<p>The service defines several key data structures for state management:
+<div class="highlight"><pre><span></span><code><span class="c1">// Request structure for updating Merkle tree leaves</span>
+<span class="cp">#[derive(Clone, Deserialize, Serialize)]</span>
+<span class="k">pub</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">UpdateLeafRequest</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">root</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="kt">u8</span><span class="p">;</span><span class="w"> </span><span class="mi">32</span><span class="p">],</span><span class="w">      </span><span class="c1">// Current Merkle root</span>
+<span class="w">    </span><span class="n">data</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="kt">u8</span><span class="p">;</span><span class="w"> </span><span class="mi">32</span><span class="p">],</span><span class="w">      </span><span class="c1">// New leaf data</span>
+<span class="w">    </span><span class="n">index</span><span class="p">:</span><span class="w"> </span><span class="nb">String</span><span class="p">,</span><span class="w">       </span><span class="c1">// Leaf index (u64 encoded as string)</span>
+<span class="p">}</span>
+
+<span class="c1">// Request structure for retrieving Merkle tree leaves</span>
+<span class="cp">#[derive(Clone, Deserialize, Serialize)]</span>
+<span class="k">pub</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">GetLeafRequest</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">root</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="kt">u8</span><span class="p">;</span><span class="w"> </span><span class="mi">32</span><span class="p">],</span><span class="w">      </span><span class="c1">// Merkle root to query</span>
+<span class="w">    </span><span class="n">index</span><span class="p">:</span><span class="w"> </span><span class="nb">String</span><span class="p">,</span><span class="w">       </span><span class="c1">// Leaf index to retrieve</span>
+<span class="p">}</span>
+
+<span class="c1">// Request structure for storing data records</span>
+<span class="cp">#[derive(Clone, Deserialize, Serialize)]</span>
+<span class="k">pub</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">UpdateRecordRequest</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">hash</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="kt">u8</span><span class="p">;</span><span class="w"> </span><span class="mi">32</span><span class="p">],</span><span class="w">      </span><span class="c1">// Hash of the data</span>
+<span class="w">    </span><span class="n">data</span><span class="p">:</span><span class="w"> </span><span class="nb">Vec</span><span class="o">&lt;</span><span class="nb">String</span><span class="o">&gt;</span><span class="p">,</span><span class="w">   </span><span class="c1">// Actual data as vector of u64 strings</span>
+<span class="p">}</span>
+
+<span class="c1">// Request structure for retrieving data records</span>
+<span class="cp">#[derive(Clone, Deserialize, Serialize)]</span>
+<span class="k">pub</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">GetRecordRequest</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">hash</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="kt">u8</span><span class="p">;</span><span class="w"> </span><span class="mi">32</span><span class="p">],</span><span class="w">      </span><span class="c1">// Hash of the data to retrieve</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<h3 id="json-rpc-api-endpoints">JSON-RPC API Endpoints</h3>
+<p>The service exposes several JSON-RPC endpoints for state management:</p>
+<h4 id="merkle-tree-operations">Merkle Tree Operations</h4>
+<div class="highlight"><pre><span></span><code><span class="c1">// Update a leaf in the Merkle tree</span>
+<span class="k">async</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">update_leaf</span><span class="p">(</span><span class="n">request</span><span class="p">:</span><span class="w"> </span><span class="nc">UpdateLeafRequest</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nb">Result</span><span class="o">&lt;</span><span class="p">[</span><span class="kt">u8</span><span class="p">;</span><span class="w"> </span><span class="mi">32</span><span class="p">],</span><span class="w"> </span><span class="n">Error</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Parameters:</span>
+<span class="w">    </span><span class="c1">// - root: Current Merkle root</span>
+<span class="w">    </span><span class="c1">// - data: New leaf data</span>
+<span class="w">    </span><span class="c1">// - index: Position to update</span>
+<span class="w">    </span><span class="c1">// Returns:</span>
+<span class="w">    </span><span class="c1">// - New Merkle root after update</span>
+<span class="p">}</span>
+
+<span class="c1">// Retrieve a leaf from the Merkle tree</span>
+<span class="k">async</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">get_leaf</span><span class="p">(</span><span class="n">request</span><span class="p">:</span><span class="w"> </span><span class="nc">GetLeafRequest</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nb">Result</span><span class="o">&lt;</span><span class="p">[</span><span class="kt">u8</span><span class="p">;</span><span class="w"> </span><span class="mi">32</span><span class="p">],</span><span class="w"> </span><span class="n">Error</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Parameters:</span>
+<span class="w">    </span><span class="c1">// - root: Merkle root to query</span>
+<span class="w">    </span><span class="c1">// - index: Leaf position</span>
+<span class="w">    </span><span class="c1">// Returns:</span>
+<span class="w">    </span><span class="c1">// - Leaf data with proof</span>
+<span class="p">}</span>
+</code></pre></div>
+<h4 id="data-record-operations">Data Record Operations</h4>
+<div class="highlight"><pre><span></span><code><span class="c1">// Store a new data record</span>
+<span class="k">async</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">update_record</span><span class="p">(</span><span class="n">request</span><span class="p">:</span><span class="w"> </span><span class="nc">UpdateRecordRequest</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nb">Result</span><span class="o">&lt;</span><span class="p">(),</span><span class="w"> </span><span class="n">Error</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Parameters:</span>
+<span class="w">    </span><span class="c1">// - hash: Hash of the data</span>
+<span class="w">    </span><span class="c1">// - data: Vector of u64 values as strings</span>
+<span class="w">    </span><span class="c1">// Returns:</span>
+<span class="w">    </span><span class="c1">// - Success/failure status</span>
+<span class="p">}</span>
+
+<span class="c1">// Retrieve a data record</span>
+<span class="k">async</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">get_record</span><span class="p">(</span><span class="n">request</span><span class="p">:</span><span class="w"> </span><span class="nc">GetRecordRequest</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nb">Result</span><span class="o">&lt;</span><span class="nb">Vec</span><span class="o">&lt;</span><span class="nb">String</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">Error</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Parameters:</span>
+<span class="w">    </span><span class="c1">// - hash: Hash of the data to retrieve</span>
+<span class="w">    </span><span class="c1">// Returns:</span>
+<span class="w">    </span><span class="c1">// - Vector of u64 values as strings</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2 id="server-implementation-zkwasm-ts-server-ts">Server Implementation (zkWasm-ts-Server) (/ts)</h2>
+<p>The Server implementation serves as the service layer of the zkWasm Mini Rollup system, providing essential functionality for application bootstrapping, transaction processing, proof generation, and service management. This implementation bridges the gap between client applications and the underlying zkWasm infrastructure. </p>
+<h3 id="core-service-architecture-tsservicets">Core Service Architecture (ts/service.ts)</h3>
+<p>The Service layer is organized into several key components that work together to provide a complete rollup service:</p>
+<ul>
+<li>Transaction batch processing and scheduling</li>
+<li>State synchronization between different system components</li>
+<li>Service lifecycle management including startup and shutdown</li>
+<li>Error handling and recovery mechanisms</li>
+</ul>
+<p>Let's take a look at the core implementation of the service layer <a href="https://github.com/DelphinusLab/zkwasm-mini-rollup/blob/main/ts/src/service.ts">service.ts</a>. This file contains the main logic for starting and running the zkWasm Mini Rollup Appication. </p>
+<p>Remind how to run the zkWasm Mini Rollup Application, you can find the example code in the <a href="https://github.com/riddles-are-us/helloworld-rollup/blob/main/ts/src/service.ts">helloworld-rollup</a>:</p>
+<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Service</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;zkwasm-ts-server&quot;</span><span class="p">;</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">service</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Service</span><span class="p">(()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="p">;</span><span class="w"> </span><span class="p">});</span>
+<span class="nx">service</span><span class="p">.</span><span class="nx">initialize</span><span class="p">();</span>
+<span class="nx">service</span><span class="p">.</span><span class="nx">serve</span><span class="p">();</span>
+</code></pre></div>
+<p>We can notice that the <code>Service</code> class is instantiated at first, here's how the <code>Service</code> class is defined:</p>
+<div class="highlight"><pre><span></span><code><span class="k">export</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nx">Service</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">worker</span><span class="o">:</span><span class="w"> </span><span class="kt">null</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="nx">Worker</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">queue</span><span class="o">:</span><span class="w"> </span><span class="kt">null</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="nx">Queue</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">txCallback</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="nx">arg</span><span class="o">:</span><span class="w"> </span><span class="kt">TxWitness</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="ow">void</span><span class="p">;</span>
+
+<span class="w">    </span><span class="kr">constructor</span><span class="p">(</span><span class="nx">cb</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="nx">arg</span><span class="o">:</span><span class="w"> </span><span class="kt">TxWitness</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="ow">void</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="nx">worker</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="nx">queue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="nx">txCallback</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">cb</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>The Service class is the core orchestrator for the zkWasm Mini Rollup system. It manages transaction processing, job queuing, and callback handling through a worker-based architecture, here's the explanation of the components:</p>
+<ol>
+<li>
+<p>Worker Management (worker: null | Worker)</p>
+<ul>
+<li>Purpose: Handles computationally intensive tasks like proof generation</li>
+<li>Type: Worker from the bullmq package</li>
+<li>Initially set to null and initialized during service startup</li>
+<li>Used for:<ul>
+<li>Running proof generation tasks in the background</li>
+<li>Processing transactions asynchronously</li>
+<li>Managing computational resources</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Queue Management (queue: null | Queue)</p>
+<ul>
+<li>Purpose: Manages transaction processing order and scheduling</li>
+<li>Type: Queue from the bullmq package</li>
+<li>Initially set to null and initialized during service startup</li>
+<li>Used for:<ul>
+<li>Maintaining transaction order</li>
+<li>Ensuring sequential processing</li>
+<li>Managing backpressure</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Transaction Callback (txCallback: (arg: TxWitness) =&gt; void)</p>
+<ul>
+<li>Purpose: Handles post-transaction processing notifications</li>
+<li>Type: Function that takes a TxWitness argument</li>
+<li>Called after successful transaction processing</li>
+<li>Used for:<ul>
+<li>Notifying external systems of transaction completion</li>
+<li>Triggering state updates</li>
+<li>Handling transaction-specific logic</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<p>After the Service class is instantiated, the <code>initialize</code> method is called, which sets up necessary connections and bootstraps the application:
+<div class="highlight"><pre><span></span><code><span class="k">async</span><span class="w"> </span><span class="nx">initialize</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Connect to MongoDB</span>
+<span class="w">    </span><span class="k">await</span><span class="w"> </span><span class="nx">mongoose</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">get_mongoose_db</span><span class="p">());</span>
+
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">db</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">mongoose</span><span class="p">.</span><span class="nx">connection</span><span class="p">;</span><span class="w"> </span>
+<span class="w">    </span><span class="c1">// Handle connection error</span>
+<span class="w">    </span><span class="nx">db</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s1">&#39;fatal: mongoose connection error ... process will terminate&#39;</span><span class="p">);</span>
+<span class="w">      </span><span class="nx">process</span><span class="p">.</span><span class="nx">exit</span><span class="p">(</span><span class="mf">1</span><span class="p">);</span>
+<span class="w">    </span><span class="p">});</span>
+<span class="w">    </span><span class="c1">// Handle connection success</span>
+<span class="w">    </span><span class="nx">db</span><span class="p">.</span><span class="nx">once</span><span class="p">(</span><span class="s1">&#39;open&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Connected to MongoDB&#39;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">});</span>
+
+<span class="w">    </span><span class="c1">// Setup Redis connection</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">connection</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">IORedis</span><span class="p">(</span>
+<span class="w">      </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">host</span><span class="o">:</span><span class="w"> </span><span class="kt">redisHost</span><span class="p">,</span><span class="w">  </span><span class="c1">// Your Redis server host</span>
+<span class="w">        </span><span class="nx">port</span><span class="o">:</span><span class="w"> </span><span class="kt">6379</span><span class="p">,</span><span class="w">        </span><span class="c1">// Your Redis server port</span>
+<span class="w">        </span><span class="nx">reconnectOnError</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;reconnect on error&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="p">);</span>
+<span class="w">          </span><span class="k">return</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nx">maxRetriesPerRequest</span><span class="o">:</span><span class="w"> </span><span class="kt">null</span><span class="w">  </span><span class="c1">// Important: set this to null</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// Bootstrap application</span>
+<span class="w">    </span><span class="k">await</span><span class="w"> </span><span class="nx">initBootstrap</span><span class="p">();</span>
+<span class="w">    </span><span class="k">await</span><span class="w"> </span><span class="nx">initApplication</span><span class="p">(</span><span class="nx">bootstrap</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<h3 id="bootstrap-tsbootstrap">Bootstrap (ts/bootstrap)</h3>
+<p>The Bootstrap system in zkWasm Mini Rollup serves as the critical bridge between the TypeScript service layer and the WebAssembly-based host environment. It provides the necessary bindings and initialization logic to enable seamless communication between different components of the system.</p>
+<div class="highlight"><pre><span></span><code>bootstrap/
+├── bootstrap.d.ts     # TypeScript definitions for WASM bindings
+├── bootstrap.js       # Main bootstrap implementation
+├── bootstrap_bg.wasm  # WebAssembly binary
+├── dbprocess.ts      # Database processing utilities
+└── rpcbind.js        # RPC binding implementation
+</code></pre></div>
+<h4 id="host-function-bindings">Host Function Bindings</h4>
+<p>The bootstrap system directly interfaces with the host environment (/host directory) by providing TypeScript bindings for the core host functions:</p>
+<div class="highlight"><pre><span></span><code>// Host function bindings examples
+export function cache_set_mode(mode: bigint): void;
+export function cache_store_data(data: bigint): void;
+export function cache_fetch_data(): bigint;
+</code></pre></div>
+<p>These bindings correspond to the Rust implementations in the host environment:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// In host/src/lib.rs</span>
+<span class="cp">#[wasm_bindgen]</span>
+<span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">cache_set_mode</span><span class="p">(</span><span class="n">mode</span><span class="p">:</span><span class="w"> </span><span class="kt">u64</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="o">..</span><span class="p">.</span><span class="w"> </span><span class="p">}</span>
+<span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">cache_store_data</span><span class="p">(</span><span class="n">data</span><span class="p">:</span><span class="w"> </span><span class="kt">u64</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="o">..</span><span class="p">.</span><span class="w"> </span><span class="p">}</span>
+<span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">cache_fetch_data</span><span class="p">()</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kt">u64</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="o">..</span><span class="p">.</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+<h4 id="database-operations">Database Operations</h4>
+<p>The zkWasm Mini Rollup system implements a multi-layered RPC architecture for database operations, consisting of three main components:</p>
+<ol>
+<li>
+<p>RPC Binding Layer (rpcbind.js)</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// High-level interface exposing database operations</span>
+<span class="k">export</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">get_leaf</span><span class="p">(</span><span class="nx">root</span><span class="p">,</span><span class="w"> </span><span class="nx">index</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="p">}</span><span class="w">  </span><span class="c1">// Retrieve a leaf node from the Merkle tree</span>
+<span class="k">export</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">update_leaf</span><span class="p">(</span><span class="nx">root</span><span class="p">,</span><span class="w"> </span><span class="nx">index</span><span class="p">,</span><span class="w"> </span><span class="nx">data</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="p">}</span><span class="w">  </span><span class="c1">// Update a leaf node in the Merkle tree</span>
+<span class="k">export</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">get_record</span><span class="p">(</span><span class="nx">hash</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="p">}</span><span class="w">  </span><span class="c1">// Retrieve a record by its hash</span>
+<span class="k">export</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">update_record</span><span class="p">(</span><span class="nx">hash</span><span class="p">,</span><span class="w"> </span><span class="nx">data</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="p">}</span><span class="w">  </span><span class="c1">// Update a record&#39;s data</span>
+</code></pre></div>
+<p>This layer provides high-level functions for database operations with built-in performance monitoring. Each function formats the JSON-RPC request and delegates to syncrpc.cjs through the <code>requestMerkleData</code> function.</p>
+</li>
+<li>
+<p>Synchronous RPC Layer (syncrpc.cjs)</p>
+<div class="highlight"><pre><span></span><code><span class="kd">function</span><span class="w"> </span><span class="nx">requestMerkleData</span><span class="p">(</span><span class="nx">requestData</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Manages a persistent Node.js child process running dbprocess.js</span>
+<span class="w">    </span><span class="c1">// Handles synchronous IPC communication</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>This intermediate layer maintains a persistent Node.js child process running dbprocess.js. It implements synchronous inter-process communication (IPC) using file descriptors for reliable data exchange.</p>
+</li>
+<li>
+<p>Database Process Layer (dbprocess.ts)</p>
+<div class="highlight"><pre><span></span><code><span class="k">export</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nx">MerkleServiceRpc</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="nx">baseUrl</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="nx">instance</span><span class="p">;</span>
+
+<span class="w">    </span><span class="kr">constructor</span><span class="p">(</span><span class="nx">baseUrl</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="nx">baseUrl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">baseUrl</span><span class="p">;</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="nx">instance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">axios</span><span class="p">.</span><span class="nx">create</span><span class="p">({</span>
+<span class="w">            </span><span class="nx">baseURL</span><span class="o">:</span><span class="w"> </span><span class="kt">this.baseUrl</span><span class="p">,</span>
+<span class="w">            </span><span class="nx">headers</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s1">&#39;Content-Type&#39;</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;application/json&#39;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">        </span><span class="p">});</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="nx">queryDB</span><span class="p">(</span><span class="nx">request</span><span class="o">:</span><span class="w"> </span><span class="kt">any</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="nb">Promise</span><span class="o">&lt;</span><span class="ow">void</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Handles actual HTTP communication with the Merkle tree database service</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>This layer runs as a separate process and handles the actual HTTP communication with the Merkle tree database service. It processes JSON-RPC requests and manages the HTTP connection pool.</p>
+</li>
+</ol>
+<p>Communication Flow</p>
+<ol>
+<li>Client code calls exported functions from rpcbind.js</li>
+<li>rpcbind.js formats the JSON-RPC request and calls requestMerkleData from syncrpc.cjs</li>
+<li>syncrpc.cjs writes the request to the child process's stdin and waits for response on stdout</li>
+<li>dbprocess.ts receives the request through stdin, makes an HTTP request to the Merkle service, and writes the response back to stdout</li>
+<li>The response flows back through the layers to the original caller</li>
+</ol>
+<p>Remind that we initialize the application by:</p>
+<div class="highlight"><pre><span></span><code><span class="k">await</span><span class="w"> </span><span class="nx">initBootstrap</span><span class="p">();</span>
+<span class="k">await</span><span class="w"> </span><span class="nx">initApplication</span><span class="p">(</span><span class="nx">bootstrap</span><span class="p">);</span>
+</code></pre></div>
+<p>This will allow the application to use the specific WebAssembly module and the infrastructure provided by the bootstrap module.</p>
+<h3 id="server-configuration-tsservicets">Server Configuration (ts/service.ts)</h3>
+<p>After bootstrapping the application, the initialization process checks the environment variables.</p>
+<p>We have five environment variables that can be set to configure the server:</p>
+<ol>
+<li><code>process.env.DEPLOY</code>: set to <code>TRUE</code> if you want to interact with the zkWasm hub such as submitting tasks for your application.</li>
+<li><code>process.env.REMOTE</code>: set to <code>TRUE</code> if you want to get the latest merkle root from the latest proof generated by the zkWasm hub for your application.</li>
+<li><code>process.env.MIGRATE</code>: set to <code>TRUE</code> if you have upgraded your application and need to migrate your data.</li>
+<li><code>process.env.REDISHOST</code>: the host of the Redis server.</li>
+<li><code>process.env.TASKID</code>: the task id of your application, used for retrieving the latest proof generated by the zkWasm hub for your application.</li>
+</ol>
+<p>You can refer to the <a href="Quick%20Tutorial.html#restore-the-state">Restore the State</a> section in <a href="Quick%20Tutorial.html">Quick Tutorial</a> for more details about using these environment variables. You can either add those variables in the <code>.env</code> file or set them directly when you run the application in the terminal.</p>
+<h4 id="migrate">Migrate</h4>
+<p>First, the initialization process checks if the <code>migrate</code> environment variable is set to <code>TRUE</code>. If it is, it will proceed to migrate the data using the lastest merkle root from the proxy contract (the main contract of the <a href="https://github.com/DelphinusLab/zkWasm-protocol">zkWasm Protocol Contracts</a>).</p>
+<div class="highlight"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">migrate</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">remote</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="k">throw</span><span class="w"> </span><span class="ne">Error</span><span class="p">(</span><span class="s2">&quot;Can&#39;t migrate in remote mode&quot;</span><span class="p">);}</span><span class="w"> </span><span class="c1">// Can&#39;t migrate in remote mode because you have updated your application which has a different image hash.</span>
+<span class="w">    </span><span class="nx">merkle_root</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">getMerkleArray</span><span class="p">();</span><span class="w"> </span><span class="c1">// Get the merkle root from the proxy contract.</span>
+<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Migrate: updated merkle root&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">merkle_root</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>This will retrieve the lastest merkle root from the proxy contract via the <code>getMerkleArray</code> function:</p>
+<div class="highlight"><pre><span></span><code><span class="k">export</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">getMerkleArray</span><span class="p">()</span><span class="o">:</span><span class="w"> </span><span class="nb">Promise</span><span class="o">&lt;</span><span class="nb">BigUint64Array</span><span class="o">&gt;</span><span class="p">{</span>
+<span class="w">  </span><span class="c1">// Connect to the Proxy contract</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">proxy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">ethers</span><span class="p">.</span><span class="nx">Contract</span><span class="p">(</span><span class="nx">constants</span><span class="p">.</span><span class="nx">proxyAddress</span><span class="p">,</span><span class="w"> </span><span class="nx">abiData</span><span class="p">.</span><span class="nx">abi</span><span class="p">,</span><span class="w"> </span><span class="nx">provider</span><span class="p">);</span>
+<span class="w">  </span><span class="c1">// Fetch the proxy information</span>
+<span class="w">  </span><span class="kd">let</span><span class="w"> </span><span class="nx">proxyInfo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">proxy</span><span class="p">.</span><span class="nx">getProxyInfo</span><span class="p">();</span>
+<span class="w">  </span><span class="c1">// Extract the old Merkle root</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">oldRoot</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">proxyInfo</span><span class="p">.</span><span class="nx">merkle_root</span><span class="p">;</span>
+
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">convertToBigUint64Array</span><span class="p">(</span><span class="nx">oldRoot</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>In order to use the <code>getMerkleArray</code> function for migration, you need to set two more environment variables:</p>
+<ol>
+<li><code>process.env.SETTLEMENT_CONTRACT_ADDRESS</code>: the address of the proxy contract.</li>
+<li><code>process.env.RPC_PROVIDER</code>: the rpc provider of the blockchain that the proxy contract is deployed on.</li>
+</ol>
+<h4 id="restore">Restore</h4>
+<p>After the migration check, the initialization process will check if the <code>remote</code> environment variable is set to <code>TRUE</code>. If it is, it will proceed to restore the data using the lastest merkle root from the latest proof generated by the zkWasm hub for your application. </p>
+<div class="highlight"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">remote</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="kc">true</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">// Keep waiting until there are no uncompleted tasks on the zkWasm hub.</span>
+<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">hasTasks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">has_uncomplete_task</span><span class="p">();</span><span class="w"> </span><span class="c1">// Check if there are any uncompleted tasks on the zkWasm hub.</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">hasTasks</span><span class="p">)</span><span class="w"> </span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">                </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;remote = 1, There are uncompleted tasks. Trying again in 5 second...&quot;</span><span class="p">);</span>
+<span class="w">                </span><span class="k">await</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">Promise</span><span class="p">(</span><span class="nx">resolve</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">setTimeout</span><span class="p">(</span><span class="nx">resolve</span><span class="p">,</span><span class="w"> </span><span class="mf">5000</span><span class="p">));</span><span class="w"> </span><span class="c1">// Sleep for 5 second</span>
+<span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;remote = 1, No incomplete tasks. Proceeding...&quot;</span><span class="p">);</span>
+<span class="w">                </span><span class="k">break</span><span class="p">;</span><span class="w"> </span><span class="c1">// Exit the loop if there are no incomplete tasks</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">task</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">get_latest_proof</span><span class="p">(</span><span class="nx">taskid</span><span class="p">);</span><span class="w"> </span><span class="c1">// Get the latest proof from the zkWasm hub.</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">task</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">instances</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">ZkWasmUtil</span><span class="p">.</span><span class="nx">bytesToBN</span><span class="p">(</span><span class="nx">task</span><span class="o">?</span><span class="p">.</span><span class="nx">instances</span><span class="p">);</span>
+<span class="w">        </span><span class="nx">merkle_root</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">BigUint64Array</span><span class="p">([</span>
+<span class="w">            </span><span class="nb">BigInt</span><span class="p">(</span><span class="nx">instances</span><span class="p">[</span><span class="mf">4</span><span class="p">].</span><span class="nx">toString</span><span class="p">()),</span>
+<span class="w">            </span><span class="nb">BigInt</span><span class="p">(</span><span class="nx">instances</span><span class="p">[</span><span class="mf">5</span><span class="p">].</span><span class="nx">toString</span><span class="p">()),</span>
+<span class="w">            </span><span class="nb">BigInt</span><span class="p">(</span><span class="nx">instances</span><span class="p">[</span><span class="mf">6</span><span class="p">].</span><span class="nx">toString</span><span class="p">()),</span>
+<span class="w">            </span><span class="nb">BigInt</span><span class="p">(</span><span class="nx">instances</span><span class="p">[</span><span class="mf">7</span><span class="p">].</span><span class="nx">toString</span><span class="p">()),</span>
+<span class="w">        </span><span class="p">]);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>After the restore check, we could initialize the application with the merkle root, which will be used to restore or initialize the state of the application.</p>
+<div class="highlight"><pre><span></span><code><span class="nx">application</span><span class="p">.</span><span class="nx">initialize</span><span class="p">(</span><span class="nx">merkle_root</span><span class="p">);</span>
+</code></pre></div>
+<h3 id="sequencer-tsservicets">Sequencer (ts/service.ts)</h3>
+<p>After the initialization process, the server will start the sequencer to process the transactions. To ensure the state consistency and clean start of the server, the sequencer queue will be drained to prevent any previous tasks from being processed which may cause unexpected state.</p>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">myQueue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Queue</span><span class="p">(</span><span class="s1">&#39;sequencer&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="nx">connection</span><span class="p">});</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">waitingCount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">myQueue</span><span class="p">.</span><span class="nx">getWaitingCount</span><span class="p">();</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;waiting Count is:&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">waitingCount</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot; perform draining ...&quot;</span><span class="p">);</span>
+<span class="k">await</span><span class="w"> </span><span class="nx">myQueue</span><span class="p">.</span><span class="nx">drain</span><span class="p">();</span>
+<span class="k">this</span><span class="p">.</span><span class="nx">queue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">myQueue</span><span class="p">;</span>
+</code></pre></div>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p><strong><em>What is a Sequencer?</em></strong></p>
+<p>A sequencer is a component that manages the order of transactions in a blockchain or distributed system. It ensures that transactions are processed in a sequential manner, maintaining the integrity and consistency of the system's state.</p>
+</div>
+<h4 id="timetick-transaction">Timetick transaction</h4>
+<p>The sequencer handles the timetick function for the application. Timetick is a special type of system transaction that is automatically generated at regular intervals to drive time-dependent state transitions in the application. It can be used in time-related applications such as Game, DeFi (for interest calculations), or any application that requires periodic state updates.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// Check if application needs automatic ticking</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">application</span><span class="p">.</span><span class="nx">autotick</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Generate timetick transaction every 5 seconds</span>
+<span class="w">    </span><span class="nx">setInterval</span><span class="p">(</span><span class="k">async</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">await</span><span class="w"> </span><span class="nx">myQueue</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="s1">&#39;autoJob&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="nx">command</span><span class="o">:</span><span class="kt">0</span><span class="p">});</span>
+<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s1">&#39;Error adding automatic job to the queue:&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">error</span><span class="p">);</span>
+<span class="w">            </span><span class="nx">process</span><span class="p">.</span><span class="nx">exit</span><span class="p">(</span><span class="mf">1</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">},</span><span class="w"> </span><span class="mf">5000</span><span class="p">);</span><span class="w"> </span><span class="c1">// This can be set to any interval you want, the default is 5 seconds.</span>
+<span class="p">}</span>
+</code></pre></div>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>By default, the timetick interval is set to 5 seconds, you can change it here at the moment, we will provider better setting for the timetick interval in the future.</p>
+</div>
+<h4 id="transaction-processing-worker-implementation">Transaction Processing Worker Implementation</h4>
+<p>The sequencer worker serves as the core transaction processing engine in our zkWasm Mini Rollup system. It operates on a Redis-backed queue system using BullMQ (which you have seen in the <a href="#sequencer">Sequencer</a> main section), processing two distinct types of transactions:</p>
+<ol>
+<li>automatic timetick transactions, specified by <code>autoJob</code> (which we have mentioned in the <a href="#timetick-transaction">Timetick transaction</a> section)</li>
+<li>user-submitted transactions, specified by <code>transaction</code></li>
+</ol>
+<h5 id="automatic-timetick-transaction-flow">Automatic Timetick Transaction Flow</h5>
+<div class="highlight"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">job</span><span class="p">.</span><span class="nx">name</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s1">&#39;autoJob&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="nx">rand</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">generateRandomSeed</span><span class="p">();</span><span class="w"> </span><span class="c1">// Returns a seed commitment</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="nx">oldSeed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">application</span><span class="p">.</span><span class="nx">randSeed</span><span class="p">();</span><span class="w"> </span><span class="c1">// Returns the previous seed commitment</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="nx">seed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0n</span><span class="p">;</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">oldSeed</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0n</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">// If there is a previous seed commitment</span>
+<span class="w">            </span><span class="kd">const</span><span class="w"> </span><span class="nx">randRecord</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">modelRand</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span>
+<span class="w">                </span><span class="nx">commitment</span><span class="o">:</span><span class="w"> </span><span class="kt">oldSeed.toString</span><span class="p">(),</span>
+<span class="w">            </span><span class="p">});</span>
+<span class="w">            </span><span class="nx">seed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">randRecord</span><span class="p">[</span><span class="mf">0</span><span class="p">].</span><span class="nx">seed</span><span class="o">!</span><span class="p">.</span><span class="nx">readBigInt64LE</span><span class="p">();</span><span class="w"> </span><span class="c1">// Retrieve the previous seed from the database</span>
+<span class="w">        </span><span class="p">};</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="nx">signature</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">sign</span><span class="p">(</span><span class="ow">new</span><span class="w"> </span><span class="nb">BigUint64Array</span><span class="p">([</span><span class="mi">0n</span><span class="p">,</span><span class="w"> </span><span class="nx">seed</span><span class="p">,</span><span class="w"> </span><span class="nx">rand</span><span class="p">,</span><span class="w"> </span><span class="mi">0n</span><span class="p">]),</span><span class="w"> </span><span class="nx">get_server_admin_key</span><span class="p">());</span><span class="w"> </span><span class="c1">// Create an admin-signed transaction combining the seed and the generated commitment</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="nx">u64array</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">signature_to_u64array</span><span class="p">(</span><span class="nx">signature</span><span class="p">);</span>
+<span class="w">        </span><span class="nx">application</span><span class="p">.</span><span class="nx">handle_tx</span><span class="p">(</span><span class="nx">u64array</span><span class="p">);</span><span class="w"> </span><span class="c1">// Execute the transaction in local</span>
+<span class="w">        </span><span class="k">await</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">install_transactions</span><span class="p">(</span><span class="nx">signature</span><span class="p">,</span><span class="w"> </span><span class="nx">job</span><span class="p">.</span><span class="nx">id</span><span class="p">);</span><span class="w"> </span><span class="c1">//Install transaction into rollup</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;fatal: handling auto tick error, process will terminate.&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">error</span><span class="p">);</span>
+<span class="w">        </span><span class="nx">process</span><span class="p">.</span><span class="nx">exit</span><span class="p">(</span><span class="mf">1</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>When processing an autoJob, the system follows these steps:</p>
+<ol>
+<li>Generates a new random seed and returns its commitment.</li>
+<li>If there is a previous seed commitment, retrieves the previous seed.</li>
+<li>Creates an admin-signed transaction combining the seed and the generated commitment.</li>
+<li>Executes the transaction and updates the system state</li>
+</ol>
+<h5 id="user-transaction-flow">User Transaction Flow</h5>
+<div class="highlight"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">job</span><span class="p">.</span><span class="nx">name</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s1">&#39;transaction&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;handle transaction ...&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="nx">signature</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">job</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">value</span><span class="p">;</span><span class="w"> </span><span class="c1">// Get the transaction signature</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="nx">u64array</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">signature_to_u64array</span><span class="p">(</span><span class="nx">signature</span><span class="p">);</span>
+<span class="w">        </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;tx data&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">signature</span><span class="p">);</span>
+<span class="w">        </span><span class="nx">application</span><span class="p">.</span><span class="nx">verify_tx_signature</span><span class="p">(</span><span class="nx">u64array</span><span class="p">);</span><span class="w"> </span><span class="c1">// Verify the transaction signature</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="nx">error</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">application</span><span class="p">.</span><span class="nx">handle_tx</span><span class="p">(</span><span class="nx">u64array</span><span class="p">);</span><span class="w"> </span><span class="c1">// Execute the transaction</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">error</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mf">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="c1">// make sure install transaction will succeed</span>
+<span class="w">            </span><span class="k">await</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">install_transactions</span><span class="p">(</span><span class="nx">signature</span><span class="p">,</span><span class="w"> </span><span class="nx">job</span><span class="p">.</span><span class="nx">id</span><span class="p">);</span>
+<span class="w">            </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="kd">const</span><span class="w"> </span><span class="nx">jobRecord</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">modelJob</span><span class="p">({</span>
+<span class="w">                    </span><span class="nx">jobId</span><span class="o">:</span><span class="w"> </span><span class="kt">signature.sigx</span><span class="p">,</span>
+<span class="w">                    </span><span class="nx">message</span><span class="o">:</span><span class="w"> </span><span class="kt">signature.message</span><span class="p">,</span>
+<span class="w">                    </span><span class="nx">result</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;succeed&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="p">});</span>
+<span class="w">                </span><span class="k">await</span><span class="w"> </span><span class="nx">jobRecord</span><span class="p">.</span><span class="nx">save</span><span class="p">();</span>
+<span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="nx">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Error: store transaction job error&quot;</span><span class="p">);</span>
+<span class="w">                </span><span class="k">throw</span><span class="w"> </span><span class="nx">e</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="kd">let</span><span class="w"> </span><span class="nx">errorMsg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">application</span><span class="p">.</span><span class="nx">decode_error</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span><span class="w"> </span><span class="c1">// Decode the transaction error</span>
+<span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="ne">Error</span><span class="p">(</span><span class="nx">errorMsg</span><span class="p">)</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;done&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">pkx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">LeHexBN</span><span class="p">(</span><span class="nx">job</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">value</span><span class="p">.</span><span class="nx">pkx</span><span class="p">).</span><span class="nx">toU64Array</span><span class="p">();</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="nx">jstr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">application</span><span class="p">.</span><span class="nx">get_state</span><span class="p">(</span><span class="nx">pkx</span><span class="p">);</span><span class="w"> </span><span class="c1">// Get the updated player state</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="nx">player</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">jstr</span><span class="p">);</span><span class="w"> </span><span class="c1">// Parse the state into a JSON object</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="nx">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">player</span><span class="o">:</span><span class="w"> </span><span class="kt">player</span><span class="p">,</span>
+<span class="w">            </span><span class="nx">state</span><span class="o">:</span><span class="w"> </span><span class="kt">snapshot</span>
+<span class="w">        </span><span class="p">};</span><span class="w"> </span><span class="c1">// Return the updated player state and system snapshot</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">result</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="nx">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">throw</span><span class="w"> </span><span class="nx">e</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>For user-submitted transactions, the process includes:</p>
+<ol>
+<li>Signature verification using application-specific logic</li>
+<li>Transaction execution with error checking</li>
+<li>State updates and job record maintenance</li>
+<li>Return of updated player state and system snapshot</li>
+</ol>
+<p>The system maintains transaction atomicity through careful error handling and database transaction management.</p>
+<h4 id="transaction-installation-rollup">Transaction Installation (Rollup)</h4>
+<p>After verifying the signature, the sequencer will install the transaction into the rollup. Let's delve into the <code>install_transactions</code> function.</p>
+<p>The function begins by adding the transaction to the witness array and triggering necessary callbacks:</p>
+<p><div class="highlight"><pre><span></span><code><span class="nx">transactions_witness</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">tx</span><span class="p">);</span>
+<span class="k">this</span><span class="p">.</span><span class="nx">txCallback</span><span class="p">(</span><span class="nx">tx</span><span class="p">);</span>
+<span class="nx">snapshot</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">application</span><span class="p">.</span><span class="nx">snapshot</span><span class="p">());</span>
+</code></pre></div>
+This process captures the current state and prepares for persistence. The transaction is then stored in the database using a dedicated transaction model:
+<div class="highlight"><pre><span></span><code>const txRecord = new modelTx(tx);
+txRecord.save();
+</code></pre></div>
+When the rollup reaches its preemption point, indicating a batch is ready for processing, the system initiates the proof generation process:</p>
+<div class="highlight"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">application</span><span class="p">.</span><span class="nx">preempt</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;rollup reach its preemption point, generating proof:&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">txdata</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">application</span><span class="p">.</span><span class="nx">finalize</span><span class="p">();</span><span class="w"> </span><span class="c1">// This will perform flush_settlement and return the transaction data</span>
+<span class="w">    </span><span class="p">...</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>In deployment mode, the system submits the proof task and creates a bundle record linking the Merkle root with the task ID:</p>
+<div class="highlight"><pre><span></span><code><span class="kd">let</span><span class="w"> </span><span class="nx">task_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">submitProofWithRetry</span><span class="p">(</span><span class="nx">merkle_root</span><span class="p">,</span><span class="w"> </span><span class="nx">transactions_witness</span><span class="p">,</span><span class="w"> </span><span class="nx">txdata</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">bundleRecord</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">modelBundle</span><span class="p">({</span>
+<span class="w">    </span><span class="nx">merkleRoot</span><span class="o">:</span><span class="w"> </span><span class="kt">merkleRootToBeHexString</span><span class="p">(</span><span class="nx">merkle_root</span><span class="p">),</span>
+<span class="w">    </span><span class="nx">taskId</span><span class="o">:</span><span class="w"> </span><span class="kt">task_id</span><span class="p">,</span>
+<span class="p">});</span>
+</code></pre></div>
+<p>After successful task submission, the system performs a complete state reset through the updated merkle root:</p>
+<div class="highlight"><pre><span></span><code><span class="nx">transactions_witness</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">Array</span><span class="p">();</span>
+<span class="nx">merkle_root</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">application</span><span class="p">.</span><span class="nx">query_root</span><span class="p">();</span>
+<span class="k">await</span><span class="w"> </span><span class="p">(</span><span class="nx">initApplication</span><span class="w"> </span><span class="kr">as</span><span class="w"> </span><span class="nx">any</span><span class="p">)(</span><span class="nx">bootstrap</span><span class="p">);</span>
+<span class="nx">application</span><span class="p">.</span><span class="nx">initialize</span><span class="p">(</span><span class="nx">merkle_root</span><span class="p">);</span>
+</code></pre></div>
+<h3 id="serve-endpoints-tsservicets">Serve Endpoints (ts/service.ts)</h3>
+<p>Once the WASM application is initialized, we start the minirollup PRC server using nodejs express. It contains four endpoints.</p>
+<ol>
+<li>
+<p>query: This endpoint allows user to query their current state and the game public state:
+<div class="highlight"><pre><span></span><code><span class="nx">app</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">&#39;/query&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">;</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">value</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="mf">400</span><span class="p">).</span><span class="nx">send</span><span class="p">(</span><span class="s1">&#39;Value is required&#39;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">pkx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">LeHexBN</span><span class="p">(</span><span class="nx">value</span><span class="p">.</span><span class="nx">pkx</span><span class="p">).</span><span class="nx">toU64Array</span><span class="p">();</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="nx">u64array</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">BigUint64Array</span><span class="p">(</span><span class="mf">4</span><span class="p">);</span>
+<span class="w">        </span><span class="nx">u64array</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="nx">pkx</span><span class="p">);</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="nx">jstr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">application</span><span class="p">.</span><span class="nx">get_state</span><span class="p">(</span><span class="nx">pkx</span><span class="p">);</span><span class="w">   </span><span class="c1">// here we use the get_state function from application wasm binary</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="nx">player</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">jstr</span><span class="p">);</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="nx">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">player</span><span class="o">:</span><span class="w"> </span><span class="kt">player</span><span class="p">,</span>
+<span class="w">            </span><span class="nx">state</span><span class="o">:</span><span class="w"> </span><span class="kt">snapshot</span>
+<span class="w">        </span><span class="p">};</span>
+<span class="w">        </span><span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="mf">201</span><span class="p">).</span><span class="nx">send</span><span class="p">({</span>
+<span class="w">            </span><span class="nx">success</span><span class="o">:</span><span class="w"> </span><span class="kt">true</span><span class="p">,</span>
+<span class="w">            </span><span class="nx">data</span><span class="o">:</span><span class="w"> </span><span class="kt">JSON.stringify</span><span class="p">(</span><span class="nx">result</span><span class="p">),</span>
+<span class="w">        </span><span class="p">});</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="mf">500</span><span class="p">).</span><span class="nx">send</span><span class="p">(</span><span class="s1">&#39;Get Status Error&#39;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div></p>
+</li>
+<li>
+<p>send: An endpoint handles user transactions.
+<div class="highlight"><pre><span></span><code><span class="nx">app</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">&#39;/send&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">;</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">value</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="mf">400</span><span class="p">).</span><span class="nx">send</span><span class="p">(</span><span class="s1">&#39;Value is required&#39;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">msg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">LeHexBN</span><span class="p">(</span><span class="nx">value</span><span class="p">.</span><span class="nx">msg</span><span class="p">);</span>
+<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">pkx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">LeHexBN</span><span class="p">(</span><span class="nx">value</span><span class="p">.</span><span class="nx">pkx</span><span class="p">);</span>
+<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">pky</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">LeHexBN</span><span class="p">(</span><span class="nx">value</span><span class="p">.</span><span class="nx">pky</span><span class="p">);</span>
+<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">sigx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">LeHexBN</span><span class="p">(</span><span class="nx">value</span><span class="p">.</span><span class="nx">sigx</span><span class="p">);</span>
+<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">sigy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">LeHexBN</span><span class="p">(</span><span class="nx">value</span><span class="p">.</span><span class="nx">sigy</span><span class="p">);</span>
+<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">sigr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">LeHexBN</span><span class="p">(</span><span class="nx">value</span><span class="p">.</span><span class="nx">sigr</span><span class="p">);</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">verify_sign</span><span class="p">(</span><span class="nx">msg</span><span class="p">,</span><span class="w"> </span><span class="nx">pkx</span><span class="p">,</span><span class="w"> </span><span class="nx">pky</span><span class="p">,</span><span class="w"> </span><span class="nx">sigx</span><span class="p">,</span><span class="w"> </span><span class="nx">sigy</span><span class="p">,</span><span class="w"> </span><span class="nx">sigr</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">false</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="mf">500</span><span class="p">).</span><span class="nx">send</span><span class="p">(</span><span class="s1">&#39;Invalid signature&#39;</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="kd">const</span><span class="w"> </span><span class="nx">job</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">myQueue</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="s1">&#39;transaction&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">value</span><span class="w"> </span><span class="p">});</span>
+<span class="w">            </span><span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="mf">201</span><span class="p">).</span><span class="nx">send</span><span class="p">({</span>
+<span class="w">                </span><span class="nx">success</span><span class="o">:</span><span class="w"> </span><span class="kt">true</span><span class="p">,</span>
+<span class="w">                </span><span class="nx">jobid</span><span class="o">:</span><span class="w"> </span><span class="kt">job.id</span>
+<span class="w">            </span><span class="p">});</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="mf">500</span><span class="p">).</span><span class="nx">send</span><span class="p">(</span><span class="s1">&#39;Failed to add job to the queue&#39;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div>
+This endpoint will add transactions into the global job sequencer where each job is handled via the exposed wasm function <code>handle_tx</code>.</p>
+</li>
+<li>
+<p>config: An endpoint that returns all static configuration of the application.
+<div class="highlight"><pre><span></span><code><span class="nx">app</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">&#39;/config&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="nx">jstr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">application</span><span class="p">.</span><span class="nx">get_config</span><span class="p">();</span>
+<span class="w">        </span><span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="mf">201</span><span class="p">).</span><span class="nx">send</span><span class="p">({</span>
+<span class="w">            </span><span class="nx">success</span><span class="o">:</span><span class="w"> </span><span class="kt">true</span><span class="p">,</span>
+<span class="w">            </span><span class="nx">data</span><span class="o">:</span><span class="w"> </span><span class="kt">jstr</span>
+<span class="w">        </span><span class="p">});</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="mf">500</span><span class="p">).</span><span class="nx">send</span><span class="p">(</span><span class="s1">&#39;Get Status Error&#39;</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">});</span>
+</code></pre></div></p>
+</li>
+<li>
+<p>jobId: An endpoint allows user to query the job information by jobId.
+<div class="highlight"><pre><span></span><code><span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/job/:id&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="nx">jobId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">params</span><span class="p">.</span><span class="nx">id</span><span class="p">;</span>
+<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">job</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">Job</span><span class="p">.</span><span class="nx">fromId</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">queue</span><span class="o">!</span><span class="p">,</span><span class="w"> </span><span class="nx">jobId</span><span class="p">);</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="mf">201</span><span class="p">).</span><span class="nx">json</span><span class="p">(</span><span class="nx">job</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// job not tracked</span>
+<span class="w">        </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
+<span class="w">        </span><span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="mf">500</span><span class="p">).</span><span class="nx">json</span><span class="p">({</span><span class="w"> </span><span class="nx">message</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="w"> </span><span class="kr">as</span><span class="w"> </span><span class="ne">Error</span><span class="p">).</span><span class="nx">toString</span><span class="p">()});</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div></p>
+</li>
+</ol>
+<p>Those endpoints are wrapped into RPC methods in <a href="https://github.com/DelphinusLab/zkwasm-mini-rollup/blob/main/ts/src/rpc.ts">ts/src/rpc.ts</a> which can be used by any client to interact with the zkWasm Mini Rollup Application and you can find usage examples in <a href="Quick%20Tutorial.html#player-class">Quick Tutorial</a>.</p>
+<h3 id="server-admin-operations-tsinit_adminjs">Server Admin Operations (ts/init_admin.js)</h3>
+<p>When changing the state of the rollup, some operations are only allowed for the server admin. For example, only the admin can perform timetick or deposit functions.</p>
+<p>In your root directory, you can add the .env file which can specify the admin private key as:</p>
+<div class="highlight"><pre><span></span><code>SERVER_ADMIN_KEY = YOUR_ADMIN_PRIVATE_KEY
+</code></pre></div>
+<p>In the Makefile of <a href="https://github.com/DelphinusLab/zkwasm-mini-rollup/blob/main/helloworld/Makefile">helloworld rollup</a>, you can find the following commands:</p>
+<div class="highlight"><pre><span></span><code>./src/admin.pubkey:<span class="w"> </span>./ts/node_modules/zkwasm-ts-server/src/init_admin.js
+<span class="w">    </span>node<span class="w"> </span>./ts/node_modules/zkwasm-ts-server/src/init_admin.js<span class="w"> </span>./src/admin.pubkey
+</code></pre></div>
+<p>This command will generate the admin.pubkey file by using the <code>init_admin.js</code> script, which is used to initialize the admin public key drived from the admin private key. </p>
+<p>Then, in your config.rs of the application, you can specify the admin public key as:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// In src/config.rs</span>
+<span class="n">lazy_static</span><span class="p">::</span><span class="n">lazy_static</span><span class="o">!</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">ref</span><span class="w"> </span><span class="n">ADMIN_PUBKEY</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="kt">u64</span><span class="p">;</span><span class="w"> </span><span class="mi">4</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">bytes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="fm">include_bytes!</span><span class="p">(</span><span class="s">&quot;./admin.prikey&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="c1">// Interpret the bytes as an array of u64</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">u64s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">unsafe</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">std</span><span class="p">::</span><span class="n">slice</span><span class="p">::</span><span class="n">from_raw_parts</span><span class="p">(</span><span class="n">bytes</span><span class="p">.</span><span class="n">as_ptr</span><span class="p">()</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="o">*</span><span class="k">const</span><span class="w"> </span><span class="kt">u64</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="p">};</span>
+<span class="w">        </span><span class="n">u64s</span><span class="p">.</span><span class="n">try_into</span><span class="p">().</span><span class="n">unwrap</span><span class="p">()</span>
+<span class="w">    </span><span class="p">};</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>When you need it, you can import the admin public key as:</p>
+<div class="highlight"><pre><span></span><code><span class="k">use</span><span class="w"> </span><span class="k">crate</span><span class="p">::</span><span class="n">config</span><span class="p">::</span><span class="n">ADMIN_PUBKEY</span><span class="p">;</span>
+</code></pre></div>
+<p>When handling the user command including admin operatuons, you can use it like:
+<div class="highlight"><pre><span></span><code><span class="w">  </span><span class="n">COMMAND</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">unsafe</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">require</span><span class="p">(</span><span class="o">*</span><span class="n">pkey</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="o">*</span><span class="n">ADMIN_PUBKEY</span><span class="p">)</span><span class="w"> </span><span class="p">};</span><span class="w"> </span><span class="c1">// check if the command is from the admin</span>
+<span class="w">    </span><span class="o">..</span><span class="p">.</span><span class="w"> </span><span class="c1">// handle admin operations</span>
+<span class="w">  </span><span class="p">}</span>
+</code></pre></div></p>
+<p>You can find more concrete examples in the state implementation of <a href="https://github.com/riddles-are-us/zkwasm-automata/blob/main/src/state.rs">automata game</a>.</p>
+<h3 id="settlement-tssettlets">Settlement (ts/settle.ts)</h3>
+<p>The settlement module handles the crucial process of finalizing transactions on the blockchain. It verifies proofs and processes withdrawals through a series of carefully orchestrated steps.</p>
+<h4 id="environment-setup">Environment Setup</h4>
+<p>In order to run the settle.ts script, you need to firstly set enviroment variables in .env in the root directory of your application:</p>
+<div class="highlight"><pre><span></span><code>SETTLER_PRIVATE_ACCOUNT = YOUR_PRIVATE_ACCOUNT_PRIVATE_KEY
+SETTLEMENT_CONTRACT_ADDRESS = YOUR_SETTLEMENT_CONTRACT_ADDRESS
+IMAGE = YOUR_IMAGE_HASH
+</code></pre></div>
+<p>In settle.ts:</p>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">signer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">ethers</span><span class="p">.</span><span class="nx">Wallet</span><span class="p">(</span><span class="nx">get_settle_private_account</span><span class="p">(),</span><span class="w"> </span><span class="nx">provider</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">constants</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">proxyAddress</span><span class="o">:</span><span class="w"> </span><span class="kt">get_contract_addr</span><span class="p">(),</span>
+<span class="p">};</span>
+</code></pre></div>
+<h4 id="settlement-process">Settlement Process</h4>
+<p>Here's the main settlement function that:</p>
+<ol>
+<li>Retrieves the current Merkle root</li>
+<li>Fetches associated proof data</li>
+<li>Verifies and submits the proof to the blockchain</li>
+<li>Checks if the transaction is successful and updates the record</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">trySettle</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">merkleRoot</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">getMerkle</span><span class="p">();</span><span class="w"> </span><span class="c1">// get the merkle root from the proxy contract</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">record</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">modelBundle</span><span class="p">.</span><span class="nx">findOne</span><span class="p">({</span><span class="w"> </span><span class="nx">merkleRoot</span><span class="o">:</span><span class="w"> </span><span class="kt">merkleRoot</span><span class="p">});</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">record</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Fetch and verify proof</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="nx">data0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">getTaskWithTimeout</span><span class="p">(</span><span class="nx">taskId</span><span class="p">,</span><span class="w"> </span><span class="mf">60000</span><span class="p">);</span>
+
+<span class="w">        </span><span class="c1">// get the proof data with verification instances</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="nx">shadowInstances</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">data0</span><span class="p">.</span><span class="nx">shadow_instances</span><span class="p">;</span><span class="w"> </span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="nx">batchInstances</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">data0</span><span class="p">.</span><span class="nx">batch_instances</span><span class="p">;</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="nx">proofArr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">U8ArrayUtil</span><span class="p">(</span><span class="nx">data0</span><span class="p">.</span><span class="nx">proof</span><span class="p">).</span><span class="nx">toNumber</span><span class="p">();</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="nx">auxArr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">U8ArrayUtil</span><span class="p">(</span><span class="nx">data0</span><span class="p">.</span><span class="nx">aux</span><span class="p">).</span><span class="nx">toNumber</span><span class="p">();</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="nx">verifyInstancesArr</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="nx">shadowInstances</span><span class="p">.</span><span class="nx">length</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="mf">0</span>
+<span class="w">        </span><span class="o">?</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">U8ArrayUtil</span><span class="p">(</span><span class="nx">batchInstances</span><span class="p">).</span><span class="nx">toNumber</span><span class="p">()</span>
+<span class="w">        </span><span class="o">:</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">U8ArrayUtil</span><span class="p">(</span><span class="nx">shadowInstances</span><span class="p">).</span><span class="nx">toNumber</span><span class="p">();</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="nx">instArr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">U8ArrayUtil</span><span class="p">(</span><span class="nx">data0</span><span class="p">.</span><span class="nx">instances</span><span class="p">).</span><span class="nx">toNumber</span><span class="p">();</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="nx">txData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">Uint8Array</span><span class="p">(</span><span class="nx">data0</span><span class="p">.</span><span class="nx">input_context</span><span class="p">);</span>
+
+<span class="w">        </span><span class="c1">// Process proof data</span>
+<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">proxy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">ethers</span><span class="p">.</span><span class="nx">Contract</span><span class="p">(</span><span class="nx">constants</span><span class="p">.</span><span class="nx">proxyAddress</span><span class="p">,</span><span class="w"> </span><span class="nx">abiData</span><span class="p">.</span><span class="nx">abi</span><span class="p">,</span><span class="w"> </span><span class="nx">signer</span><span class="p">);</span>
+<span class="w">        </span><span class="c1">// Submit verification transaction</span>
+<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">tx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">proxy</span><span class="p">.</span><span class="nx">verify</span><span class="p">(</span><span class="nx">txData</span><span class="p">,</span><span class="w"> </span><span class="nx">proofArr</span><span class="p">,</span><span class="w"> </span><span class="nx">verifyInstancesArr</span><span class="p">,</span><span class="w"> </span><span class="nx">auxArr</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nx">instArr</span><span class="p">]);</span>
+<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">receipt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">tx</span><span class="p">.</span><span class="nx">wait</span><span class="p">();</span>
+<span class="w">        </span><span class="p">....</span><span class="w"> </span><span class="c1">// check the receipt</span>
+<span class="w">        </span><span class="c1">//update record</span>
+<span class="w">        </span><span class="nx">record</span><span class="p">.</span><span class="nx">settleTxHash</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">tx</span><span class="p">.</span><span class="nx">hash</span><span class="p">;</span>
+<span class="w">        </span><span class="nx">record</span><span class="p">.</span><span class="nx">settleStatus</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">status</span><span class="p">;</span>
+<span class="w">        </span><span class="k">await</span><span class="w"> </span><span class="nx">record</span><span class="p">.</span><span class="nx">save</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>You can run the settle.ts script by:</p>
+<div class="highlight"><pre><span></span><code>node<span class="w"> </span>ts/settle.ts
+</code></pre></div>
+<p>And this will continueously check the proof and settle the transactions every 60 seconds:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// start monitoring and settle</span>
+<span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="kc">true</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">await</span><span class="w"> </span><span class="nx">trySettle</span><span class="p">();</span>
+<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s2">&quot;Error during trySettle:&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">error</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">     </span><span class="k">await</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">Promise</span><span class="p">(</span><span class="nx">resolve</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">setTimeout</span><span class="p">(</span><span class="nx">resolve</span><span class="p">,</span><span class="w"> </span><span class="mf">60000</span><span class="p">));</span>
+<span class="w"> </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="proof-task-debugging-tsreproducets">Proof Task Debugging (ts/reproduce.ts)</h3>
+<p>This module provides functionality to debug and reproduce zkWASM proof tasks by recreating their execution environment. It's particularly useful for investigating failed proof generations or verifying proof task behavior. </p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>To reproduce the proof task, you need to have the <a href="https://github.com/DelphinusLab/zkWasm">zkWasm Project</a> Installed.</p>
+</div>
+<h4 id="task-retrieval">Task Retrieval</h4>
+<p>In order to reproduce the proof task, you need to retrieve the task information from the service.</p>
+<div class="highlight"><pre><span></span><code><span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">getTask</span><span class="p">(</span><span class="nx">taskid</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">queryParams</span><span class="o">:</span><span class="w"> </span><span class="kt">QueryParams</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="kt">taskid</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">tasktype</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Prove&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">taskstatus</span><span class="o">:</span><span class="w"> </span><span class="kt">null</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">user_address</span><span class="o">:</span><span class="w"> </span><span class="kt">null</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">md5</span><span class="o">:</span><span class="w"> </span><span class="kt">null</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">total</span><span class="o">:</span><span class="w"> </span><span class="kt">1</span><span class="p">,</span>
+<span class="w">    </span><span class="p">};</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="k">await</span><span class="w"> </span><span class="nx">ServiceHelper</span><span class="p">.</span><span class="nx">loadTasks</span><span class="p">(</span><span class="nx">queryParams</span><span class="p">)).</span><span class="nx">data</span><span class="p">[</span><span class="mf">0</span><span class="p">];</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>This code can fetch detailed task information from the service, including:</p>
+<ul>
+<li>Public and private inputs</li>
+<li>Task status and metadata</li>
+</ul>
+<h4 id="replay-the-task">Replay the Task</h4>
+<p>When performing the proof task, you can use the following code to replay the task:</p>
+<div class="highlight"><pre><span></span><code><span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">replay</span><span class="p">(</span><span class="nx">taskId</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">data0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">getTask</span><span class="p">(</span><span class="nx">taskId</span><span class="p">);</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">public_inputs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">data0</span><span class="p">.</span><span class="nx">public_inputs</span><span class="p">;</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">private_inputs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">data0</span><span class="p">.</span><span class="nx">private_inputs</span><span class="p">;</span>
+<span class="w">  </span><span class="p">...</span><span class="w"> </span><span class="c1">// handle the task</span>
+<span class="p">}</span>
+</code></pre></div>
+<h5 id="environment-setup_1">Environment Setup</h5>
+<p><div class="highlight"><pre><span></span><code><span class="nx">fs</span><span class="p">.</span><span class="nx">writeFileSync</span><span class="p">(</span><span class="s1">&#39;run-image.sh&#39;</span><span class="p">,</span><span class="w"> </span><span class="sb">`CLI=$HOME/zkWasm/target/release/zkwasm-cli\n`</span><span class="p">);</span>
+<span class="nx">fs</span><span class="p">.</span><span class="nx">appendFileSync</span><span class="p">(</span><span class="s1">&#39;run-image.sh&#39;</span><span class="p">,</span><span class="w"> </span><span class="sb">`PARAMS=$HOME/zkWasm/params\n`</span><span class="p">);</span>
+</code></pre></div>
+The above code: </p>
+<ul>
+<li>CLI: Defines the path to the zkWASM CLI executable</li>
+<li>PARAMS: Specifies the parameter directory containing necessary proving parameters</li>
+</ul>
+<h5 id="file-configuration">File Configuration</h5>
+<div class="highlight"><pre><span></span><code><span class="nx">fs</span><span class="p">.</span><span class="nx">appendFileSync</span><span class="p">(</span><span class="s1">&#39;run-image.sh&#39;</span><span class="p">,</span><span class="w"> </span><span class="sb">`IMAGE=image.wasm\n`</span><span class="p">);</span>
+<span class="nx">fs</span><span class="p">.</span><span class="nx">appendFileSync</span><span class="p">(</span><span class="s1">&#39;run-image.sh&#39;</span><span class="p">,</span><span class="w"> </span><span class="sb">`OUTPUT=output\n`</span><span class="p">);</span>
+</code></pre></div>
+<p>The above code:</p>
+<ul>
+<li>IMAGE: Specifies the WASM binary to be executed</li>
+<li>OUTPUT: Defines the directory for proof generation output</li>
+</ul>
+<h5 id="cli-command-construction">CLI Command Construction</h5>
+<div class="highlight"><pre><span></span><code><span class="nx">fs</span><span class="p">.</span><span class="nx">appendFileSync</span><span class="p">(</span><span class="s1">&#39;run-image.sh&#39;</span><span class="p">,</span><span class="w"> </span><span class="sb">`$CLI --params $PARAMS test dry-run --wasm $IMAGE \\\n`</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;utf-8&#39;</span><span class="p">);</span>
+</code></pre></div>
+<p>The above code constructs the base command with:</p>
+<ul>
+<li>test dry-run: Executes in test mode for debugging</li>
+<li>--params: Points to proving parameters</li>
+<li>--wasm: Specifies the WASM image to execute</li>
+</ul>
+<h5 id="input-parameters">Input Parameters</h5>
+<p><div class="highlight"><pre><span></span><code><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kd">const</span><span class="w"> </span><span class="nx">p</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nx">public_inputs</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">fs</span><span class="p">.</span><span class="nx">appendFileSync</span><span class="p">(</span><span class="s1">&#39;run-image.sh&#39;</span><span class="p">,</span><span class="w"> </span><span class="sb">`--public </span><span class="si">${</span><span class="nx">p</span><span class="si">}</span><span class="sb"> \\\n`</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;utf-8&#39;</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kd">const</span><span class="w"> </span><span class="nx">p</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nx">private_inputs</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">fs</span><span class="p">.</span><span class="nx">appendFileSync</span><span class="p">(</span><span class="s1">&#39;run-image.sh&#39;</span><span class="p">,</span><span class="w"> </span><span class="sb">`--private </span><span class="si">${</span><span class="nx">p</span><span class="si">}</span><span class="sb"> \\\n`</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;utf-8&#39;</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+The above code appends the public and private inputs to the CLI command.</p>
+<h5 id="output-configuration">Output Configuration</h5>
+<p><div class="highlight"><pre><span></span><code><span class="nx">fs</span><span class="p">.</span><span class="nx">appendFileSync</span><span class="p">(</span><span class="s1">&#39;run-image.sh&#39;</span><span class="p">,</span><span class="w"> </span><span class="sb">`--output $OUTPUT`</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;utf-8&#39;</span><span class="p">);</span>
+</code></pre></div>
+The above code specifies the output directory for proof generation.</p>
+<p>The resulting script will look something like:
+<div class="highlight"><pre><span></span><code><span class="nv">CLI</span><span class="o">=</span><span class="nv">$HOME</span>/zkWasm/target/release/zkwasm-cli
+<span class="nv">PARAMS</span><span class="o">=</span><span class="nv">$HOME</span>/zkWasm/params
+<span class="nv">IMAGE</span><span class="o">=</span>image.wasm
+<span class="nv">OUTPUT</span><span class="o">=</span>output
+<span class="nv">$CLI</span><span class="w"> </span>--params<span class="w"> </span><span class="nv">$PARAMS</span><span class="w"> </span><span class="nb">test</span><span class="w"> </span>dry-run<span class="w"> </span>--wasm<span class="w"> </span><span class="nv">$IMAGE</span><span class="w"> </span><span class="se">\</span>
+--public<span class="w"> </span>&lt;public_input_1&gt;<span class="w"> </span><span class="se">\</span>
+--public<span class="w"> </span>&lt;public_input_2&gt;<span class="w"> </span><span class="se">\</span>
+--private<span class="w"> </span>&lt;private_input_1&gt;<span class="w"> </span><span class="se">\</span>
+--private<span class="w"> </span>&lt;private_input_2&gt;<span class="w"> </span><span class="se">\</span>
+--output<span class="w"> </span><span class="nv">$OUTPUT</span>
+</code></pre></div></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": ".", "features": ["navigation.instant", "navigation.tracking", "navigation.sections", "navigation.expand", "navigation.top", "search.suggest", "content.code.copy", "search.highlight"], "search": "assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+    
+  </body>
+</html>
