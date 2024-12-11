@@ -372,8 +372,10 @@ async initialize() {
 }
 ```
 
+It bootstraps WASM by implementing zkWasm's host interfaces which are another WASM image that is preloaded before loading the main WASM image. The implementation of these host APIs can be found in ts/src/bootstrap/ which is compiled from the rust bootstrap code in host directory.
+
 ### Bootstrap (ts/bootstrap)
-The Bootstrap system in zkWasm Mini Rollup serves as the critical bridge between the TypeScript service layer and the WebAssembly-based host environment. It provides the necessary bindings and initialization logic to enable seamless communication between different components of the system.
+The Bootstrap process, as mentioned above, serves as the critical bridge between the service layer and the WebAssembly-based host environment. It provides the necessary bindings and initialization logic to enable seamless communication between different components.
 
 ```
 bootstrap/
@@ -385,7 +387,7 @@ bootstrap/
 ``` 
 
 #### Host Function Bindings
-The bootstrap system directly interfaces with the host environment (/host directory) by providing TypeScript bindings for the core host functions:
+The bootstrap directly interfaces with the host environment (/host directory) by providing TypeScript bindings for the core host functions:
 
 ```
 // Host function bindings examples
@@ -403,6 +405,8 @@ pub fn cache_set_mode(mode: u64) { ... }
 pub fn cache_store_data(data: u64) { ... }
 pub fn cache_fetch_data() -> u64 { ... }
 ```
+
+And the bootstrap will be compiled into WASM binary and preloaded before loading the main WASM image to provide the host functions for the application.
 
 #### Database Operations
 The zkWasm Mini Rollup system implements a multi-layered RPC architecture for database operations, consisting of three main components:
@@ -727,7 +731,7 @@ application.initialize(merkle_root);
 
 ### Serve Endpoints (ts/service.ts)
 
-Once the WASM application is initialized, we start the minirollup PRC server using nodejs express. It contains four endpoints.
+Once the main WASM application is initialized, we start the minirollup PRC server using nodejs express. It contains four endpoints.
 
 1. query: This endpoint allows user to query their current state and the game public state:
 ```ts
@@ -874,7 +878,7 @@ When handling the user command including admin operatuons, you can use it like:
 You can find more concrete examples in the state implementation of [automata game](https://github.com/riddles-are-us/zkwasm-automata/blob/main/src/state.rs).
 
 
-### Settlement (ts/settle.ts)
+### Rollup Settlement Monitor (ts/settle.ts)
 The settlement module handles the crucial process of finalizing transactions on the blockchain. It verifies proofs and processes withdrawals through a series of carefully orchestrated steps.
 
 #### Environment Setup
@@ -1009,8 +1013,8 @@ fs.appendFileSync('run-image.sh', `PARAMS=$HOME/zkWasm/params\n`);
 ```
 The above code: 
 
-- CLI: Defines the path to the zkWASM CLI executable
-- PARAMS: Specifies the parameter directory containing necessary proving parameters
+- `CLI`: Defines the path to the zkWASM CLI executable
+- `PARAMS`: Specifies the parameter directory containing necessary proving parameters
 
 ##### File Configuration
 ```ts
@@ -1020,8 +1024,8 @@ fs.appendFileSync('run-image.sh', `OUTPUT=output\n`);
 
 The above code:
 
-- IMAGE: Specifies the WASM binary to be executed
-- OUTPUT: Defines the directory for proof generation output
+- `IMAGE`: Specifies the WASM binary to be executed
+- `OUTPUT`: Defines the directory for proof generation output
 
 ##### CLI Command Construction
 ```ts
@@ -1030,9 +1034,9 @@ fs.appendFileSync('run-image.sh', `$CLI --params $PARAMS test dry-run --wasm $IM
 
 The above code constructs the base command with:
 
-- test dry-run: Executes in test mode for debugging
-- --params: Points to proving parameters
-- --wasm: Specifies the WASM image to execute
+- `test dry-run`: Executes in test mode for debugging
+- `--params`: Points to proving parameters
+- `--wasm`: Specifies the WASM image to execute
 
 ##### Input Parameters
 ```ts
