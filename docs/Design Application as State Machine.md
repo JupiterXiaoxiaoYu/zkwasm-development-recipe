@@ -105,9 +105,8 @@ Except for the game itself, there are many in-game states that control the game 
 
 And those states can be divided into two categories:
 
-1. **Global States**: These states control the flow of the game, such as the main menu, game over screen, or game paused state.
-2. **Local States**: These states are related to a specific aspect of the game, such as the game playing state, battle mode state, or inventory state.
-
+1. **Global States**: These states control the flow of the game, such as the main menu, game over screen, or game paused state, and can be accessed from anywhere in the game.
+2. **Local States**: These states are related to a specific aspect of the game, such as the game playing state, battle mode state, or inventory state, and can only be accessed within the specific context of the game.
 
 ### State Flow
 
