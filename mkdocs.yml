@@ -10,6 +10,8 @@ nav:
   - Development Guide:
     - zkWasm Rust SDK: zkWasm Rust SDK.md
     - zkWasm Mini Rollup: zkWasm Mini Rollup.md
+  - Design Guide:
+    - Design Application as State Machine: Design Application as State Machine.md
 theme:
   name: material
   palette:
@@ -44,12 +46,18 @@ theme:
 markdown_extensions:
   - attr_list
   - md_in_html
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
   - pymdownx.emoji:
       emoji_index: !!python/name:materialx.emoji.twemoji
       emoji_generator: !!python/name:materialx.emoji.to_svg
   - admonition
   - pymdownx.highlight
-  - pymdownx.superfences
 use_directory_urls: false
 extra_css:
   - stylesheets/extra.css
+extra_javascript:
+  - https://unpkg.com/mermaid@10.6.1/dist/mermaid.min.js
