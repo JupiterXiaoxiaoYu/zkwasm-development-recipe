@@ -7,13 +7,20 @@ nav:
   - Core Documentation:
     - Core Concepts: Core Concepts.md
     - zkWasm Overview: zkWasm Overview.md
-  - Development Guide:
-    - zkWasm Rust SDK: zkWasm Rust SDK.md
-    - zkWasm Mini Rollup: zkWasm Mini Rollup.md
   - Design Guide:
     - Design Application as State Machine: Design Application as State Machine.md
+  - Development Guide:
+    - zkWasm Rust SDK: zkWasm Rust SDK.md
+  - zkWasm Mini Rollup:
+    - Overview: zkwasm-mini-rollup/Rollup Overview.md
+    - Host Environment: zkwasm-mini-rollup/Rollup Host.md
+    - Database Service: zkwasm-mini-rollup/Rollup Database.md
+    - Server Implementation (zkWasm-ts-Server): zkwasm-mini-rollup/Rollup Server.md
+    - Convension: zkwasm-mini-rollup/Rollup Convention.md
+
 theme:
   name: material
+  language: en
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
@@ -35,6 +42,7 @@ theme:
   icon:
     repo: fontawesome/brands/github
   features:
+    - navigation.indexes
     - navigation.instant
     - navigation.tracking
     - navigation.sections
