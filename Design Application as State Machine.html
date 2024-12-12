@@ -1,0 +1,1547 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="zkWasm%20Mini%20Rollup.html">
+      
+      
+      
+      <link rel="icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.45">
+    
+    
+      
+        <title>Design Application as State Machine - zkWasm Development Recipe</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.0253249f.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="stylesheets/extra.css">
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="pink">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#designing-a-game-application-as-a-state-machine-a-beginners-guide" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="index.html" title="zkWasm Development Recipe" class="md-header__button md-logo" aria-label="zkWasm Development Recipe" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            zkWasm Development Recipe
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Design Application as State Machine
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="pink"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="lime"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="index.html" title="zkWasm Development Recipe" class="md-nav__button md-logo" aria-label="zkWasm Development Recipe" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    zkWasm Development Recipe
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Getting Started
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Getting Started
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Setup%20Environment.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Setup Environment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Quick%20Tutorial.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Quick Tutorial
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Core Documentation
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Core Documentation
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Core%20Concepts.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Core Concepts
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="zkWasm%20Overview.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    zkWasm Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Development Guide
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Development Guide
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="zkWasm%20Rust%20SDK.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    zkWasm Rust SDK
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="zkWasm%20Mini%20Rollup.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    zkWasm Mini Rollup
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Design Guide
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Design Guide
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Design Application as State Machine
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="Design%20Application%20as%20State%20Machine.html" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Design Application as State Machine
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction-to-state-machines" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction to State Machines
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Introduction to State Machines">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-use-state-machines" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why Use State Machines?
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#understanding-game-states-through-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Understanding Game States Through Examples
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Understanding Game States Through Examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-1-a-simple-rpg-character" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example 1: A Simple RPG Character
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-2-turn-based-battle-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example 2: Turn-Based Battle System
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#state-transitions-the-heart-of-game-logic" class="md-nav__link">
+    <span class="md-ellipsis">
+      State Transitions: The Heart of Game Logic
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="State Transitions: The Heart of Game Logic">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#understanding-states" class="md-nav__link">
+    <span class="md-ellipsis">
+      Understanding States
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#state-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      State Flow
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="State Flow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-battlestart" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. BattleStart
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-playerturn" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. PlayerTurn
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-enemyturn" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. EnemyTurn
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-victory" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Victory
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-defeat" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Defeat
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-patterns-and-best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      Common Patterns and Best Practices
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Common Patterns and Best Practices">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-state-initialization" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. State Initialization
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-state-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. State Validation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-error-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Error Handling
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#debugging-and-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Debugging and Testing
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Debugging and Testing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-state-logging" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. State Logging
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-state-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. State Testing
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conclusion
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction-to-state-machines" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction to State Machines
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Introduction to State Machines">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-use-state-machines" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why Use State Machines?
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#understanding-game-states-through-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Understanding Game States Through Examples
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Understanding Game States Through Examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-1-a-simple-rpg-character" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example 1: A Simple RPG Character
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-2-turn-based-battle-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example 2: Turn-Based Battle System
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#state-transitions-the-heart-of-game-logic" class="md-nav__link">
+    <span class="md-ellipsis">
+      State Transitions: The Heart of Game Logic
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="State Transitions: The Heart of Game Logic">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#understanding-states" class="md-nav__link">
+    <span class="md-ellipsis">
+      Understanding States
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#state-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      State Flow
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="State Flow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-battlestart" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. BattleStart
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-playerturn" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. PlayerTurn
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-enemyturn" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. EnemyTurn
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-victory" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Victory
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-defeat" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Defeat
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-patterns-and-best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      Common Patterns and Best Practices
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Common Patterns and Best Practices">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-state-initialization" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. State Initialization
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-state-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. State Validation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-error-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Error Handling
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#debugging-and-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Debugging and Testing
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Debugging and Testing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-state-logging" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. State Logging
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-state-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. State Testing
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conclusion
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="designing-a-game-application-as-a-state-machine-a-beginners-guide">Designing a Game Application as a State Machine: A Beginner's Guide</h1>
+<h2 id="introduction-to-state-machines">Introduction to State Machines</h2>
+<p>A state machine is like a flowchart of your game's behavior. Imagine you're creating a simple adventure game - at any moment, your character could be in different situations: exploring, fighting, talking to NPCs, or managing inventory. Each of these situations is a "state", and the rules for moving between them are "transitions".</p>
+<h3 id="why-use-state-machines">Why Use State Machines?</h3>
+<p>For beginners, state machines offer several advantages:</p>
+<ol>
+<li>Clear Organization: Your game logic becomes easier to understand and debug</li>
+<li>Predictable Behavior: You always know exactly what can happen next</li>
+<li>Easy to Expand: Adding new features becomes more structured</li>
+<li>Better Testing: Each state can be tested independently</li>
+</ol>
+<h2 id="understanding-game-states-through-examples">Understanding Game States Through Examples</h2>
+<h3 id="example-1-a-simple-rpg-character">Example 1: A Simple RPG Character</h3>
+<p>Let's start with a basic character state system:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// Basic character states</span>
+<span class="k">enum</span><span class="w"> </span><span class="nc">CharacterState</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">Idle</span><span class="p">,</span>
+<span class="w">    </span><span class="n">Walking</span><span class="p">,</span>
+<span class="w">    </span><span class="n">Running</span><span class="p">,</span>
+<span class="w">    </span><span class="n">Jumping</span><span class="p">,</span>
+<span class="w">    </span><span class="n">Attacking</span><span class="p">,</span>
+<span class="w">    </span><span class="n">TakingDamage</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="c1">// Character data structure</span>
+<span class="k">struct</span><span class="w"> </span><span class="nc">Character</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">state</span><span class="p">:</span><span class="w"> </span><span class="nc">CharacterState</span><span class="p">,</span>
+<span class="w">    </span><span class="n">position</span><span class="p">:</span><span class="w"> </span><span class="nc">Position</span><span class="p">,</span>
+<span class="w">    </span><span class="n">health</span><span class="p">:</span><span class="w"> </span><span class="kt">u32</span><span class="p">,</span>
+<span class="w">    </span><span class="n">stamina</span><span class="p">:</span><span class="w"> </span><span class="kt">u32</span><span class="p">,</span>
+<span class="w">    </span><span class="n">inventory</span><span class="p">:</span><span class="w"> </span><span class="nb">Vec</span><span class="o">&lt;</span><span class="n">Item</span><span class="o">&gt;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="c1">// Position in 2D space</span>
+<span class="k">struct</span><span class="w"> </span><span class="nc">Position</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">x</span><span class="p">:</span><span class="w"> </span><span class="kt">f32</span><span class="p">,</span>
+<span class="w">    </span><span class="n">y</span><span class="p">:</span><span class="w"> </span><span class="kt">f32</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="c1">// Game item</span>
+<span class="k">struct</span><span class="w"> </span><span class="nc">Item</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">id</span><span class="p">:</span><span class="w"> </span><span class="kt">u32</span><span class="p">,</span>
+<span class="w">    </span><span class="n">name</span><span class="p">:</span><span class="w"> </span><span class="nb">String</span><span class="p">,</span>
+<span class="w">    </span><span class="n">weight</span><span class="p">:</span><span class="w"> </span><span class="kt">u32</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="example-2-turn-based-battle-system">Example 2: Turn-Based Battle System</h3>
+<p>Here's how we might structure a turn-based battle system:</p>
+<div class="highlight"><pre><span></span><code><span class="k">enum</span><span class="w"> </span><span class="nc">BattleState</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">BattleStart</span><span class="p">,</span>
+<span class="w">    </span><span class="n">PlayerTurn</span><span class="p">,</span>
+<span class="w">    </span><span class="n">EnemyTurn</span><span class="p">,</span>
+<span class="w">    </span><span class="n">Victory</span><span class="p">,</span>
+<span class="w">    </span><span class="n">Defeat</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="k">struct</span><span class="w"> </span><span class="nc">BattleSystem</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">current_state</span><span class="p">:</span><span class="w"> </span><span class="nc">BattleState</span><span class="p">,</span>
+<span class="w">    </span><span class="n">player</span><span class="p">:</span><span class="w"> </span><span class="nc">Fighter</span><span class="p">,</span>
+<span class="w">    </span><span class="n">enemy</span><span class="p">:</span><span class="w"> </span><span class="nc">Fighter</span><span class="p">,</span>
+<span class="w">    </span><span class="n">turn_count</span><span class="p">:</span><span class="w"> </span><span class="kt">u32</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="k">struct</span><span class="w"> </span><span class="nc">Fighter</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">health</span><span class="p">:</span><span class="w"> </span><span class="kt">u32</span><span class="p">,</span>
+<span class="w">    </span><span class="n">attack</span><span class="p">:</span><span class="w"> </span><span class="kt">u32</span><span class="p">,</span>
+<span class="w">    </span><span class="n">defense</span><span class="p">:</span><span class="w"> </span><span class="kt">u32</span><span class="p">,</span>
+<span class="w">    </span><span class="n">special_moves</span><span class="p">:</span><span class="w"> </span><span class="nb">Vec</span><span class="o">&lt;</span><span class="n">SpecialMove</span><span class="o">&gt;</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2 id="state-transitions-the-heart-of-game-logic">State Transitions: The Heart of Game Logic</h2>
+<h3 id="understanding-states">Understanding States</h3>
+<p>Let's visualize how states flow in a simple game:</p>
+<pre class="mermaid"><code>stateDiagram-v2
+    MainMenu --&gt; GamePlaying
+    GamePlaying --&gt; GamePaused
+    GamePlaying --&gt; BattleMode
+    BattleMode --&gt; GamePlaying
+    GamePlaying --&gt; GameOver
+    GamePaused --&gt; GamePlaying
+    GameOver --&gt; MainMenu</code></pre>
+<p>Except for the game itself, there are many in-game states that control the game flow. These states are the heart of your game logic, and they determine how your game behaves. Basically, there are two kinds of state you can implement in your game:</p>
+<ol>
+<li><strong>Static States</strong>: These states are fixed and cannot be changed. For example, the main menu, game over screen, or game paused state.</li>
+<li><strong>Dynamic States</strong>: These states can be changed based on user input or game events. For example, the game playing state, battle mode state, or inventory state.</li>
+</ol>
+<p>And those states can be divided into two categories:</p>
+<ol>
+<li><strong>Global States</strong>: These states control the flow of the game, such as the main menu, game over screen, or game paused state.</li>
+<li><strong>Local States</strong>: These states are related to a specific aspect of the game, such as the game playing state, battle mode state, or inventory state.</li>
+</ol>
+<h3 id="state-flow">State Flow</h3>
+<p>Let's visualize how states flow in a turn-based battle system as <a href="#example-2-turn-based-battle-system">example 2</a>:</p>
+<pre class="mermaid"><code>stateDiagram-v2
+    [*] --&gt; BattleStart
+
+    BattleStart --&gt; PlayerTurn : Initialize Battle
+
+    PlayerTurn --&gt; EnemyTurn : Player Action Complete
+    PlayerTurn --&gt; Victory : Enemy HP &lt;= 0
+    PlayerTurn --&gt; Defeat : Player HP &lt;= 0
+
+    EnemyTurn --&gt; PlayerTurn : Enemy Action Complete
+    EnemyTurn --&gt; Victory : Enemy HP &lt;= 0
+    EnemyTurn --&gt; Defeat : Player HP &lt;= 0
+
+    Victory --&gt; [*] : Battle End
+    Defeat --&gt; [*] : Battle End
+
+    note right of BattleStart
+        Setup initial battle conditions:
+        - Load fighter stats
+        - Initialize turn counter
+    end note
+
+    note right of PlayerTurn
+        Player action options:
+        - Basic attack
+        - Special moves
+        - Use items
+    end note
+
+    note right of EnemyTurn
+        Enemy AI processing:
+        - Choose attack pattern
+        - Execute action
+    end note</code></pre>
+<h4 id="1-battlestart">1. BattleStart</h4>
+<p>Initial state when combat begins.</p>
+<div class="admonition info">
+<p class="admonition-title">Entry Actions</p>
+<ul>
+<li>Initialize player and enemy Fighter structures</li>
+<li>Set initial health, attack, and defense values</li>
+<li>Load special moves into Vec<SpecialMove></li>
+<li>Set turn_count to 0</li>
+</ul>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Exit Conditions</p>
+<ul>
+<li>Battle initialization complete</li>
+</ul>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Transitions To</p>
+<ul>
+<li>PlayerTurn (automatic after initialization)</li>
+</ul>
+</div>
+<h4 id="2-playerturn">2. PlayerTurn</h4>
+<p>Player's action phase.</p>
+<div class="admonition info">
+<p class="admonition-title">Entry Actions</p>
+<ul>
+<li>Increment turn_count</li>
+<li>Display player options</li>
+<li>Enable player input</li>
+</ul>
+</div>
+<div class="admonition check">
+<p class="admonition-title">Available Actions</p>
+<ul>
+<li>Basic attack: damage = player.attack - enemy.defense</li>
+<li>Special moves: custom effects from special_moves Vec</li>
+</ul>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Exit Conditions</p>
+<ul>
+<li>Player completes action</li>
+<li>Health check after action</li>
+</ul>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Transitions To</p>
+<ul>
+<li>EnemyTurn (if enemy alive)</li>
+<li>Victory (if enemy HP &lt;= 0)</li>
+<li>Defeat (if player HP &lt;= 0)</li>
+</ul>
+</div>
+<h4 id="3-enemyturn">3. EnemyTurn</h4>
+<p>Enemy's action phase.</p>
+<div class="admonition info">
+<p class="admonition-title">Entry Actions</p>
+<ul>
+<li>Calculate enemy NPC decision </li>
+<li>Display enemy action animation </li>
+</ul>
+</div>
+<div class="admonition check">
+<p class="admonition-title">NPC Algorithm Processing</p>
+<ul>
+<li>Choose between basic attack and special moves</li>
+<li>Target selection (in case of multiple targets)</li>
+</ul>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Exit Conditions</p>
+<ul>
+<li>Enemy completes action</li>
+<li>Health check after action</li>
+</ul>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Transitions To</p>
+<ul>
+<li>PlayerTurn (if player alive)</li>
+<li>Victory (if enemy HP &lt;= 0)</li>
+<li>Defeat (if player HP &lt;= 0)</li>
+</ul>
+</div>
+<h4 id="4-victory">4. Victory</h4>
+<p>Battle won state.</p>
+<div class="admonition info">
+<p class="admonition-title">Entry Actions</p>
+<ul>
+<li>Play victory animation</li>
+<li>Calculate rewards</li>
+<li>Update player progress</li>
+</ul>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Exit Conditions</p>
+<ul>
+<li>Victory sequence complete</li>
+</ul>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Transitions To</p>
+<ul>
+<li>[End State]</li>
+</ul>
+</div>
+<h4 id="5-defeat">5. Defeat</h4>
+<p>Battle lost state.</p>
+<div class="admonition info">
+<p class="admonition-title">Entry Actions</p>
+<ul>
+<li>Play defeat animation</li>
+<li>Save game statistics</li>
+<li>Prepare retry options</li>
+</ul>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Exit Conditions</p>
+<ul>
+<li>Defeat sequence complete</li>
+</ul>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Transitions To</p>
+<ul>
+<li>[End State]</li>
+</ul>
+</div>
+<h2 id="common-patterns-and-best-practices">Common Patterns and Best Practices</h2>
+<h3 id="1-state-initialization">1. State Initialization</h3>
+<p>Always initialize your game with a clear starting state:</p>
+<div class="highlight"><pre><span></span><code><span class="k">impl</span><span class="w"> </span><span class="n">GameState</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">new</span><span class="p">()</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nc">Self</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="bp">Self</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">current_scene</span><span class="p">:</span><span class="w"> </span><span class="nc">SceneType</span><span class="p">::</span><span class="n">MainMenu</span><span class="p">,</span>
+<span class="w">            </span><span class="n">player</span><span class="p">:</span><span class="w"> </span><span class="nc">Player</span><span class="p">::</span><span class="n">new_game</span><span class="p">(),</span>
+<span class="w">            </span><span class="n">game_time</span><span class="p">:</span><span class="w"> </span><span class="nc">GameTime</span><span class="p">::</span><span class="n">default</span><span class="p">(),</span>
+<span class="w">            </span><span class="n">battle_state</span><span class="p">:</span><span class="w"> </span><span class="nb">None</span><span class="p">,</span>
+<span class="w">            </span><span class="n">dialogue_state</span><span class="p">:</span><span class="w"> </span><span class="nb">None</span><span class="p">,</span>
+<span class="w">            </span><span class="n">inventory_state</span><span class="p">:</span><span class="w"> </span><span class="nb">None</span><span class="p">,</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="2-state-validation">2. State Validation</h3>
+<p>Always validate state transitions:</p>
+<div class="highlight"><pre><span></span><code><span class="k">fn</span><span class="w"> </span><span class="nf">validate_transition</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">new_state</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="nc">GameState</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nb">Result</span><span class="o">&lt;</span><span class="p">(),</span><span class="w"> </span><span class="nb">String</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Check if transition is allowed</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="o">!</span><span class="bp">self</span><span class="p">.</span><span class="n">is_valid_transition</span><span class="p">(</span><span class="n">new_state</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nb">Err</span><span class="p">(</span><span class="s">&quot;Invalid state transition&quot;</span><span class="p">.</span><span class="n">to_string</span><span class="p">());</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// Validate game rules</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="o">!</span><span class="bp">self</span><span class="p">.</span><span class="n">validate_game_rules</span><span class="p">(</span><span class="n">new_state</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nb">Err</span><span class="p">(</span><span class="s">&quot;Game rules violated&quot;</span><span class="p">.</span><span class="n">to_string</span><span class="p">());</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nb">Ok</span><span class="p">(())</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="3-error-handling">3. Error Handling</h3>
+<p>Use proper error handling for state transitions:</p>
+<div class="highlight"><pre><span></span><code><span class="k">enum</span><span class="w"> </span><span class="nc">GameError</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">InvalidState</span><span class="p">(</span><span class="nb">String</span><span class="p">),</span>
+<span class="w">    </span><span class="n">SaveError</span><span class="p">(</span><span class="nb">String</span><span class="p">),</span>
+<span class="w">    </span><span class="n">LoadError</span><span class="p">(</span><span class="nb">String</span><span class="p">),</span>
+<span class="p">}</span>
+
+<span class="k">type</span><span class="w"> </span><span class="nc">GameResult</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Result</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">GameError</span><span class="o">&gt;</span><span class="p">;</span>
+</code></pre></div>
+<h2 id="debugging-and-testing">Debugging and Testing</h2>
+<h3 id="1-state-logging">1. State Logging</h3>
+<p>Implement logging for state transitions use zkWasm SDK:</p>
+<div class="highlight"><pre><span></span><code><span class="k">fn</span><span class="w"> </span><span class="nf">log_state_transition</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">old_state</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="nc">GameState</span><span class="p">,</span><span class="w"> </span><span class="n">new_state</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="nc">GameState</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">zkwasm_rust_sdk</span><span class="p">::</span><span class="fm">dbg!</span><span class="p">(</span><span class="s">&quot;State Transition:&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">zkwasm_rust_sdk</span><span class="p">::</span><span class="fm">dbg!</span><span class="p">(</span><span class="s">&quot;  From: {:?}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">old_state</span><span class="p">.</span><span class="n">current_scene</span><span class="p">);</span>
+<span class="w">    </span><span class="n">zkwasm_rust_sdk</span><span class="p">::</span><span class="fm">dbg!</span><span class="p">(</span><span class="s">&quot;  To: {:?}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">new_state</span><span class="p">.</span><span class="n">current_scene</span><span class="p">);</span>
+<span class="w">    </span><span class="n">zkwasm_rust_sdk</span><span class="p">::</span><span class="fm">dbg!</span><span class="p">(</span><span class="s">&quot;  Player Previous Health: {:?}&quot;</span><span class="p">,</span><span class="w"> </span>
+<span class="w">        </span><span class="n">old_state</span><span class="p">.</span><span class="n">player</span><span class="p">.</span><span class="n">health</span>
+<span class="w">    </span><span class="p">);</span>
+<span class="w">    </span><span class="n">zkwasm_rust_sdk</span><span class="p">::</span><span class="fm">dbg!</span><span class="p">(</span><span class="s">&quot;  Player Current Health: {:?}&quot;</span><span class="p">,</span><span class="w"> </span>
+<span class="w">        </span><span class="n">new_state</span><span class="p">.</span><span class="n">player</span><span class="p">.</span><span class="n">health</span>
+<span class="w">    </span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="2-state-testing">2. State Testing</h3>
+<p>Write tests for your state machine:</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#[cfg(test)]</span>
+<span class="k">mod</span><span class="w"> </span><span class="nn">tests</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">use</span><span class="w"> </span><span class="k">super</span><span class="p">::</span><span class="o">*</span><span class="p">;</span>
+
+<span class="w">    </span><span class="cp">#[test]</span>
+<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">test_battle_transition</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">game</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GameState</span><span class="p">::</span><span class="n">new</span><span class="p">();</span>
+<span class="w">        </span><span class="n">game</span><span class="p">.</span><span class="n">start_battle</span><span class="p">(</span><span class="n">Enemy</span><span class="p">::</span><span class="n">new</span><span class="p">());</span>
+
+<span class="w">        </span><span class="fm">assert_eq!</span><span class="p">(</span><span class="n">game</span><span class="p">.</span><span class="n">current_scene</span><span class="p">,</span><span class="w"> </span><span class="n">SceneType</span><span class="p">::</span><span class="n">Battle</span><span class="p">);</span>
+<span class="w">        </span><span class="fm">assert!</span><span class="p">(</span><span class="n">game</span><span class="p">.</span><span class="n">battle_state</span><span class="p">.</span><span class="n">is_some</span><span class="p">());</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>You can also test state transitions based on your RPC calls, for example, in the <a href="https://github.com/riddles-are-us/helloworld-rollup/blob/main/ts/src/test.ts">helloworld rollup</a> we can find a test file which you can modify to test the state transition of the zkWasm Mini Rollup Application:</p>
+<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Player</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;./api.js&quot;</span><span class="p">;</span>
+<span class="k">import</span><span class="w"> </span><span class="nx">assert</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;assert&quot;</span><span class="p">;</span>
+<span class="kd">let</span><span class="w"> </span><span class="nx">account</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;1234&quot;</span><span class="p">;</span>
+<span class="kd">let</span><span class="w"> </span><span class="nx">player</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Player</span><span class="p">(</span><span class="nx">account</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;http://localhost:3000&quot;</span><span class="p">);</span>
+<span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">player</span><span class="p">.</span><span class="nx">getState</span><span class="p">();</span>
+<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">state</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;register&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="k">await</span><span class="w"> </span><span class="nx">player</span><span class="p">.</span><span class="nx">register</span><span class="p">();</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">pre_counter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">state</span><span class="p">.</span><span class="nx">player</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">counter</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">pre_counter</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;inc counter&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">player</span><span class="p">.</span><span class="nx">incCounter</span><span class="p">();</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">post_counter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">state</span><span class="p">.</span><span class="nx">player</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">counter</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">post_counter</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">assert</span><span class="p">(</span><span class="nx">post_counter</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nx">pre_counter</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">1</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="nx">main</span><span class="p">();</span>
+</code></pre></div>
+<h2 id="conclusion">Conclusion</h2>
+<p>Building a game as a state machine makes your code more:</p>
+<ul>
+<li>Organized and easier to understand</li>
+<li>Reliable and predictable</li>
+<li>Testable and debuggable</li>
+<li>Ready for zkWasm integration</li>
+</ul>
+<p>Remember to:</p>
+<ol>
+<li>Start simple and add complexity gradually</li>
+<li>Keep your states well-defined and documented</li>
+<li>Implement proper error handling and validation</li>
+<li>Test each state and transition thoroughly</li>
+<li>Consider performance implications of state changes</li>
+</ol>
+<p>By following these patterns and practices, you'll create a solid foundation for your application that's both maintainable and extensible.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": ".", "features": ["navigation.instant", "navigation.tracking", "navigation.sections", "navigation.expand", "navigation.top", "search.suggest", "content.code.copy", "search.highlight"], "search": "assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+        <script src="https://unpkg.com/mermaid@10.6.1/dist/mermaid.min.js"></script>
+      
+    
+  </body>
+</html>
