@@ -57,3 +57,8 @@
     color: var(--md-accent-fg-color);
 }
 
+/* 限制左侧导航栏二级标题的宽度 */
+.md-nav__item--nested .md-nav__link {
+    max-width: 165px;  /* 可以根据需要调整这个值 */
+    text-overflow: ellipsis;
+}

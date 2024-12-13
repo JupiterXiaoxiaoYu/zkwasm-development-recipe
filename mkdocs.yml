@@ -11,6 +11,7 @@ nav:
     - Design Application as State Machine: Design Application as State Machine.md
   - Development Guide:
     - zkWasm Rust SDK: zkWasm Rust SDK.md
+    - Web3 Development Frameworks: Web3 Development Frameworks.md
   - zkWasm Mini Rollup:
     - Overview: zkwasm-mini-rollup/Rollup Overview.md
     - Host Environment: zkwasm-mini-rollup/Rollup Host.md
