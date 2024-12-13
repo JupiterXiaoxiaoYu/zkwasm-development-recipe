@@ -8,7 +8,11 @@ Popular frontend frameworks like [Web3.js](https://web3js.readthedocs.io/) and [
 
 ## Backend Development
 
-Backend SDKs are equally important in the Web3 ecosystem, providing developers with tools for server-side blockchain interactions, data indexing, and API integration. These SDKs enable features such as transaction monitoring, webhook implementations, and efficient data querying from blockchain networks. They also handle important aspects like key management, transaction signing, and gas optimization on the server side. For example, [Thirdweb](https://portal.thirdweb.com/connect) provides a comprehensive backend SDK and engine suite that supports multiple platforms, including web, mobile, and game development.
+Backend SDKs are equally important in the Web3 ecosystem, providing developers with tools for server-side blockchain interactions, data indexing, and API integration. These SDKs enable features such as transaction monitoring, webhook implementations, and efficient data querying from blockchain networks. They also handle important aspects like key management, transaction signing, and gas optimization on the server side. For example, [Thirdweb](https://portal.thirdweb.com/connect) provides a comprehensive backend SDK and engine suite that supports multiple platforms, including web, mobile, and game development. 
+
+!!!Note
+
+    Since zkWasm currently only provides good support for Rust, we recommend developing microservices in other languages if your project requires them. For example, you can use JavaScript/TypeScript to build backend services that listen to events and interact with your zkWasm Rollup Application through RPC calls.
 
 ## Game Development Frameworks
 
@@ -40,14 +44,14 @@ For game developers, Alchemy has a [gaming tools collection](https://www.alchemy
 
 For beginners, it's recommended to start with one of the more established frameworks and gradually explore additional tools as needed. The key is to choose tools that offer good documentation, active community support, and regular updates to ensure a smooth development experience.
 
-## Disclaimer
+!!!warning "    Disclaimer"
 
-Please note that while we strive to provide accurate and up-to-date information about Web3 development frameworks and tools, the blockchain technology landscape evolves rapidly. We encourage all developers to:
+    Please note that while we strive to provide accurate and up-to-date information about Web3 development frameworks and tools, the blockchain technology landscape evolves rapidly. We encourage all developers to:
 
-- Do Your Own Research (DYOR) before implementing any framework or tool
-- Thoroughly review the documentation and security considerations of each tool
-- Test extensively in development environments before deploying to production
-- Stay updated with the latest versions and security patches
-- Verify the activity and support level of the community around each tool
+    - Do Your Own Research (DYOR) before implementing any framework or tool
+    - Thoroughly review the documentation and security considerations of each tool
+    - Test extensively in development environments before deploying to production
+    - Stay updated with the latest versions and security patches
+    - Verify the activity and support level of the community around each tool
 
-The frameworks and tools mentioned in this document are provided for informational purposes only. We do not endorse any specific solution and are not responsible for any issues or losses that may arise from their use. Always exercise due diligence and professional judgment when choosing development tools for your projects.
+    The frameworks and tools mentioned in this document are provided for informational purposes only. We do not endorse any specific solution and are not responsible for any issues or losses that may arise from their use. Always exercise due diligence and professional judgment when choosing development tools for your projects.
