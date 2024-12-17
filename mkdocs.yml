@@ -18,6 +18,10 @@ nav:
     - Database Service: zkwasm-mini-rollup/Rollup Database.md
     - Server Implementation (zkWasm-ts-Server): zkwasm-mini-rollup/Rollup Server.md
     - Convension: zkwasm-mini-rollup/Rollup Convention.md
+  - zkWasm Protocol:
+    - zkWasm Protocol Overview: zkwasm-protocol/zkWasm Protocol.md
+    - Deposit: zkwasm-protocol/Deposit.md
+    - Withdraw: zkwasm-protocol/Withdraw.md
 
 theme:
   name: material
