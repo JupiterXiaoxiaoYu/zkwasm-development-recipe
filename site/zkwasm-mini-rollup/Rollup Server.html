@@ -2019,7 +2019,7 @@ When the rollup reaches its preemption point, indicating a batch is ready for pr
 <span class="w">    </span><span class="p">}</span>
 <span class="p">});</span>
 </code></pre></div>
-This endpoint will add transactions into the global job sequencer where each job is handled via the exposed wasm function <code>handle_tx</code>.</p>
+This endpoint will add transactions into the global job sequencer where each job is handled via the exposed wasm function <code>handle_tx</code>, which then calls the "process" function in the application.</p>
 </li>
 <li>
 <p>config: An endpoint that returns all static configuration of the application.

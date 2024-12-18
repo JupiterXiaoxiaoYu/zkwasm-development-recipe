@@ -275,10 +275,12 @@ So the `deposit` function will first get the player from the pid, then check if 
     The `cost_balance` function in the zkWasm Rollup Application handles both deposit and withdrawal operations through a clever use of positive and negative values. Here's how it works:
 
     When processing a deposit with `cost_balance(-x)`, the function:
+
     1. Checks if `treasure >= -x`
     2. Executes `treasure -= (-x)`, which is equivalent to `treasure += x`
 
     This is why in the deposit function we see `cost_balance(-(self.data[2] as i64))`:
+
     - First converts `self.data[2]` to a 64-bit integer
     - Takes its negative value to make it a deposit operation
     - Uses `cost_balance` to update the balance
