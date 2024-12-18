@@ -522,8 +522,7 @@ app.post('/send', async (req, res) => {
 });
 
 ```
-This endpoint will add transactions into the global job sequencer where each job is handled via the exposed wasm function `handle_tx`.
-
+This endpoint will add transactions into the global job sequencer where each job is handled via the exposed wasm function `handle_tx`, which then calls the "process" function in the application.
 
 3. config: An endpoint that returns all static configuration of the application.
 ```ts
