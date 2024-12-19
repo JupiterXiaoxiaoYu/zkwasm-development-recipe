@@ -28,7 +28,7 @@ function topup (
     //USDT does not follow ERC20 interface so have to use the following safer method
     TransferHelper.safeTransferFrom(address(underlying_token), msg.sender, address(this), amount);
 
-    //Tbd: Charge fees to developer
+    //TBD: Charge fees to developer
     emit TopUp(_l1_address(token), msg.sender, pid_1, pid_2, amount);
 }
 ```
@@ -36,8 +36,8 @@ function topup (
 The `topup` function accepts four parameters that control the deposit process:
 
  - The `tidx` parameter (uint128) represents the token index in the contract's token registry. This index is used to retrieve the actual token contract address through the `get_token_uid` function.
- - The `pid_1` and `pid_2` parameters (both uint64) together form a unique player identifier within the zkWasm system. This two-part identifier corresponds to the `player_id: [u64; 2]` structure used in the `Player` struct in the zkWasm mini rollup ABI. Therefore, we can use the `pid_1` and `pid_2` to identify the which player is depositing the token.
- - The `amount` parameter (uint128) specifies the deposit amount in wei, representing the smallest unit of the token being deposited, this means the amount has to multiple by 10^18 to represent the actual amount of the token.
+ - The `pid_1` and `pid_2` parameters (both uint64) together form a unique player identifier within the zkWasm system. This two-part identifier corresponds to the `player_id: [u64; 2]` structure used in the `Player` struct in the zkWasm mini rollup ABI. Therefore, we can use the `pid_1` and `pid_2` to identify which player is depositing the token.
+ - The `amount` parameter (uint128) specifies the deposit amount in wei, representing the smallest unit of the token being deposited, this means the amount has to be multiplied by 10^18 to represent the actual amount of the token.
 
 When a user calls the `topup` function, the following steps will be performed:
 
@@ -48,7 +48,7 @@ When a user calls the `topup` function, the following steps will be performed:
 
 You can add more features to the `topup` function, such as charging fees to the developer, or checking if the user is on the whitelist.
 
-Image a user has deposited a token into the zkWasm Rollup Application and the `TopUp` event has been emitted. What will happen next? 
+Imagine a user has deposited a token into the zkWasm Rollup Application and the `TopUp` event has been emitted. What will happen next? 
 
 Actually... nothing will happen next. The `TopUp` event is just a notification event, it does not trigger any further actions. So how does the zkWasm Rollup Application know that the user has deposited the token? We need to implement a mechanism to listen to the `TopUp` event and trigger the corresponding actions to process the deposit in the zkWasm Rollup Application. A good way to do this is to use a deposit monitor which operates by the server's admin.
 
@@ -97,7 +97,7 @@ const txSchema = new mongoose.Schema({
 });
 const TxHash = mongoose.model('TxHash', txSchema);
 ```
-The above code defines a schema for the `TxHash` collection in the database. Each `TxHash` document will have fields that correspond to the parameters of the `TopUp` event. Notably, the state field is used to indicate the status of the event processing which could be used to prevent the event from being processed multiple times.
+The above code defines a schema for the `TxHash` collection in the database. Each `TxHash` document will have fields that correspond to the parameters of the `TopUp` event. Notably, the state field is used to indicate the status of the event processing which can be used to prevent the event from being processed multiple times.
 
 When we start the service, after connecting to the database, we will first retrieve all past `TopUp` events from the proxy contract and process each event. This is specifically useful for the server's admin to check if there are any deposits that need to be processed when initializing the monitor:
 
@@ -135,7 +135,7 @@ proxyContract.on('TopUp', async (l1token, address, pid_1, pid_2, amount, event) 
 
 Once there is a new `TopUp` event, the service will process the event by calling the `processTopUpEvent` function. 
 
-Let's delve into the `processTopUpEvent` function: 
+Let's take a look at the `processTopUpEvent` function:
 
 ```ts
 async function processTopUpEvent(event) {
@@ -155,7 +155,7 @@ async function processTopUpEvent(event) {
 First, the function will check if the token is the right token (the token that can be deposited into the zkWasm Rollup Application) by comparing the `l1token` (which is the uid of the token) with the token uid stored in the proxy contract. If the token is not the right token, the function will skip the event. 
 
 !!!tip "Tip"
-    You can implement your own logic to check if the token is the right token by checking the token's uid, for example, if you wanna make all the tokens that has been registered in the proxy contract can be deposited into the zkWasm Rollup Application, you can skip the check (because the token has been checked in the `topup` function in the proxy contract when user deposit the token) or check if the token is supported by the proxy contract by calling the `allTokens` function and check if the `l1token` is in the `allTokens` array.
+    You can implement your own logic to check if the token is the right token by checking the token's uid, for example, if you want to make all the tokens that have been registered in the proxy contract can be deposited into the zkWasm Rollup Application, you can skip the check (because the token has been checked in the `topup` function in the proxy contract when user deposit the token) or check if the token is supported by the proxy contract by calling the `allTokens` function and check if the `l1token` is in the `allTokens` array.
 
 Then the function will check if the transaction is already in the database by calling the `findTxByHash` function:
 
@@ -211,7 +211,7 @@ if (tx && tx.state === 'pending') {
 }
 ```
 
-The above code will set the transaction state to `in-progress`, then convert the amount from wei to ether, and then call the `deposit` function in the zkWasm Rollup Application to process the deposit. After the deposit is successful, the function will set the transaction state to `completed`. Howerver, if the deposit is failed, the status of the transaction will not be updated as `completed` and maintain as `in-progress`.
+The above code will set the transaction state to `in-progress`, then convert the amount from wei to ether, and then call the `deposit` function in the zkWasm Rollup Application to process the deposit. After the deposit is successful, the function will set the transaction state to `completed`. However, if the deposit fails, the status of the transaction will not be updated to `completed` and will remain as `in-progress`.
 
 !!!info "Admin Setup"
     The `deposit` function is a function in the zkWasm Rollup Application, which is only callable by the admin. You will need to setup the admin key as `SERVER_ADMIN_KEY` in the `.env` file first before you can call the `deposit` function. Also, as a kind of "player", you will need to install the admin into the zkWasm Rollup Application by calling the `installPlayer` function:
@@ -228,7 +228,7 @@ If the transaction is in the `completed` state, the function will skip the depos
 
 ## Deposit Action
 
-Let's take a look on how admin deposit the token into the zkWasm Rollup Application, in `process` function in state.rs of the zkWasm Rollup Application ([automata](https://github.com/riddles-are-us/zkwasm-automata/blob/main/src/state.rs)):
+Let's take a look at how admin deposits the token into the zkWasm Rollup Application, in `process` function in state.rs of the zkWasm Rollup Application ([automata](https://github.com/riddles-are-us/zkwasm-automata/blob/main/src/state.rs)):
 
 ```rs
 DEPOSIT => {
@@ -263,7 +263,7 @@ pub fn deposit(&self, pid: &[u64; 2]) -> Result<(), u32> {
 }
 ```
 
-Remind how we call the `deposit` function in the deposit monitor we use the `pid_1` and `pid_2` to identify the player, and the `amount` to specify the amount of the token to be deposited:
+Remember how we call the `deposit` function in the deposit monitor, we use the `pid_1` and `pid_2` to identify the player, and the `amount` to specify the amount of the token to be deposited:
 
 ```typescript
 await admin.deposit(pid_1, pid_2, amountInEther);

@@ -2,7 +2,7 @@
 
 ## Overview
 
-zkWasm-Protocol is a specialized blockchain protocol designed to facilitate the settlement of zkWASM mini-rollups. It provides a robust framework for handling zero-knowledge proof verification and transaction processing in a secure and efficient manner. Specifically, it enables deposit and withdrawal of assets between the zkWASM mini-rollup application and the on-chain zkWasm-Protocol.
+zkWasm-Protocol is a specialized blockchain protocol designed to facilitate the settlement of zkWASM mini-rollups. It provides a robust framework for handling zero-knowledge proof verification and transaction processing in a secure and efficient manner. Specifically, it enables deposits and withdrawals of assets between the zkWASM mini-rollup application and the on-chain zkWasm-Protocol.
 
 ## Core Components
 
@@ -206,7 +206,7 @@ function addTransaction(address txaddr, bool sideEffect) public onlyOwner return
 }
 ```
 
-A common misunstanding is to think that the transaction type is a "real" transaction which can be executed, but it is not. It is just a transaction type which represents a specific kind of transaction such as withdrawals. The parameter `txaddr` is the address of the deployed transaction type contract which implements the `Transaction` interface:
+A common misunderstanding is to think that the transaction type is a "real" transaction which can be executed, but it is not. It is just a transaction type which represents a specific kind of transaction such as withdrawals. The parameter `txaddr` is the address of the deployed transaction type contract which implements the `Transaction` interface:
 
 ```solidity
 pragma solidity ^0.8.0;
@@ -245,7 +245,7 @@ contract Withdraw is Transaction {
         ops[1] = uint256( (data32 >> (30*8)) & 0x00FF );
         // amount to withdraw (wei not considered
         ops[2] = uint256( data32 & 0xFFFFFFFFFFFFFFFF );
-        // recipent address
+        // recipient address
         ops[3] = uint256( (data32 >> (8*8)) & 0x00FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF );
         return ops;
     }
@@ -301,7 +301,7 @@ if (tx_data.length > 1) {
                 (instances[0][9] << 128) +
                 (instances[0][10] << 64) +
                 instances[0][11],
-        "Inconstant: Sha data inconsistant"
+        "Inconsistent: Sha data inconsistent"
     );
 }
 ```
@@ -315,7 +315,7 @@ require(
             (instances[0][1] << 128) +
             (instances[0][2] << 64) +
             instances[0][3],
-    "Inconstant: Merkle root dismatch"
+    "Inconsistent: Merkle root dismatch"
 );
 ```
 
@@ -441,7 +441,7 @@ function sideEffect(bytes memory witness, uint256 cursor)
     ops[1] = uint256( (data32 >> (30*8)) & 0x00FF );
     // amount to withdraw (wei not considered
     ops[2] = uint256( data32 & 0xFFFFFFFFFFFFFFFF );
-    // recipent address
+    // recipient address
     ops[3] = uint256( (data32 >> (8*8)) & 0x00FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF );
     return ops;
 }
@@ -459,7 +459,7 @@ It returns an array of 4 elements (ops), where the ops has the following layout:
 ```
 
 !!! note "Note"
-    You may find hard to understand the assembly code and bit shift operations. You may skip this section if you are not interested in the details. 
+    You may find it hard to understand the assembly code and bit shift operations. You may skip this section if you are not interested in the details. 
     
     First, let's understand how bytes memory is laid out:
     ```
@@ -498,7 +498,7 @@ It returns an array of 4 elements (ops), where the ops has the following layout:
 
     The `add` function is used to calculate the final memory address by adding the offset to the witness pointer. The `mload` function is used to load 32 bytes from that address into `data32`. Therefore, `data32` will hold the 32 bytes of the transaction data we want to extract.
 
-    And the `data32` is then used to extract the operation code, token index, amount, and recipient address from the transaction data. For exmaple:
+    And the `data32` is then used to extract the operation code, token index, amount, and recipient address from the transaction data. For example:
 
     ```solidity
     ops[1] = uint256( (data32 >> (30*8)) & 0x00FF ); //extract the token index
@@ -569,7 +569,7 @@ function _withdraw(
     if (_is_local(tokenid)) {
         address token = address(uint160(tokenid));
         address recipent = address(uint160(l1recipent));
-        // Sanitity checks
+        // Sanity checks
         require(recipent != address(0), "Withdraw to the zero address");
         IERC20 underlying_token = IERC20(token);
         uint256 balance = underlying_token.balanceOf(address(this));

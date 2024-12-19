@@ -1275,13 +1275,17 @@ When it receives a deposit request (<code>admin.deposit(pid_1, pid_2, amountInEt
 <div class="admonition tip">
 <p class="admonition-title">Balance Update</p>
 <p>The <code>cost_balance</code> function in the zkWasm Rollup Application handles both deposit and withdrawal operations through a clever use of positive and negative values. Here's how it works:</p>
-<p>When processing a deposit with <code>cost_balance(-x)</code>, the function:
-1. Checks if <code>treasure &gt;= -x</code>
-2. Executes <code>treasure -= (-x)</code>, which is equivalent to <code>treasure += x</code></p>
-<p>This is why in the deposit function we see <code>cost_balance(-(self.data[2] as i64))</code>:
-- First converts <code>self.data[2]</code> to a 64-bit integer
-- Takes its negative value to make it a deposit operation
-- Uses <code>cost_balance</code> to update the balance</p>
+<p>When processing a deposit with <code>cost_balance(-x)</code>, the function:</p>
+<ol>
+<li>Checks if <code>treasure &gt;= -x</code></li>
+<li>Executes <code>treasure -= (-x)</code>, which is equivalent to <code>treasure += x</code></li>
+</ol>
+<p>This is why in the deposit function we see <code>cost_balance(-(self.data[2] as i64))</code>:</p>
+<ul>
+<li>First converts <code>self.data[2]</code> to a 64-bit integer</li>
+<li>Takes its negative value to make it a deposit operation</li>
+<li>Uses <code>cost_balance</code> to update the balance</li>
+</ul>
 <p>This is a common design pattern where a single function handles both increasing and decreasing balances, using the sign of the value to determine the operation type. When the input is negative, it becomes a deposit (increasing balance), and when positive, it becomes a withdrawal (decreasing balance).</p>
 <p>Here's the implementation:
 <div class="highlight"><pre><span></span><code><span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">cost_balance</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">:</span><span class="w"> </span><span class="kt">i64</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nb">Result</span><span class="o">&lt;</span><span class="p">(),</span><span class="w"> </span><span class="kt">u32</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
