@@ -1218,7 +1218,7 @@
 
 <h1 id="zkwasm-protocol-overview">zkWasm Protocol Overview</h1>
 <h2 id="overview">Overview</h2>
-<p>zkWasm-Protocol is a specialized blockchain protocol designed to facilitate the settlement of zkWASM mini-rollups. It provides a robust framework for handling zero-knowledge proof verification and transaction processing in a secure and efficient manner. Specifically, it enables deposit and withdrawal of assets between the zkWASM mini-rollup application and the on-chain zkWasm-Protocol.</p>
+<p>zkWasm-Protocol is a specialized blockchain protocol designed to facilitate the settlement of zkWASM mini-rollups. It provides a robust framework for handling zero-knowledge proof verification and transaction processing in a secure and efficient manner. Specifically, it enables deposits and withdrawals of assets between the zkWASM mini-rollup application and the on-chain zkWasm-Protocol.</p>
 <h2 id="core-components">Core Components</h2>
 <ul>
 <li>Proxy Contract: The central hub for transaction processing and state management for a specific application.</li>
@@ -1373,7 +1373,7 @@ ProxyInfo<span class="w"> </span>_proxy_info<span class="p">;</span>
 <span class="w">    </span><span class="kt">return</span><span class="w"> </span>cursor<span class="p">;</span><span class="w"> </span><span class="c1">// return the index of the transaction type in the transactions array</span>
 <span class="p">}</span>
 </code></pre></div>
-<p>A common misunstanding is to think that the transaction type is a "real" transaction which can be executed, but it is not. It is just a transaction type which represents a specific kind of transaction such as withdrawals. The parameter <code>txaddr</code> is the address of the deployed transaction type contract which implements the <code>Transaction</code> interface:</p>
+<p>A common misunderstanding is to think that the transaction type is a "real" transaction which can be executed, but it is not. It is just a transaction type which represents a specific kind of transaction such as withdrawals. The parameter <code>txaddr</code> is the address of the deployed transaction type contract which implements the <code>Transaction</code> interface:</p>
 <div class="highlight"><pre><span></span><code><span class="k">pragma solidity</span><span class="w"> </span><span class="o">^</span><span class="k">0.8.0</span><span class="p">;</span>
 
 <span class="kt">uint8</span><span class="w"> </span><span class="nv">constant</span><span class="w"> </span>_WITHDRAW<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0x0</span><span class="p">;</span>
@@ -1408,7 +1408,7 @@ interface<span class="w"> </span>Transaction<span class="w"> </span><span class=
 <span class="w">        </span>ops<span class="p">[</span><span class="m m-Decimal">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">uint256</span><span class="p">(</span><span class="w"> </span><span class="p">(</span>data32<span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="p">(</span><span class="m m-Decimal">30</span><span class="o">*</span><span class="m m-Decimal">8</span><span class="p">))</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="mh">0x00FF</span><span class="w"> </span><span class="p">);</span>
 <span class="w">        </span><span class="c1">// amount to withdraw (wei not considered</span>
 <span class="w">        </span>ops<span class="p">[</span><span class="m m-Decimal">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">uint256</span><span class="p">(</span><span class="w"> </span>data32<span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="mh">0xFFFFFFFFFFFFFFFF</span><span class="w"> </span><span class="p">);</span>
-<span class="w">        </span><span class="c1">// recipent address</span>
+<span class="w">        </span><span class="c1">// recipient address</span>
 <span class="w">        </span>ops<span class="p">[</span><span class="m m-Decimal">3</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">uint256</span><span class="p">(</span><span class="w"> </span><span class="p">(</span>data32<span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="p">(</span><span class="m m-Decimal">8</span><span class="o">*</span><span class="m m-Decimal">8</span><span class="p">))</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="mh">0x00FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF</span><span class="w"> </span><span class="p">);</span>
 <span class="w">        </span><span class="kt">return</span><span class="w"> </span>ops<span class="p">;</span>
 <span class="w">    </span><span class="p">}</span>
@@ -1454,7 +1454,7 @@ You will need to deploy the Withdraw.sol contract and add its address to the pro
 <span class="w">                </span><span class="p">(</span>instances<span class="p">[</span><span class="m m-Decimal">0</span><span class="p">][</span><span class="m m-Decimal">9</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="m m-Decimal">128</span><span class="p">)</span><span class="w"> </span><span class="o">+</span>
 <span class="w">                </span><span class="p">(</span>instances<span class="p">[</span><span class="m m-Decimal">0</span><span class="p">][</span><span class="m m-Decimal">10</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="m m-Decimal">64</span><span class="p">)</span><span class="w"> </span><span class="o">+</span>
 <span class="w">                </span>instances<span class="p">[</span><span class="m m-Decimal">0</span><span class="p">][</span><span class="m m-Decimal">11</span><span class="p">],</span>
-<span class="w">        </span><span class="s2">&quot;Inconstant: Sha data inconsistant&quot;</span>
+<span class="w">        </span><span class="s2">&quot;Inconsistent: Sha data inconsistent&quot;</span>
 <span class="w">    </span><span class="p">);</span>
 <span class="p">}</span>
 </code></pre></div>
@@ -1465,7 +1465,7 @@ You will need to deploy the Withdraw.sol contract and add its address to the pro
 <span class="w">            </span><span class="p">(</span>instances<span class="p">[</span><span class="m m-Decimal">0</span><span class="p">][</span><span class="m m-Decimal">1</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="m m-Decimal">128</span><span class="p">)</span><span class="w"> </span><span class="o">+</span>
 <span class="w">            </span><span class="p">(</span>instances<span class="p">[</span><span class="m m-Decimal">0</span><span class="p">][</span><span class="m m-Decimal">2</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="m m-Decimal">64</span><span class="p">)</span><span class="w"> </span><span class="o">+</span>
 <span class="w">            </span>instances<span class="p">[</span><span class="m m-Decimal">0</span><span class="p">][</span><span class="m m-Decimal">3</span><span class="p">],</span>
-<span class="w">    </span><span class="s2">&quot;Inconstant: Merkle root dismatch&quot;</span>
+<span class="w">    </span><span class="s2">&quot;Inconsistent: Merkle root dismatch&quot;</span>
 <span class="p">);</span>
 </code></pre></div>
 <p>Then it calls the <code>verify</code> function of the verifier contract to verify the proof and process the transactions:</p>
@@ -1572,7 +1572,7 @@ instances<span class="p">[</span><span class="m m-Decimal">0</span><span class="
 <span class="w">    </span>ops<span class="p">[</span><span class="m m-Decimal">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">uint256</span><span class="p">(</span><span class="w"> </span><span class="p">(</span>data32<span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="p">(</span><span class="m m-Decimal">30</span><span class="o">*</span><span class="m m-Decimal">8</span><span class="p">))</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="mh">0x00FF</span><span class="w"> </span><span class="p">);</span>
 <span class="w">    </span><span class="c1">// amount to withdraw (wei not considered</span>
 <span class="w">    </span>ops<span class="p">[</span><span class="m m-Decimal">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">uint256</span><span class="p">(</span><span class="w"> </span>data32<span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="mh">0xFFFFFFFFFFFFFFFF</span><span class="w"> </span><span class="p">);</span>
-<span class="w">    </span><span class="c1">// recipent address</span>
+<span class="w">    </span><span class="c1">// recipient address</span>
 <span class="w">    </span>ops<span class="p">[</span><span class="m m-Decimal">3</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">uint256</span><span class="p">(</span><span class="w"> </span><span class="p">(</span>data32<span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="p">(</span><span class="m m-Decimal">8</span><span class="o">*</span><span class="m m-Decimal">8</span><span class="p">))</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="mh">0x00FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF</span><span class="w"> </span><span class="p">);</span>
 <span class="w">    </span><span class="kt">return</span><span class="w"> </span>ops<span class="p">;</span>
 <span class="p">}</span>
@@ -1587,7 +1587,7 @@ instances<span class="p">[</span><span class="m m-Decimal">0</span><span class="
 </code></pre></div></p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>You may find hard to understand the assembly code and bit shift operations. You may skip this section if you are not interested in the details. </p>
+<p>You may find it hard to understand the assembly code and bit shift operations. You may skip this section if you are not interested in the details. </p>
 <p>First, let's understand how bytes memory is laid out:
 <div class="highlight"><pre><span></span><code>Memory Layout for &#39;bytes&#39;:
 +---------------+------------------------+-----------------+
@@ -1618,7 +1618,7 @@ assembly<span class="w"> </span><span class="p">{</span>
 <span class="p">}</span>
 </code></pre></div>
 <p>The <code>add</code> function is used to calculate the final memory address by adding the offset to the witness pointer. The <code>mload</code> function is used to load 32 bytes from that address into <code>data32</code>. Therefore, <code>data32</code> will hold the 32 bytes of the transaction data we want to extract.</p>
-<p>And the <code>data32</code> is then used to extract the operation code, token index, amount, and recipient address from the transaction data. For exmaple:</p>
+<p>And the <code>data32</code> is then used to extract the operation code, token index, amount, and recipient address from the transaction data. For example:</p>
 <div class="highlight"><pre><span></span><code>ops<span class="p">[</span><span class="m m-Decimal">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">uint256</span><span class="p">(</span><span class="w"> </span><span class="p">(</span>data32<span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="p">(</span><span class="m m-Decimal">30</span><span class="o">*</span><span class="m m-Decimal">8</span><span class="p">))</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="mh">0x00FF</span><span class="w"> </span><span class="p">);</span><span class="w"> </span><span class="c1">//extract the token index</span>
 </code></pre></div>
 <p>This operation shifts <code>data32</code> right by 30*8 bits (which is 240 bits) and then performs a bitwise AND with <code>0x00FF</code> (which is 255 in decimal). This effectively extracts the last 8 bits of <code>data32</code>, which correspond to the token index: </p>
@@ -1679,7 +1679,7 @@ Step 2: AND with 0x00FF
 <span class="w">    </span><span class="kt">if</span><span class="w"> </span><span class="p">(</span>_is_local<span class="p">(</span>tokenid<span class="p">))</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="kt">address</span><span class="w"> </span><span class="nv">token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">address</span><span class="p">(</span><span class="kt">uint160</span><span class="p">(</span>tokenid<span class="p">));</span>
 <span class="w">        </span><span class="kt">address</span><span class="w"> </span><span class="nv">recipent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">address</span><span class="p">(</span><span class="kt">uint160</span><span class="p">(</span>l1recipent<span class="p">));</span>
-<span class="w">        </span><span class="c1">// Sanitity checks</span>
+<span class="w">        </span><span class="c1">// Sanity checks</span>
 <span class="w">        </span><span class="kt">require</span><span class="p">(</span>recipent<span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kt">address</span><span class="p">(</span><span class="m m-Decimal">0</span><span class="p">),</span><span class="w"> </span><span class="s2">&quot;Withdraw to the zero address&quot;</span><span class="p">);</span>
 <span class="w">        </span>IERC20<span class="w"> </span>underlying_token<span class="w"> </span><span class="o">=</span><span class="w"> </span>IERC20<span class="p">(</span>token<span class="p">);</span>
 <span class="w">        </span><span class="kt">uint256</span><span class="w"> </span><span class="nv">balance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>underlying_token<span class="p">.</span>balanceOf<span class="p">(</span><span class="kt">address</span><span class="p">(</span><span class="kt">this</span><span class="p">));</span>

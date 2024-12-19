@@ -1073,15 +1073,15 @@
 <span class="w">    </span><span class="c1">//USDT does not follow ERC20 interface so have to use the following safer method</span>
 <span class="w">    </span>TransferHelper<span class="p">.</span>safeTransferFrom<span class="p">(</span><span class="kt">address</span><span class="p">(</span>underlying_token<span class="p">),</span><span class="w"> </span><span class="k">msg.sender</span><span class="p">,</span><span class="w"> </span><span class="kt">address</span><span class="p">(</span><span class="kt">this</span><span class="p">),</span><span class="w"> </span>amount<span class="p">);</span>
 
-<span class="w">    </span><span class="c1">//Tbd: Charge fees to developer</span>
+<span class="w">    </span><span class="c1">//TBD: Charge fees to developer</span>
 <span class="w">    </span>emit<span class="w"> </span>TopUp<span class="p">(</span>_l1_address<span class="p">(</span>token<span class="p">),</span><span class="w"> </span><span class="k">msg.sender</span><span class="p">,</span><span class="w"> </span>pid_1<span class="p">,</span><span class="w"> </span>pid_2<span class="p">,</span><span class="w"> </span>amount<span class="p">);</span>
 <span class="p">}</span>
 </code></pre></div>
 <p>The <code>topup</code> function accepts four parameters that control the deposit process:</p>
 <ul>
 <li>The <code>tidx</code> parameter (uint128) represents the token index in the contract's token registry. This index is used to retrieve the actual token contract address through the <code>get_token_uid</code> function.</li>
-<li>The <code>pid_1</code> and <code>pid_2</code> parameters (both uint64) together form a unique player identifier within the zkWasm system. This two-part identifier corresponds to the <code>player_id: [u64; 2]</code> structure used in the <code>Player</code> struct in the zkWasm mini rollup ABI. Therefore, we can use the <code>pid_1</code> and <code>pid_2</code> to identify the which player is depositing the token.</li>
-<li>The <code>amount</code> parameter (uint128) specifies the deposit amount in wei, representing the smallest unit of the token being deposited, this means the amount has to multiple by 10^18 to represent the actual amount of the token.</li>
+<li>The <code>pid_1</code> and <code>pid_2</code> parameters (both uint64) together form a unique player identifier within the zkWasm system. This two-part identifier corresponds to the <code>player_id: [u64; 2]</code> structure used in the <code>Player</code> struct in the zkWasm mini rollup ABI. Therefore, we can use the <code>pid_1</code> and <code>pid_2</code> to identify which player is depositing the token.</li>
+<li>The <code>amount</code> parameter (uint128) specifies the deposit amount in wei, representing the smallest unit of the token being deposited, this means the amount has to be multiplied by 10^18 to represent the actual amount of the token.</li>
 </ul>
 <p>When a user calls the <code>topup</code> function, the following steps will be performed:</p>
 <ol>
@@ -1091,7 +1091,7 @@
 <li>The function will then emit a <code>TopUp</code> event to notify the zkWasm Rollup Application that the user has deposited the token.</li>
 </ol>
 <p>You can add more features to the <code>topup</code> function, such as charging fees to the developer, or checking if the user is on the whitelist.</p>
-<p>Image a user has deposited a token into the zkWasm Rollup Application and the <code>TopUp</code> event has been emitted. What will happen next? </p>
+<p>Imagine a user has deposited a token into the zkWasm Rollup Application and the <code>TopUp</code> event has been emitted. What will happen next? </p>
 <p>Actually... nothing will happen next. The <code>TopUp</code> event is just a notification event, it does not trigger any further actions. So how does the zkWasm Rollup Application know that the user has deposited the token? We need to implement a mechanism to listen to the <code>TopUp</code> event and trigger the corresponding actions to process the deposit in the zkWasm Rollup Application. A good way to do this is to use a deposit monitor which operates by the server's admin.</p>
 <h2 id="deposit-monitor">Deposit Monitor</h2>
 <p>In this section, we will implement a typescript node.js service that can listen to the <code>TopUp</code> event and trigger the corresponding actions to process the deposit in the zkWasm Rollup Application. The original code is in the <code>deposit.ts</code> <a href="https://github.com/riddles-are-us/zkwasm-automata/blob/main/ts/src/deposit.ts">file</a> in a game called <a href="https://automata.zkplay.app/">automata</a>.</p>
@@ -1131,7 +1131,7 @@
 <span class="p">});</span>
 <span class="kd">const</span><span class="w"> </span><span class="nx">TxHash</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">mongoose</span><span class="p">.</span><span class="nx">model</span><span class="p">(</span><span class="s1">&#39;TxHash&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">txSchema</span><span class="p">);</span>
 </code></pre></div>
-The above code defines a schema for the <code>TxHash</code> collection in the database. Each <code>TxHash</code> document will have fields that correspond to the parameters of the <code>TopUp</code> event. Notably, the state field is used to indicate the status of the event processing which could be used to prevent the event from being processed multiple times.</p>
+The above code defines a schema for the <code>TxHash</code> collection in the database. Each <code>TxHash</code> document will have fields that correspond to the parameters of the <code>TopUp</code> event. Notably, the state field is used to indicate the status of the event processing which can be used to prevent the event from being processed multiple times.</p>
 <p>When we start the service, after connecting to the database, we will first retrieve all past <code>TopUp</code> events from the proxy contract and process each event. This is specifically useful for the server's admin to check if there are any deposits that need to be processed when initializing the monitor:</p>
 <div class="highlight"><pre><span></span><code><span class="c1">// Function to retrieve all past TopUp events</span>
 <span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">getTopUpEvents</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
@@ -1162,7 +1162,7 @@ The above code defines a schema for the <code>TxHash</code> collection in the da
 <span class="p">});</span>
 </code></pre></div></p>
 <p>Once there is a new <code>TopUp</code> event, the service will process the event by calling the <code>processTopUpEvent</code> function. </p>
-<p>Let's delve into the <code>processTopUpEvent</code> function: </p>
+<p>Let's take a look at the <code>processTopUpEvent</code> function:</p>
 <div class="highlight"><pre><span></span><code><span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">processTopUpEvent</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">eventLog</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">event</span><span class="p">;</span>
 <span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="p">[</span><span class="nx">l1token</span><span class="p">,</span><span class="w"> </span><span class="nx">address</span><span class="p">,</span><span class="w"> </span><span class="nx">pid_1</span><span class="p">,</span><span class="w"> </span><span class="nx">pid_2</span><span class="p">,</span><span class="w"> </span><span class="nx">amount</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">eventLog</span><span class="p">.</span><span class="nx">args</span><span class="p">;</span>
@@ -1179,7 +1179,7 @@ The above code defines a schema for the <code>TxHash</code> collection in the da
 <p>First, the function will check if the token is the right token (the token that can be deposited into the zkWasm Rollup Application) by comparing the <code>l1token</code> (which is the uid of the token) with the token uid stored in the proxy contract. If the token is not the right token, the function will skip the event. </p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>You can implement your own logic to check if the token is the right token by checking the token's uid, for example, if you wanna make all the tokens that has been registered in the proxy contract can be deposited into the zkWasm Rollup Application, you can skip the check (because the token has been checked in the <code>topup</code> function in the proxy contract when user deposit the token) or check if the token is supported by the proxy contract by calling the <code>allTokens</code> function and check if the <code>l1token</code> is in the <code>allTokens</code> array.</p>
+<p>You can implement your own logic to check if the token is the right token by checking the token's uid, for example, if you want to make all the tokens that have been registered in the proxy contract can be deposited into the zkWasm Rollup Application, you can skip the check (because the token has been checked in the <code>topup</code> function in the proxy contract when user deposit the token) or check if the token is supported by the proxy contract by calling the <code>allTokens</code> function and check if the <code>l1token</code> is in the <code>allTokens</code> array.</p>
 </div>
 <p>Then the function will check if the transaction is already in the database by calling the <code>findTxByHash</code> function:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">let</span><span class="w"> </span><span class="nx">tx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">findTxByHash</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">transactionHash</span><span class="p">);</span>
@@ -1226,7 +1226,7 @@ The above code defines a schema for the <code>TxHash</code> collection in the da
 <span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-<p>The above code will set the transaction state to <code>in-progress</code>, then convert the amount from wei to ether, and then call the <code>deposit</code> function in the zkWasm Rollup Application to process the deposit. After the deposit is successful, the function will set the transaction state to <code>completed</code>. Howerver, if the deposit is failed, the status of the transaction will not be updated as <code>completed</code> and maintain as <code>in-progress</code>.</p>
+<p>The above code will set the transaction state to <code>in-progress</code>, then convert the amount from wei to ether, and then call the <code>deposit</code> function in the zkWasm Rollup Application to process the deposit. After the deposit is successful, the function will set the transaction state to <code>completed</code>. However, if the deposit fails, the status of the transaction will not be updated to <code>completed</code> and will remain as <code>in-progress</code>.</p>
 <div class="admonition info">
 <p class="admonition-title">Admin Setup</p>
 <p>The <code>deposit</code> function is a function in the zkWasm Rollup Application, which is only callable by the admin. You will need to setup the admin key as <code>SERVER_ADMIN_KEY</code> in the <code>.env</code> file first before you can call the <code>deposit</code> function. Also, as a kind of "player", you will need to install the admin into the zkWasm Rollup Application by calling the <code>installPlayer</code> function:
@@ -1239,7 +1239,7 @@ The above code defines a schema for the <code>TxHash</code> collection in the da
 <p>If the transaction is in the <code>in-progress</code> state, the function will skip the deposit process as this indicates that something went wrong during the deposit process and requires manual intervention.</p>
 <p>If the transaction is in the <code>completed</code> state, the function will skip the deposit process as this indicates that the deposit has already been processed.</p>
 <h2 id="deposit-action">Deposit Action</h2>
-<p>Let's take a look on how admin deposit the token into the zkWasm Rollup Application, in <code>process</code> function in state.rs of the zkWasm Rollup Application (<a href="https://github.com/riddles-are-us/zkwasm-automata/blob/main/src/state.rs">automata</a>):</p>
+<p>Let's take a look at how admin deposits the token into the zkWasm Rollup Application, in <code>process</code> function in state.rs of the zkWasm Rollup Application (<a href="https://github.com/riddles-are-us/zkwasm-automata/blob/main/src/state.rs">automata</a>):</p>
 <p><div class="highlight"><pre><span></span><code><span class="n">DEPOSIT</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="k">unsafe</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">require</span><span class="p">(</span><span class="o">*</span><span class="n">pkey</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="o">*</span><span class="n">ADMIN_PUBKEY</span><span class="p">)</span><span class="w"> </span><span class="p">};</span>
 <span class="w">    </span><span class="bp">self</span><span class="p">.</span><span class="n">deposit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">AutomataPlayer</span><span class="p">::</span><span class="n">pkey_to_pid</span><span class="p">(</span><span class="n">pkey</span><span class="p">))</span>
@@ -1268,7 +1268,7 @@ When it receives a deposit request (<code>admin.deposit(pid_1, pid_2, amountInEt
 <span class="w">    </span><span class="nb">Ok</span><span class="p">(())</span><span class="w"> </span><span class="c1">// no error occurred</span>
 <span class="p">}</span>
 </code></pre></div>
-<p>Remind how we call the <code>deposit</code> function in the deposit monitor we use the <code>pid_1</code> and <code>pid_2</code> to identify the player, and the <code>amount</code> to specify the amount of the token to be deposited:</p>
+<p>Remember how we call the <code>deposit</code> function in the deposit monitor, we use the <code>pid_1</code> and <code>pid_2</code> to identify the player, and the <code>amount</code> to specify the amount of the token to be deposited:</p>
 <div class="highlight"><pre><span></span><code><span class="k">await</span><span class="w"> </span><span class="nx">admin</span><span class="p">.</span><span class="nx">deposit</span><span class="p">(</span><span class="nx">pid_1</span><span class="p">,</span><span class="w"> </span><span class="nx">pid_2</span><span class="p">,</span><span class="w"> </span><span class="nx">amountInEther</span><span class="p">);</span>
 </code></pre></div>
 <p>So the <code>deposit</code> function will first get the player from the pid, then check if the player exists, if not, it will create a new player with the pid, then it will add the amount to the player's balance by <code>player.data.cost_balance(-(self.data[2] as i64))?;</code>.</p>
