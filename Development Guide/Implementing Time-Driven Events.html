@@ -9,23 +9,25 @@
       
       
       
+        <link rel="prev" href="Web3%20Development%20Frameworks.html">
       
-        <link rel="next" href="Setup%20Environment.html">
+      
+        <link rel="next" href="Generating%20Random%20Numbers.html">
       
       
-      <link rel="icon" href="assets/images/favicon.png">
+      <link rel="icon" href="../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.45">
     
     
       
-        <title>zkWasm Development Recipe</title>
+        <title>Implementing Time-Driven Events - zkWasm Development Recipe</title>
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.0253249f.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.0253249f.min.css">
       
         
-        <link rel="stylesheet" href="assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -44,9 +46,9 @@
       
     
     
-      <link rel="stylesheet" href="stylesheets/extra.css">
+      <link rel="stylesheet" href="../stylesheets/extra.css">
     
-    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -71,11 +73,6 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
-        
-        <a href="#welcome-to-zkwasm-development-recipe" class="md-skip">
-          Skip to content
-        </a>
-      
     </div>
     <div data-md-component="announce">
       
@@ -88,7 +85,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="index.html" title="zkWasm Development Recipe" class="md-header__button md-logo" aria-label="zkWasm Development Recipe" data-md-component="logo">
+    <a href="../index.html" title="zkWasm Development Recipe" class="md-header__button md-logo" aria-label="zkWasm Development Recipe" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -108,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Home
+              Implementing Time-Driven Events
             
           </span>
         </div>
@@ -211,7 +208,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="index.html" title="zkWasm Development Recipe" class="md-nav__button md-logo" aria-label="zkWasm Development Recipe" data-md-component="logo">
+    <a href="../index.html" title="zkWasm Development Recipe" class="md-nav__button md-logo" aria-label="zkWasm Development Recipe" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -226,30 +223,10 @@
       
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    Home
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="index.html" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../index.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -258,77 +235,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#learning-experience" class="md-nav__link">
-    <span class="md-ellipsis">
-      Learning Experience
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#ready-to-get-started" class="md-nav__link">
-    <span class="md-ellipsis">
-      Ready to get started?
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Ready to get started?">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#join-the-discord-community" class="md-nav__link">
-    <span class="md-ellipsis">
-      Join the Discord Community
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#join-the-telegram-dev-chat" class="md-nav__link">
-    <span class="md-ellipsis">
-      Join the Telegram Dev Chat
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#getting-started" class="md-nav__link">
-    <span class="md-ellipsis">
-      Getting Started
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -388,7 +294,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Setup%20Environment.html" class="md-nav__link">
+      <a href="../Setup%20Environment.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -409,7 +315,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Quick%20Tutorial.html" class="md-nav__link">
+      <a href="../Quick%20Tutorial.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -485,7 +391,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Core%20Concepts.html" class="md-nav__link">
+      <a href="../Core%20Concepts.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -506,7 +412,7 @@
   
   
     <li class="md-nav__item">
-      <a href="zkWasm%20Overview.html" class="md-nav__link">
+      <a href="../zkWasm%20Overview.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -580,7 +486,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Design%20Application%20as%20State%20Machine.html" class="md-nav__link">
+      <a href="../Design%20Application%20as%20State%20Machine.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -605,8 +511,10 @@
       
   
   
+    
   
   
+  
     
     
       
@@ -626,13 +534,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
         
           
           <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
@@ -646,7 +552,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             Development Guide
@@ -660,7 +566,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Development%20Guide/zkWasm%20Rust%20SDK.html" class="md-nav__link">
+      <a href="zkWasm%20Rust%20SDK.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -681,7 +587,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Development%20Guide/Web3%20Development%20Frameworks.html" class="md-nav__link">
+      <a href="Web3%20Development%20Frameworks.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -699,10 +605,17 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="Development%20Guide/Implementing%20Time-Driven%20Events.html" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+      <a href="Implementing%20Time-Driven%20Events.html" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -711,6 +624,7 @@
   
 
       </a>
+      
     </li>
   
 
@@ -723,7 +637,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Development%20Guide/Generating%20Random%20Numbers.html" class="md-nav__link">
+      <a href="Generating%20Random%20Numbers.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -805,7 +719,7 @@
   
   
     <li class="md-nav__item">
-      <a href="zkwasm-mini-rollup/Rollup%20Overview.html" class="md-nav__link">
+      <a href="../zkwasm-mini-rollup/Rollup%20Overview.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -826,7 +740,7 @@
   
   
     <li class="md-nav__item">
-      <a href="zkwasm-mini-rollup/Rollup%20Host.html" class="md-nav__link">
+      <a href="../zkwasm-mini-rollup/Rollup%20Host.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -847,7 +761,7 @@
   
   
     <li class="md-nav__item">
-      <a href="zkwasm-mini-rollup/Rollup%20Database.html" class="md-nav__link">
+      <a href="../zkwasm-mini-rollup/Rollup%20Database.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -868,7 +782,7 @@
   
   
     <li class="md-nav__item">
-      <a href="zkwasm-mini-rollup/Rollup%20Server.html" class="md-nav__link">
+      <a href="../zkwasm-mini-rollup/Rollup%20Server.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -889,7 +803,7 @@
   
   
     <li class="md-nav__item">
-      <a href="zkwasm-mini-rollup/Rollup%20Convention.html" class="md-nav__link">
+      <a href="../zkwasm-mini-rollup/Rollup%20Convention.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -967,7 +881,7 @@
   
   
     <li class="md-nav__item">
-      <a href="zkwasm-protocol/zkWasm%20Protocol.html" class="md-nav__link">
+      <a href="../zkwasm-protocol/zkWasm%20Protocol.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -988,7 +902,7 @@
   
   
     <li class="md-nav__item">
-      <a href="zkwasm-protocol/Deposit.html" class="md-nav__link">
+      <a href="../zkwasm-protocol/Deposit.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1009,7 +923,7 @@
   
   
     <li class="md-nav__item">
-      <a href="zkwasm-protocol/Withdraw.html" class="md-nav__link">
+      <a href="../zkwasm-protocol/Withdraw.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1047,67 +961,6 @@
   
   
   
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#learning-experience" class="md-nav__link">
-    <span class="md-ellipsis">
-      Learning Experience
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#ready-to-get-started" class="md-nav__link">
-    <span class="md-ellipsis">
-      Ready to get started?
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Ready to get started?">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#join-the-discord-community" class="md-nav__link">
-    <span class="md-ellipsis">
-      Join the Discord Community
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#join-the-telegram-dev-chat" class="md-nav__link">
-    <span class="md-ellipsis">
-      Join the Telegram Dev Chat
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#getting-started" class="md-nav__link">
-    <span class="md-ellipsis">
-      Getting Started
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
   
 </nav>
                   </div>
@@ -1122,160 +975,9 @@
                   
 
 
-<h1 id="welcome-to-zkwasm-development-recipe">Welcome to zkWasm Development Recipe</h1>
-<p>The zkWasm Development Recipe focuses on building trustless blockchain applications using zkWasm and related technologies. It will start from scratch, from understanding blockchain and zero-knowledge proofs, to learning the basics and architecture of zkWasm, and then to developing a complete application, allowing you to transform from a beginner to an advanced zkWasm developer.</p>
-<p>Of course, this Development Recipe can serve as both an introductory tutorial for beginners and a reference manual for developing zkWasm applications. Each chapter corresponds to a step in developing a full-stack zkWasm application.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>This is still a work in progress. We will keep updating it with the latest information and best practices.</p>
-</div>
-<h2 id="learning-experience">Learning Experience</h2>
-<p><strong>Here's what you can expect from this recipe:</strong></p>
-<ul>
-<li><strong>Workflow</strong>: A smooth development learning experience following a "learn - design - develop - test - deploy" workflow</li>
-<li><strong>Tools</strong>: Useful tools and guidance for developing games, web, and backend applications </li>
-<li><strong>Guidance</strong>: Step-by-step code examples and practical guidance</li>
-</ul>
-<p><strong>Content Format:</strong></p>
-<ul>
-<li><strong>Text</strong>: Clear and concise explanations to help you understand the concepts and principles</li>
-<li><strong>Code</strong>: Step-by-step code examples to guide you through the development process</li>
-<li><strong>Video</strong>: Visual explanations to help you understand the concepts and principles</li>
-<li><strong>Quiz</strong>: Test your understanding of the concepts and principles</li>
-<li><strong>Supplemental Resources</strong>: Additional resources to further enhance your learning</li>
-<li><strong>FAQ</strong>: Answers to frequently asked questions</li>
-</ul>
-<p><strong>You will build skills and confidence in the following areas:</strong></p>
-<ul>
-<li>Blockchain and zkWasm engineering</li>
-<li>Application design</li>
-<li>Frontend development with React, TypeScript, and Web3 libraries</li>
-<li>Backend development with Rust and zkWasm </li>
-<li>Environment setup, testing, debugging, and deployment</li>
-</ul>
-<p>This will equip you to build your own zkWasm applications from the ground up.</p>
-<p><strong>Upon completing this Development Recipe, you'll have several exciting paths to explore:</strong></p>
-<ul>
-<li><strong>Hackathons</strong>: Put your skills to the test by participating in hackathons across various ecosystems and showcasing your zkWasm prowess</li>
-<li><strong>Entrepreneurship</strong>: Embark on an entrepreneurial journey by building your own innovative products and starting a company, with the support of Delphinus Labs</li>
-<li><strong>Ecosystem Contribution</strong>: Contribute to the growth of the zkWasm ecosystem by creating essential tools and libraries, with grants from Delphinus Labs</li>
-<li><strong>Career Development</strong>: Launch your career as a sought-after full-stack developer in the thriving blockchain industry</li>
-<li><strong>Academic Research</strong>: Delve deeper into the academic realm by pursuing research on zkWasm and pushing the boundaries of this cutting-edge technology</li>
-<li><strong>Discover Opportunities</strong>: Discover countless other opportunities to apply your newfound expertise and make your mark in the world of blockchain and zero-knowledge proofs</li>
-</ul>
-<h2 id="ready-to-get-started">Ready to get started?</h2>
-<p>Here are a few steps you should follow to ensure a great development experience:</p>
-<h3 id="join-the-discord-community">Join the Discord Community</h3>
-<p><a href="https://discord.com/invite/delphinuslab">Delphinus Labs Discord Community</a> </p>
-<ul>
-<li>Ask questions, share your ideas, and get help from the community. </li>
-<li>"The best way to learn is by teaching.” If you see others who are stuck, help them out! </li>
-<li>There are also many events and activities organized by the community which you can participate in.</li>
-</ul>
-<h3 id="join-the-telegram-dev-chat">Join the Telegram Dev Chat</h3>
-<p><a href="https://t.me/jupxiao">Please DM The Developer Relations Team</a> </p>
-<ul>
-<li>Direct Message the developer relations team to be invited into the telegram chat group.</li>
-<li>You can get help from the developer relations team, also you will be able to connect with other developers. </li>
-<li>Please also give us your feedback and suggestions on how to improve the development experience.</li>
-</ul>
-<p><strong>Let's dive in!</strong></p>
-<hr />
-<h2 id="getting-started">Getting Started</h2>
-<div class="grid-wrapper">
-    <a href="Quick%20Tutorial.html" class="grid-box">
-        <h3>🚀 Quick Tutorial</h3>
-        <p>Get started quickly with a hands-on tutorial</p>
-        <span class="grid-link">Start Building →</span>
-    </a>
+  <h1>Implementing Time-Driven Events</h1>
 
-    <a href="Core%20Concepts.html" class="grid-box">
-        <h3>🔰 Core Concepts</h3>
-        <p>Learn the fundamental concepts of blockchain application development</p>
-        <span class="grid-link">Start Learning →</span>
-    </a>
 
-    <a href="Setup%20Environment.html" class="grid-box">
-        <h3>⚙️ Setup Guide</h3>
-        <p>Set up your development environment</p>
-        <span class="grid-link">Get Ready →</span>
-    </a>
-
-    <a href="zkWasm%20Overview.html" class="grid-box">
-        <h3>🚀 zkWasm Overview</h3>
-        <p>Learn the basics of zkWasm</p>
-        <span class="grid-link">Start Learning →</span>
-    </a>
-</div>
-
-<style>
-.grid-wrapper {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 24px;
-    margin: 32px 0;
-}
-
-.grid-box {
-    display: block;
-    padding: 24px;
-    background: #ffffff;
-    border: 1px solid #e1e4e8;
-    border-radius: 8px;
-    text-align: left;
-    text-decoration: none;
-    color: inherit;
-    transition: all 0.3s ease;
-}
-
-.grid-box:hover {
-    border-color: var(--md-primary-fg-color);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    text-decoration: none;
-    transform: translateY(-2px);
-}
-
-.grid-box h3 {
-    margin-top: 0;
-    margin-bottom: 12px;
-    color: var(--md-primary-fg-color);
-    font-size: 1.2rem;
-}
-
-.grid-box p {
-    color: #586069;
-    margin-bottom: 16px;
-    line-height: 1.5;
-}
-
-.grid-link {
-    display: inline-flex;
-    align-items: center;
-    color: var(--md-primary-fg-color);
-    font-weight: 500;
-    font-size: 0.9rem;
-}
-
-.grid-link:after {
-    content: "→";
-    margin-left: 4px;
-    transition: transform 0.2s ease;
-}
-
-.grid-box:hover .grid-link:after {
-    transform: translateX(4px);
-}
-
-/* Dark mode support */
-[data-md-color-scheme="slate"] .grid-box {
-    background: #2b2b2b;
-    border-color: #404040;
-}
-
-[data-md-color-scheme="slate"] .grid-box p {
-    color: #9e9e9e;
-}
-</style>
 
 
 
@@ -1328,10 +1030,10 @@
     </div>
     
     
-    <script id="__config" type="application/json">{"base": ".", "features": ["navigation.indexes", "navigation.instant", "navigation.tracking", "navigation.sections", "navigation.expand", "navigation.top", "search.suggest", "content.code.copy", "search.highlight"], "search": "assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.indexes", "navigation.instant", "navigation.tracking", "navigation.sections", "navigation.expand", "navigation.top", "search.suggest", "content.code.copy", "search.highlight"], "search": "../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="assets/javascripts/bundle.83f73b43.min.js"></script>
+      <script src="../assets/javascripts/bundle.83f73b43.min.js"></script>
       
         <script src="https://unpkg.com/mermaid@10.6.1/dist/mermaid.min.js"></script>
       
