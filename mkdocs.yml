@@ -10,8 +10,10 @@ nav:
   - Design Guide:
     - Design Application as State Machine: Design Application as State Machine.md
   - Development Guide:
-    - zkWasm Rust SDK: zkWasm Rust SDK.md
-    - Web3 Development Frameworks: Web3 Development Frameworks.md
+    - zkWasm Rust SDK and Rest Service ABI: Development Guide/zkWasm Rust SDK.md
+    - Web3 Development Frameworks: Development Guide/Web3 Development Frameworks.md
+    - Implementing Time-Driven Events: Development Guide/Implementing Time-Driven Events.md
+    - Generating Random Numbers: Development Guide/Generating Random Numbers.md
   - zkWasm Mini Rollup:
     - Overview: zkwasm-mini-rollup/Rollup Overview.md
     - Host Environment: zkwasm-mini-rollup/Rollup Host.md
