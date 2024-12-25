@@ -4,6 +4,9 @@
 
 In this section, we will use what we have learned from [zkWasm Protocol Overview](zkWasm%20Protocol.md) and [Rollup Settlement Monitor](../zkwasm-mini-rollup/Rollup%20Server.md#rollup-settlement-monitor-tssettlets) to implement a withdraw workflow. 
 
+!!! Prerequisite
+    In order to implement the withdraw workflow, you may need to deploy a proxy contract and a withdraw contract and add the withdraw contract to the proxy contract through `AddTransaction` method mentioned in the [zkWasm Protocol Overview](zkWasm%20Protocol.md#proxy-contract).
+
 ## Withdraw flow in the application
 
 As a kind of transaction, the withdraw function can be implemented in the `Transaction` struct which we have discussed a little bit in the [Quick Tutorial](../Quick%20Tutorial.md#3-transaction-handler). Take [automata](https://github.com/riddles-are-us/zkwasm-automata/blob/main/src/state.rs) as an example, the withdraw function is implemented in the `Transaction` struct as follows:

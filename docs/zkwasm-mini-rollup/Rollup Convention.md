@@ -1,4 +1,4 @@
-## Convension (/convention)
+## Convention (/convention)
 The zkWasm Convention Library provides essential traits and implementations for building zkWasm applications with standardized state management, event handling, and settlement processing. This library serves as the foundation for creating consistent and reliable zkWasm applications.
 
 ### Core Components
@@ -272,4 +272,4 @@ fn set_entries(&self, entries: &Vec<u64>, counter: u64) {
 The above code can store all the events that shall be processed in a same specific counter to the storage. This is particularly useful to save the memory space and improve the performance.
 
 !!!info
-    We will cover how to leverage the event queue and time-based events in other chapters.
+    We will cover how to leverage the event queue and time-based events in [Implementing Time-Driven Events](../Development%20Guide/Implementing%20Time-Driven%20Events.md) chapter.
