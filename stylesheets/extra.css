@@ -62,3 +62,13 @@
     max-width: 165px;  /* 可以根据需要调整这个值 */
     text-overflow: ellipsis;
 }
+
+.light-toggle {
+  background-image: url('../assets/logo_orange.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 24px;
+  height: 24px;
+}
+
