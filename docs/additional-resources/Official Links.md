@@ -10,6 +10,8 @@ Welcome to DelphinusLab's official communication channels and resources. Feel fr
 | :speech_balloon: Discord      | [https://discord.com/invite/delphinuslab](https://discord.com/invite/delphinuslab)     |
 | :incoming_envelope: Telegram  | [https://t.me/DelphinusLabOfficial](https://t.me/DelphinusLabOfficial)                |
 | :computer: GitHub             | [https://github.com/DelphinusLab](https://github.com/DelphinusLab)                     |
+| :cloud: zkWasm Hub           | [https://zkwasmhub.com/](https://zkwasmhub.com/)                                       |
+| :mag: zkWasm Hub Explorer    | [https://explorer.zkwasmhub.com/](https://explorer.zkwasmhub.com/)                     |
 
 ---
 *Follow us to stay updated with the latest news and developments!*
