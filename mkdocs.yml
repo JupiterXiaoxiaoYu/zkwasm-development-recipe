@@ -2,18 +2,19 @@ site_name: zkWasm Development Recipe
 nav:
   - Home: index.md
   - Getting Started:
-    - Setup Environment: Setup Environment.md
-    - Quick Tutorial: Quick Tutorial.md
+    - Setup Environment: getting-started/Setup Environment.md
+    - Quick Tutorial: getting-started/Quick Tutorial.md
+    - Development Workflow: getting-started/Development Workflow.md
   - Core Documentation:
     - Core Concepts: Core Concepts.md
     - zkWasm Overview: zkWasm Overview.md
   - Design Guide:
     - Design Application as State Machine: Design Application as State Machine.md
   - Development Guide:
-    - zkWasm Rust SDK and Rest Service ABI: Development Guide/zkWasm Rust SDK.md
-    - Web3 Development Frameworks: Development Guide/Web3 Development Frameworks.md
-    - Implementing Time-Driven Events: Development Guide/Implementing Time-Driven Events.md
-    - Generating Random Numbers: Development Guide/Generating Random Numbers.md
+    - zkWasm Rust SDK and Rest Service ABI: development-guide/zkWasm Rust SDK.md
+    - Web3 Development Frameworks: development-guide/Web3 Development Frameworks.md
+    - Implementing Time-Driven Events: development-guide/Implementing Time-Driven Events.md
+    - Generating Random Numbers: development-guide/Generating Random Numbers.md
   - zkWasm Mini Rollup:
     - Overview: zkwasm-mini-rollup/Rollup Overview.md
     - Host Environment: zkwasm-mini-rollup/Rollup Host.md
@@ -24,6 +25,11 @@ nav:
     - zkWasm Protocol Overview: zkwasm-protocol/zkWasm Protocol.md
     - Deposit: zkwasm-protocol/Deposit.md
     - Withdraw: zkwasm-protocol/Withdraw.md
+    - Custom Transaction: zkwasm-protocol/Custom Transaction.md
+  - Additional Resources:
+    - Official Links: additional-resources/Official Links.md
+    - Project Examples: additional-resources/Project Examples.md
+    - Frequently Asked Questions: additional-resources/Frequently Asked Questions.md
 
 theme:
   name: material

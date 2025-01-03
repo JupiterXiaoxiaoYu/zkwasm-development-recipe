@@ -44,7 +44,7 @@ For game developers, Alchemy has a [gaming tools collection](https://www.alchemy
 
 For beginners, it's recommended to start with one of the more established frameworks and gradually explore additional tools as needed. The key is to choose tools that offer good documentation, active community support, and regular updates to ensure a smooth development experience.
 
-!!!warning "    Disclaimer"
+!!!warning "Disclaimer"
 
     Please note that while we strive to provide accurate and up-to-date information about Web3 development frameworks and tools, the blockchain technology landscape evolves rapidly. We encourage all developers to:
 
