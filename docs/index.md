@@ -69,7 +69,7 @@ Here are a few steps you should follow to ensure a great development experience:
 ## Getting Started
 
 <div class="grid-wrapper">
-    <a href="Quick%20Tutorial.html" class="grid-box">
+    <a href="getting-started/Quick%20Tutorial.html" class="grid-box">
         <h3>🚀 Quick Tutorial</h3>
         <p>Get started quickly with a hands-on tutorial</p>
         <span class="grid-link">Start Building →</span>
@@ -81,7 +81,7 @@ Here are a few steps you should follow to ensure a great development experience:
         <span class="grid-link">Start Learning →</span>
     </a>
     
-    <a href="Setup%20Environment.html" class="grid-box">
+    <a href="getting-started/Setup%20Environment.html" class="grid-box">
         <h3>⚙️ Setup Guide</h3>
         <p>Set up your development environment</p>
         <span class="grid-link">Get Ready →</span>
