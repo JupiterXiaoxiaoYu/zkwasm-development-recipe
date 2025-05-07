@@ -1,6 +1,6 @@
 ﻿# zkwasm-development-recipe
 
-[Read it online](https://jupiterxiaoxiaoyu.github.io/zkwasm-development-recipe/)
+[Read it online](https://development-recipe.zkwasm.ai/)
 
 mkdocs build
 

@@ -1,4 +1,5 @@
 site_name: zkWasm Development Recipe
+site_url: https://development-recipe.zkwasm.ai
 nav:
   - Home: index.md
   - Getting Started:
