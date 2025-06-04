@@ -8,7 +8,7 @@ These events can affect the state of a minirollup application. Using the farming
 
 Traditional blockchain systems don't natively support time-driven events since blockchains cannot autonomously trigger state changes. However, we can simulate time-driven events using an external account controlled by an off-chain service.
 
-In zkWasm, we have a server-side sequencer that manages the transaction queue. This sequencer can generate timetick transactions to trigger time-driven events (see the [Sequencer section in the server documentation](../zkwasm-mini-rollup/Rollup%20Server.md#sequencer-tsservicets)). This provides native support for time-driven events in zkWasm.
+In zkWasm, we have a server-side sequencer that manages the transaction queue. This sequencer can generate timetick transactions to trigger time-driven events (see the [Sequencer section in the server documentation](../zkwasm-mini-rollup/Rollup%20Server.md#sequencer)). This provides native support for time-driven events in zkWasm.
 
 ## Implementation Components
 

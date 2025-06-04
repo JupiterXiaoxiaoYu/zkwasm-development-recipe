@@ -1,0 +1,1791 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://development-recipe.zkwasm.ai/Core%20Concepts.html">
+      
+      
+        <link rel="prev" href="getting-started/Development%20Workflow.html">
+      
+      
+        <link rel="next" href="zkWasm%20Overview.html">
+      
+      
+      <link rel="icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
+    
+    
+      
+        <title>Core Concepts - zkWasm Development Recipe</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.342714a4.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="stylesheets/extra.css">
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="pink">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#core-concepts" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="index.html" title="zkWasm Development Recipe" class="md-header__button md-logo" aria-label="zkWasm Development Recipe" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            zkWasm Development Recipe
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Core Concepts
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="pink"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="lime"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="index.html" title="zkWasm Development Recipe" class="md-nav__button md-logo" aria-label="zkWasm Development Recipe" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    zkWasm Development Recipe
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Getting Started
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Getting Started
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="getting-started/Setup%20Environment.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Setup Environment
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="getting-started/Quick%20Tutorial.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Quick Tutorial
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="getting-started/Development%20Workflow.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Development Workflow
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Core Documentation
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Core Documentation
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Core Concepts
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="Core%20Concepts.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Core Concepts
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-understanding-web-application-development" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Understanding Web Application Development
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Understanding Web Application Development">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#backend-state-storage-and-transformation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Backend: State Storage and Transformation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#frontend-state-presentation-and-interaction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Frontend: State Presentation and Interaction
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#frontend-backend-separation-state-synchronization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Frontend-Backend Separation: State Synchronization
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-understanding-state-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Understanding State Management
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Understanding State Management">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#state-is-a-snapshot-of-the-system-or-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      State is a "Snapshot" of the System or Application
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#state-transition-reflects-the-systems-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      State Transition Reflects the System's Behavior
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-understanding-blockchain-engineering" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Understanding Blockchain Engineering
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Understanding Blockchain Engineering">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#decentralized-storage-of-global-state" class="md-nav__link">
+    <span class="md-ellipsis">
+      Decentralized Storage of Global State
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#consensus-mechanism-for-state-transitions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Consensus Mechanism for State Transitions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#state-management-in-smart-contracts" class="md-nav__link">
+    <span class="md-ellipsis">
+      State Management in Smart Contracts
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#state-extension-in-layer2-or-rollup-applications" class="md-nav__link">
+    <span class="md-ellipsis">
+      State Extension in Layer2 or Rollup Applications
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-understanding-zero-knowledge-proofs" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Understanding Zero-Knowledge Proofs
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Understanding Zero-Knowledge Proofs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#supplemental-resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      Supplemental Resources
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="zkWasm%20Overview.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    zkWasm Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Design Guide
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Design Guide
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Design%20Application%20as%20State%20Machine.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Design Application as State Machine
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Development Guide
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Development Guide
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="development-guide/zkWasm%20Rust%20SDK.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    zkWasm Rust SDK and Rest Service ABI
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="development-guide/Web3%20Development%20Frameworks.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Web3 Development Frameworks
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="development-guide/Implementing%20Time-Driven%20Events.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Implementing Time-Driven Events
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="development-guide/Generating%20Random%20Numbers.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Generating Random Numbers
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    zkWasm Mini Rollup
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            zkWasm Mini Rollup
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="zkwasm-mini-rollup/Rollup%20Overview.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="zkwasm-mini-rollup/Rollup%20Host.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Host Environment
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="zkwasm-mini-rollup/Rollup%20Database.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Database Service
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="zkwasm-mini-rollup/Rollup%20Server.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Server Implementation (zkWasm-ts-Server)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="zkwasm-mini-rollup/Rollup%20Convention.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Convention
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    zkWasm Protocol
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            zkWasm Protocol
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="zkwasm-protocol/zkWasm%20Protocol.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    zkWasm Protocol Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="zkwasm-protocol/Deposit.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Deposit
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="zkwasm-protocol/Withdraw.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Withdraw
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="zkwasm-protocol/Custom%20Transaction.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Custom Transaction
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Additional Resources
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            Additional Resources
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="additional-resources/Official%20Links.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Official Links
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="additional-resources/Project%20Examples.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Project Examples
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="additional-resources/Frequently%20Asked%20Questions.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Frequently Asked Questions
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-understanding-web-application-development" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Understanding Web Application Development
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Understanding Web Application Development">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#backend-state-storage-and-transformation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Backend: State Storage and Transformation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#frontend-state-presentation-and-interaction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Frontend: State Presentation and Interaction
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#frontend-backend-separation-state-synchronization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Frontend-Backend Separation: State Synchronization
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-understanding-state-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Understanding State Management
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Understanding State Management">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#state-is-a-snapshot-of-the-system-or-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      State is a "Snapshot" of the System or Application
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#state-transition-reflects-the-systems-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      State Transition Reflects the System's Behavior
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-understanding-blockchain-engineering" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Understanding Blockchain Engineering
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Understanding Blockchain Engineering">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#decentralized-storage-of-global-state" class="md-nav__link">
+    <span class="md-ellipsis">
+      Decentralized Storage of Global State
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#consensus-mechanism-for-state-transitions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Consensus Mechanism for State Transitions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#state-management-in-smart-contracts" class="md-nav__link">
+    <span class="md-ellipsis">
+      State Management in Smart Contracts
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#state-extension-in-layer2-or-rollup-applications" class="md-nav__link">
+    <span class="md-ellipsis">
+      State Extension in Layer2 or Rollup Applications
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-understanding-zero-knowledge-proofs" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Understanding Zero-Knowledge Proofs
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Understanding Zero-Knowledge Proofs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#supplemental-resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      Supplemental Resources
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="core-concepts">Core Concepts</h1>
+<h2 id="1-understanding-web-application-development">1. Understanding Web Application Development</h2>
+<p>In modern web application development, the frontend and backend have clear divisions of labor. Although technologies are constantly evolving, one thing remains constant: the frontend is responsible for presenting the state, while the backend is responsible for managing the state.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul>
+<li>The recipe focuses on web application development due to zkWasm's strong ties with WebAssembly. However, zkWasm is not limited to web applications, you can use zkWasm to develop applications such as games for other platforms.</li>
+<li>Wasm's widespread support in web browsers makes it easier to integrate zkWasm into web applications.</li>
+<li>The zkWasm ecosystem and Delphinus Labs provide web-friendly tools and libraries for a streamlined development process.</li>
+</ul>
+</div>
+<h3 id="backend-state-storage-and-transformation">Backend: State Storage and Transformation</h3>
+<p>The backend is the core of an application, and its main responsibilities include:</p>
+<ol>
+<li>
+<p><strong>State Storage</strong>: The backend stores the application's state data, which can be kept in memory or persisted in a database. Common storage methods include relational databases (like <a href="https://www.mysql.com/">MySQL</a>) and non-relational databases (like <a href="https://www.mongodb.com/">MongoDB</a>).</p>
+</li>
+<li>
+<p><strong>State Transformation</strong>: The backend receives requests from the frontend, transforms the state according to business logic, and returns the new state to the frontend. This process can be seen as a <a href="https://en.wikipedia.org/wiki/Finite-state_machine">state machine</a>, where each request triggers a state transition.</p>
+</li>
+<li>
+<p><strong>Business Logic</strong>: The backend handles complex business logic, such as user authentication, access control, and data validation, ensuring the legitimacy and security of state transitions.</p>
+</li>
+</ol>
+<h3 id="frontend-state-presentation-and-interaction">Frontend: State Presentation and Interaction</h3>
+<p>The frontend directly faces the user, and its main responsibilities include:</p>
+<ol>
+<li>
+<p><strong>State Presentation</strong>: The frontend renders the state data returned by the backend into a user interface. Traditional web pages use HTML to describe content structure and CSS to describe appearance. Modern web applications often use JavaScript frameworks (like <a href="https://react.dev/">React</a> or <a href="https://vuejs.org/">Vue</a>) to declaratively describe the mapping between UI and state.</p>
+</li>
+<li>
+<p><strong>User Interaction</strong>: The frontend handles various user interactions, such as mouse clicks, keyboard input, and touch events. When the user performs an action, the frontend updates the UI state and passes the user's intent to the backend.</p>
+</li>
+<li>
+<p><strong>Local State Management</strong>: Although the backend is the main manager of state, the frontend also needs to manage some local UI states, such as the currently selected tab or whether a modal is shown. These states are usually related to specific UI components and do not need to be passed to the backend.</p>
+</li>
+</ol>
+<h3 id="frontend-backend-separation-state-synchronization">Frontend-Backend Separation: State Synchronization</h3>
+<p>As the division between frontend and backend becomes clearer, frontend-backend separation has become the mainstream model of web development. In this model, the frontend and backend communicate through APIs and need to agree on data formats and communication protocols. We can view the interaction between frontend and backend as a process of synchronizing state from the backend to the frontend: the frontend requests the backend API, the backend returns or updates state data, and the frontend updates the UI based on the state data.</p>
+<p><img alt="Frontend-Backend Architecture" src="media/fb.png" /></p>
+<p>In summary, in a frontend-backend separated architecture, state management requires close cooperation between the frontend and backend. Both sides need to reach agreement on API design, data synchronization, authentication, and other aspects to jointly maintain the application's state.</p>
+<h2 id="2-understanding-state-management">2. Understanding State Management</h2>
+<p>We've discussed the roles of the frontend and backend in state management. It's clear that regardless of frontend or backend, state management is a core issue in application development. So, what is state? Why is state management so important?</p>
+<p>In software development, state is everywhere:</p>
+<ul>
+<li>On the backend, state could be data in a database, objects in memory, files in a filesystem, etc.</li>
+<li>On the frontend, state could be the structure of the DOM tree, CSS styles, JavaScript variables, etc.</li>
+</ul>
+<p>Broadly speaking, state is a snapshot of a program at a certain moment. It determines the program's current behavior and future direction. Managing state well means managing the program well.</p>
+<h3 id="state-is-a-snapshot-of-the-system-or-application">State is a "Snapshot" of the System or Application</h3>
+<p>In computer science, we often say "program = data structure + algorithm". Data structure, in essence, is a representation of the system's state. The system's state at any moment determines its current behavior and properties. Understanding and managing state is the foundation of controlling the system.</p>
+<p>Here are a few examples:</p>
+<ul>
+<li>The process management in an operating system is essentially managing the state transitions of processes (ready, running, blocked, etc.).</li>
+<li>Variables in a programming language can be seen as a representation of the program's state. Functional languages emphasize immutable state to reduce the complexity of state management.</li>
+<li>The ACID properties of databases are meant to ensure the consistency of state before and after transactions.</li>
+</ul>
+<p>Or more vividly:</p>
+<ul>
+<li>In games, a character's movement, attack, skill release, etc., are all processes of state transition.</li>
+<li>In social networks, a user's state (like follow, like, comment) determines the display of the information flow.</li>
+<li>In e-commerce websites, the state of a user's shopping cart, order status, etc., determines the recommendation system and search results.</li>
+</ul>
+<p>The primary task of state management is to choose the right data structure to represent the system's state space. A good state representation should be concise, complete, and easy to verify.</p>
+<h3 id="state-transition-reflects-the-systems-behavior">State Transition Reflects the System's Behavior</h3>
+<p>If state is a "snapshot" of the system, then state transition is the "script" of the system's behavior. The dynamic behavior of the system can be seen as the result of a series of state transitions. Each input or event may cause a change in state, thereby changing the system's behavior.</p>
+<p>The management of state transitions involves several key issues:</p>
+<ol>
+<li><strong>Transition Function</strong>: Given the current state and input, how to calculate the next state.</li>
+<li><strong>Consistency</strong>: How to ensure the consistency of the final result of concurrent state transitions.</li>
+<li><strong>Fault Tolerance</strong>: How to handle invalid state transitions and prevent the system from entering an erroneous state.</li>
+</ol>
+<p>For example:</p>
+<ul>
+<li>In a game, a player's attack may cause changes in multiple states, including the attacker's state, the defender's state, the game scene's state, etc.</li>
+<li>In a social network, a user's like may cause changes in multiple states, including the liker's state, the liked person's state, the recommendation system's state, etc.</li>
+<li>On an e-commerce website, a user's cart checkout may cause changes in multiple states, including the shopping cart's state, the order's state, the recommendation system's state, etc.</li>
+</ul>
+<p>Many engineering problems, such as concurrency control and exception handling, can essentially be boiled down to the management of state transitions. Good state management should ensure:</p>
+<ol>
+<li><strong>State Space</strong>: All possible states are safe and controllable.</li>
+<li><strong>State Transition</strong>: Any transition satisfies the predefined constraints.</li>
+<li><strong>State Consistency</strong>: All replicas or views eventually converge to a consistent state.</li>
+</ol>
+<p>Understanding state management allows us to better understand the essence of blockchain development.</p>
+<h2 id="3-understanding-blockchain-engineering">3. Understanding Blockchain Engineering</h2>
+<p>In blockchain application development, the blockchain can replace or partially replace the traditional backend as a distributed database and server. </p>
+<p><img alt="Blockchain Application Architecture" src="media/frontend-backend-blockchain.drawio.png" /></p>
+<p>The core of blockchain engineering is managing global state in a decentralized network. Here, state can be account balances, smart contract variables, token ownership, etc. Unlike traditional centralized systems, state management in blockchain faces several major challenges.</p>
+<h3 id="decentralized-storage-of-global-state">Decentralized Storage of Global State</h3>
+<p>The global state of the blockchain is maintained by all nodes together. Each node saves a complete copy of the state. Although this decentralized storage improves the system's availability and fault tolerance, it also brings several problems:</p>
+<ol>
+<li><strong>State Synchronization</strong>: How do newly joined nodes obtain the latest state from other nodes?</li>
+<li><strong>State Validation</strong>: How to quickly verify the legitimacy of a state to prevent malicious nodes from injecting erroneous states?</li>
+<li><strong>State Storage</strong>: How to design efficient data structures for synchronizing and verifying state among nodes?</li>
+</ol>
+<p>For example, Ethereum uses Merkle Patricia Trees to store state, which can quickly verify state consistency and support state queries by light nodes.</p>
+<h3 id="consensus-mechanism-for-state-transitions">Consensus Mechanism for State Transitions</h3>
+<p>State transitions in the blockchain are triggered by transactions. But in a decentralized network, reaching consensus on the order and legitimacy of transactions is a very tricky problem. Consensus mechanisms, such as PoW and PoS, provide a way to reach agreement on state transitions among untrusted nodes.</p>
+<p>The consensus mechanism needs to solve several problems:</p>
+<ol>
+<li><strong>Consistency</strong>: How to ensure that honest nodes see a consistent order of state transitions?</li>
+<li><strong>Liveness</strong>: How to ensure that state transitions can be completed within a finite time, without livelock or deadlock?</li>
+<li><strong>Incentive</strong>: How to incentivize nodes to participate in consensus and punish malicious behavior?</li>
+</ol>
+<p>For example, Bitcoin's PoW reaches consensus through computing power competition, while Ethereum's PoS chooses block-producing nodes through staking and randomness.</p>
+<h3 id="state-management-in-smart-contracts">State Management in Smart Contracts</h3>
+<p>Smart contracts are one of the most powerful features of blockchain. They allow developers to deploy arbitrary state transition logic on the blockchain. From a programming perspective, each contract is like a state machine, managing a set of state variables and performing state transitions based on transaction inputs.</p>
+<p>State management in smart contracts involves several key issues:</p>
+<ol>
+<li><strong>State Representation</strong>: How to abstract complex business logic and data structures with state variables?</li>
+<li><strong>State Transition</strong>: How to ensure that each state transition is deterministic and verifiable?</li>
+<li><strong>Concurrency Control</strong>: How to handle concurrent state access and modification to prevent race conditions?</li>
+</ol>
+<p>Ethereum's EVM provides a runtime environment for smart contracts. The Solidity programming language supports various state variable types, such as uint, mapping, struct, etc. Contract functions implement state transitions by reading and writing state variables.</p>
+<h3 id="state-extension-in-layer2-or-rollup-applications">State Extension in Layer2 or Rollup Applications</h3>
+<p>State storage and transitions in blockchain are all done on Layer1 (mainchain). But due to the limitations of consensus mechanisms and storage capacity, the state throughput of Layer1 is very limited. To extend state capacity, Layer2 solutions emerged.</p>
+<p>Layer2 solutions, such as state channels and rollups, process state off-chain and only interact with Layer1 at critical moments (such as final state submission), thus greatly improving state throughput. But this also puts higher requirements on state management:</p>
+<ol>
+<li><strong>State Sharding</strong>: How to split state into multiple Layer2s for parallel processing?</li>
+<li><strong>Fraud Proofs</strong>: How to use cryptographic methods to prove the legitimacy of off-chain state transitions?</li>
+<li><strong>State Submission</strong>: How to securely and efficiently submit Layer2 state to Layer1?</li>
+</ol>
+<p>For example, zkRollup uses zero-knowledge proofs to verify off-chain state transitions, while Optimistic Rollup ensures state legitimacy through fraud proofs and challenge periods. zkWasm achieves deterministic and verifiable state transitions by compiling state transition logic into Wasm bytecode and executing it in a zkVM.</p>
+<h2 id="4-understanding-zero-knowledge-proofs">4. Understanding Zero-Knowledge Proofs</h2>
+<p>The most significant role of blockchain as a distributed system is verification. We mentioned earlier that zkWasm achieves deterministic and verifiable state transitions, so why do we need verification? What is determinism and verifiability in the context of blockchain, and what role does zero-knowledge proof play in it?</p>
+<p>Let's start with the essential properties of blockchain. Blockchain is a decentralized network where each node is equal, and there is no centralized authority. This brings the following problems:</p>
+<ul>
+<li>How to reach consensus among untrusted nodes? </li>
+<li>How to ensure that the state transitions seen by each node are consistent and correct?</li>
+</ul>
+<p>This requires the introduction of a verification mechanism. When accepting a new state transition (such as a transaction or a new block), each node needs to verify its legitimacy. Only state transitions that pass verification can be added to the blockchain and become part of the global consensus.</p>
+<p>To achieve reliable verification, determinism and verifiability are needed:</p>
+<ul>
+<li>
+<p><strong>Determinism</strong> means that given the same input, the same output is always obtained. In blockchain, determinism means that each node, executing the same state transition logic, will get the same result. This is the premise of reaching consensus. Imagine if the result of a state transition is non-deterministic (for example, dependent on the execution environment or random numbers), different nodes might get different states, breaking the consensus.</p>
+</li>
+<li>
+<p><strong>Verifiability</strong> means that the correctness of a state transition can be efficiently verified. In blockchain, verifiability means that any node can quickly check whether a state transition is legal without redoing all the computations. Imagine if verifying a state transition requires replaying the entire computation process, the cost of verification would be as high as generating the state transition, which is unacceptable in computationally intensive situations.</p>
+</li>
+</ul>
+<p>Traditional blockchains (like Bitcoin and Ethereum) achieve determinism by replaying every transaction on each node, and achieve verifiability through a hash-linked block structure. But this method is less efficient, especially when the state transition logic is complex.</p>
+<p>This is where zero-knowledge proofs come into play. Zero-knowledge proofs are a cryptographic technique that can prove a statement is correct without revealing any information. In blockchain, zero-knowledge proofs can be used to prove that a state transition is legal without revealing the specific input data and intermediate states. More Information about Zero-Knowledge Proofs can be found <a href="https://en.wikipedia.org/wiki/Zero-knowledge_proof">here</a> or Later in Supplemental Resources.</p>
+<p>Zero-knowledge proofs provide a more efficient way to implement determinism and verifiability:</p>
+<ul>
+<li>
+<p>For determinism, zero-knowledge proofs require the state transition logic to be deterministic (like zkWasm using a deterministic Wasm subset) to generate proofs.</p>
+</li>
+<li>
+<p>For verifiability, zero-knowledge proofs allow the prover to generate a succinct proof proving the correctness of the state transition, and the verifier only needs to check this proof without redoing the computation. This greatly reduces the cost of verification.</p>
+</li>
+</ul>
+<p>Here's an example. Suppose there is a complex state transition that requires 1,000,000 steps of computation. In a traditional blockchain, each node would need to replay these 1,000,000 steps to verify the result. But with zero-knowledge proofs, the prover only needs to do the computation once to generate a proof, and the verifier might only need to do 100 steps of computation to verify this proof.</p>
+<p>In addition to efficiency, zero-knowledge proofs bring another important property: privacy. Since the proving process does not reveal input data and intermediate states, zero-knowledge proofs allow verifying the correctness of a computation result without disclosing the original data. This is very important for privacy-sensitive application scenarios (like finance and healthcare).</p>
+<h3 id="supplemental-resources">Supplemental Resources</h3>
+<ul>
+<li><a href="https://github.com/Quillhash/Zero-Knowledge-Mastery?tab=readme-ov-file">Zero-Knowledge Mastery</a>: A comprehensive guide to zero-knowledge proofs.</li>
+<li><a href="https://zkhack.dev/">zkhack</a>: zkhack is a hub for zk learning and building. It hosts virtual events and advanced puzzle competitions, as well as produces educational content and runs study groups. Its goal is to explore and explain key concepts and tools and get you onboarded into zk.</li>
+<li><a href="https://www.zksummit.com/">zksummit</a>: The annual zkSummit conference, an important event in the zero-knowledge proof community. The conference brings together the best thinkers and builders to discuss the latest in zero knowledge research, zk use-cases, cryptographic primitives, privacy and maths. </li>
+<li><a href="https://progcrypto.org/">progcrypto</a>: The Programmable Cryptography Conference is a 2-day event, organized by 0xPARC and PSE, which brings together researchers, developers, and community members focused on next-generation cryptography and its applications. Topics include new research developments in applied cryptography, infrastructure for tools like zkSNARKs and MPC, and applications of these new cryptographic primitives for areas such as digital identity or financial privacy.</li>
+</ul>
+<p>Next, we will introduce the core concepts and fundamentals of zkWasm.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": ".", "features": ["navigation.indexes", "navigation.instant", "navigation.tracking", "navigation.sections", "navigation.expand", "navigation.top", "search.suggest", "content.code.copy", "search.highlight"], "search": "assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="assets/javascripts/bundle.13a4f30d.min.js"></script>
+      
+        <script src="https://unpkg.com/mermaid@10.6.1/dist/mermaid.min.js"></script>
+      
+    
+  </body>
+</html>

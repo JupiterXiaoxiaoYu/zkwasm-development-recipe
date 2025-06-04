@@ -1,0 +1,1589 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://development-recipe.zkwasm.ai/zkwasm-protocol/Withdraw.html">
+      
+      
+        <link rel="prev" href="Deposit.html">
+      
+      
+        <link rel="next" href="Custom%20Transaction.html">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
+    
+    
+      
+        <title>Withdraw - zkWasm Development Recipe</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.342714a4.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="pink">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#withdraw-workflow" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../index.html" title="zkWasm Development Recipe" class="md-header__button md-logo" aria-label="zkWasm Development Recipe" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            zkWasm Development Recipe
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Withdraw
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="pink"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="lime"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../index.html" title="zkWasm Development Recipe" class="md-nav__button md-logo" aria-label="zkWasm Development Recipe" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    zkWasm Development Recipe
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Getting Started
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Getting Started
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting-started/Setup%20Environment.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Setup Environment
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting-started/Quick%20Tutorial.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Quick Tutorial
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting-started/Development%20Workflow.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Development Workflow
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Core Documentation
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Core Documentation
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Core%20Concepts.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Core Concepts
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../zkWasm%20Overview.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    zkWasm Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Design Guide
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Design Guide
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Design%20Application%20as%20State%20Machine.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Design Application as State Machine
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Development Guide
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Development Guide
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../development-guide/zkWasm%20Rust%20SDK.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    zkWasm Rust SDK and Rest Service ABI
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../development-guide/Web3%20Development%20Frameworks.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Web3 Development Frameworks
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../development-guide/Implementing%20Time-Driven%20Events.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Implementing Time-Driven Events
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../development-guide/Generating%20Random%20Numbers.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Generating Random Numbers
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    zkWasm Mini Rollup
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            zkWasm Mini Rollup
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../zkwasm-mini-rollup/Rollup%20Overview.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../zkwasm-mini-rollup/Rollup%20Host.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Host Environment
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../zkwasm-mini-rollup/Rollup%20Database.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Database Service
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../zkwasm-mini-rollup/Rollup%20Server.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Server Implementation (zkWasm-ts-Server)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../zkwasm-mini-rollup/Rollup%20Convention.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Convention
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    zkWasm Protocol
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            zkWasm Protocol
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="zkWasm%20Protocol.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    zkWasm Protocol Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Deposit.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Deposit
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Withdraw
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="Withdraw.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Withdraw
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#withdraw-flow-in-the-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      Withdraw flow in the application
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#withdraw-flow-in-the-rollup-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      Withdraw flow in the rollup server
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#settle-on-the-blockchain" class="md-nav__link">
+    <span class="md-ellipsis">
+      Settle on the blockchain
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Custom%20Transaction.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Custom Transaction
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Additional Resources
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            Additional Resources
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../additional-resources/Official%20Links.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Official Links
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../additional-resources/Project%20Examples.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Project Examples
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../additional-resources/Frequently%20Asked%20Questions.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Frequently Asked Questions
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#withdraw-flow-in-the-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      Withdraw flow in the application
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#withdraw-flow-in-the-rollup-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      Withdraw flow in the rollup server
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#settle-on-the-blockchain" class="md-nav__link">
+    <span class="md-ellipsis">
+      Settle on the blockchain
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="withdraw-workflow">Withdraw Workflow</h1>
+<h2 id="introduction">Introduction</h2>
+<p>In this section, we will use what we have learned from <a href="zkWasm%20Protocol.html">zkWasm Protocol Overview</a> and <a href="../zkwasm-mini-rollup/Rollup%20Server.html#rollup-settlement-monitor-tssettlets">Rollup Settlement Monitor</a> to implement a withdraw workflow. </p>
+<div class="admonition prerequisite">
+<p class="admonition-title">Prerequisite</p>
+<p>In order to implement the withdraw workflow, you may need to deploy a proxy contract and a withdraw contract and add the withdraw contract to the proxy contract through <code>AddTransaction</code> method mentioned in the <a href="zkWasm%20Protocol.html#proxy-contract">zkWasm Protocol Overview</a>.</p>
+</div>
+<h2 id="withdraw-flow-in-the-application">Withdraw flow in the application</h2>
+<p>As a kind of transaction, the withdraw function can be implemented in the <code>Transaction</code> struct which we have discussed a little bit in the <a href="../getting-started/Quick%20Tutorial.html#3-transaction-handler">Quick Tutorial</a>. Take <a href="https://github.com/riddles-are-us/zkwasm-automata/blob/main/src/state.rs">automata</a> as an example, the withdraw function is implemented in the <code>Transaction</code> struct as follows:</p>
+<div class="highlight"><pre><span></span><code><span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">withdraw</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">pid</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="p">[</span><span class="kt">u64</span><span class="p">;</span><span class="w"> </span><span class="mi">2</span><span class="p">])</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nb">Result</span><span class="o">&lt;</span><span class="p">(),</span><span class="w"> </span><span class="kt">u32</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">player</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">AutomataPlayer</span><span class="p">::</span><span class="n">get_from_pid</span><span class="p">(</span><span class="n">pid</span><span class="p">);</span>
+<span class="w">    </span><span class="k">match</span><span class="w"> </span><span class="n">player</span><span class="p">.</span><span class="n">as_mut</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nb">None</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nb">Err</span><span class="p">(</span><span class="n">ERROR_PLAYER_NOT_EXIST</span><span class="p">),</span>
+<span class="w">        </span><span class="nb">Some</span><span class="p">(</span><span class="n">player</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">player</span><span class="p">.</span><span class="n">check_and_inc_nonce</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">nonce</span><span class="p">);</span>
+<span class="w">            </span><span class="kd">let</span><span class="w"> </span><span class="n">amount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="mh">0xffffffff</span><span class="p">;</span>
+<span class="w">            </span><span class="n">player</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">cost_balance</span><span class="p">(</span><span class="n">amount</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="kt">i64</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+<span class="w">            </span><span class="kd">let</span><span class="w"> </span><span class="n">withdrawinfo</span><span class="w"> </span><span class="o">=</span>
+<span class="w">                </span><span class="n">WithdrawInfo</span><span class="p">::</span><span class="n">new</span><span class="p">(</span><span class="o">&amp;</span><span class="p">[</span><span class="bp">self</span><span class="p">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">data</span><span class="p">[</span><span class="mi">2</span><span class="p">]],</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<span class="w">            </span><span class="n">SettlementInfo</span><span class="p">::</span><span class="n">append_settlement</span><span class="p">(</span><span class="n">withdrawinfo</span><span class="p">);</span>
+<span class="w">            </span><span class="n">player</span><span class="p">.</span><span class="n">store</span><span class="p">();</span>
+<span class="w">            </span><span class="nb">Ok</span><span class="p">(())</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>The above code first checks if the player exists, then checks if the nonce is valid, then deducts the balance of the player, and finally appends the withdraw information to the settlement information. And here's how a player can trigger the withdraw function, in the frontend: </p>
+<div class="highlight"><pre><span></span><code><span class="k">async</span><span class="w"> </span><span class="nx">withdrawRewards</span><span class="p">(</span><span class="nx">address</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="nx">amount</span><span class="o">:</span><span class="w"> </span><span class="kt">bigint</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">nonce</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">getNonce</span><span class="p">();</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">addressBN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">BN</span><span class="p">(</span><span class="nx">address</span><span class="p">,</span><span class="w"> </span><span class="mf">16</span><span class="p">);</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">addressBN</span><span class="p">.</span><span class="nx">toArray</span><span class="p">(</span><span class="s2">&quot;be&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">20</span><span class="p">);</span><span class="w"> </span><span class="c1">// 20 bytes = 160 bits and split into 4, 8, 8</span>
+<span class="w">    </span><span class="cm">/*</span>
+<span class="cm">    (32 bit amount | 32 bit highbit of address)</span>
+<span class="cm">    (64 bit mid bit of address (be))</span>
+<span class="cm">    (64 bit tail bit of address (be))</span>
+<span class="cm">     */</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">firstLimb</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">BigInt</span><span class="p">(</span><span class="s1">&#39;0x&#39;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">bytesToHex</span><span class="p">(</span><span class="nx">a</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mf">0</span><span class="p">,</span><span class="mf">4</span><span class="p">).</span><span class="nx">reverse</span><span class="p">()));</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">sndLimb</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">BigInt</span><span class="p">(</span><span class="s1">&#39;0x&#39;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">bytesToHex</span><span class="p">(</span><span class="nx">a</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mf">4</span><span class="p">,</span><span class="mf">12</span><span class="p">).</span><span class="nx">reverse</span><span class="p">()));</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">thirdLimb</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">BigInt</span><span class="p">(</span><span class="s1">&#39;0x&#39;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">bytesToHex</span><span class="p">(</span><span class="nx">a</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mf">12</span><span class="p">,</span><span class="w"> </span><span class="mf">20</span><span class="p">).</span><span class="nx">reverse</span><span class="p">()));</span>
+<span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="kd">let</span><span class="w"> </span><span class="nx">processStamp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">rpc</span><span class="p">.</span><span class="nx">sendTransaction</span><span class="p">(</span>
+<span class="w">        </span><span class="ow">new</span><span class="w"> </span><span class="nb">BigUint64Array</span><span class="p">([</span>
+<span class="w">          </span><span class="nx">createCommand</span><span class="p">(</span><span class="nx">nonce</span><span class="p">,</span><span class="w"> </span><span class="nx">CMD_WITHDRAW</span><span class="p">,</span><span class="w"> </span><span class="mi">0n</span><span class="p">),</span>
+<span class="w">          </span><span class="p">(</span><span class="nx">firstLimb</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mi">32n</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">amount</span><span class="p">,</span>
+<span class="w">          </span><span class="nx">sndLimb</span><span class="p">,</span>
+<span class="w">          </span><span class="nx">thirdLimb</span>
+<span class="w">        </span><span class="p">]),</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">processingKey</span><span class="p">);</span>
+<span class="w">      </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;withdraw rewards processed at:&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">processStamp</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">e</span><span class="w"> </span><span class="ow">instanceof</span><span class="w"> </span><span class="ne">Error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">message</span><span class="p">);</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">      </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;collect reward error at address:&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">address</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>The function first converts the hexadecimal address string into a byte array, then the 20-byte address is then split into three parts. For example, if we have an address <code>0x742d35Cc6634C0532925a3b844Bc454e4438f44e</code>, it is split as follows:</p>
+<ul>
+<li>firstLimb:  <code>[74 2d 35 cc]</code>           (4 bytes, 32 bits, used to combine with the withdrawal amount) </li>
+<li>sndLimb:    <code>[66 34 c0 53 29 25 a3 b8]</code> (8 bytes, 64 bits)</li>
+<li>thirdLimb:  <code>[44 bc 45 4e 44 38 f4 4e]</code> (8 bytes, 64 bits)</li>
+</ul>
+<p>The withdrawal amount needs to be combined with part of the address. This is done by:
+<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="nx">firstLimb</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mi">32n</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">amount</span>
+</code></pre></div></p>
+<p>This operation:</p>
+<ol>
+<li>Shifts the first 4 bytes of the address left by 32 bits</li>
+<li>Adds the withdrawal amount in the lower 32 bits</li>
+</ol>
+<p>Finally we send the transaction to the rollup server by creating a command with the <code>CMD_WITHDRAW</code> command.</p>
+<p>The users can withdraw their rewards by calling the <code>withdrawRewards</code> function:</p>
+<div class="highlight"><pre><span></span><code><span class="k">await</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">withdrawRewards</span><span class="p">(</span><span class="nx">address</span><span class="p">,</span><span class="w"> </span><span class="nx">amount</span><span class="p">);</span>
+</code></pre></div>
+<p>And this will be processed in the <code>process</code> function of the <code>Transaction</code> struct in <code>state.rs</code> and the withdraw function will be called:</p>
+<div class="highlight"><pre><span></span><code><span class="n">WITHDRAW</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="bp">self</span>
+<span class="w">    </span><span class="p">.</span><span class="n">withdraw</span><span class="p">(</span><span class="o">&amp;</span><span class="n">AutomataPlayer</span><span class="p">::</span><span class="n">pkey_to_pid</span><span class="p">(</span><span class="n">pkey</span><span class="p">))</span>
+<span class="w">    </span><span class="p">.</span><span class="n">map_or_else</span><span class="p">(</span><span class="o">|</span><span class="n">e</span><span class="o">|</span><span class="w"> </span><span class="n">e</span><span class="p">,</span><span class="w"> </span><span class="o">|</span><span class="n">_</span><span class="o">|</span><span class="w"> </span><span class="mi">0</span><span class="p">),</span>
+</code></pre></div>
+<h2 id="withdraw-flow-in-the-rollup-server">Withdraw flow in the rollup server</h2>
+<p>You may notice that the withdraw function just appends the withdraw information to the settlement information and then returns. Remember that the withdraw transactions will be submitted with <code>merkle_root</code> and <code>transactions_witness</code> to the zkWasm Hub or your own zkWasm Prover to generate proofs when the rollup server is ready to settle, you may have a look at <a href="../zkwasm-mini-rollup/Rollup%20Server.html#transaction-installation-rollup">Transaction Installation (Rollup)</a>. This takes several steps:</p>
+<ol>
+<li>
+<p>First, the server will check if the application has reached the <a href="../development-guide/zkWasm%20Rust%20SDK.html#3-preemption-check">preemption threshold</a>:</p>
+<div class="highlight"><pre><span></span><code>if (application.preempt()){
+    ...
+}
+</code></pre></div>
+</li>
+<li>
+<p>If the application has reached the preemption threshold, the server will call the <code>finalize</code> function to get the settlement information (withdraw information):</p>
+<div class="highlight"><pre><span></span><code>let txdata = application.finalize();
+</code></pre></div>
+<p>Let's take a look at the <code>finalize</code> function in <a href="https://github.com/DelphinusLab/zkwasm-mini-rollup/blob/main/abi/src/lib.rs">zkWasm Mini Rollup's ABI</a>:</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#[wasm_bindgen]</span>
+<span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">finalize</span><span class="p">()</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nb">Vec</span><span class="o">&lt;</span><span class="kt">u8</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">unsafe</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">bytes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="cp">$S</span><span class="p">::</span><span class="n">flush_settlement</span><span class="p">();</span>
+<span class="w">        </span><span class="cp">$S</span><span class="p">::</span><span class="n">store</span><span class="p">();</span>
+<span class="w">        </span><span class="n">bytes</span><span class="w"> </span><span class="c1">// This is the txdata</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>The <code>finalize</code> function will call the implemented <code>flush_settlement</code> function in your application to get the settlement information which the application has appended in the withdraw function and return it to the server.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For the details of the <code>ABI</code> which represents the workflow of rollup, you may have a look at <a href="../development-guide/zkWasm%20Rust%20SDK.html#5-zkwasm-rest-abi">zkWasm Rust SDK</a></p>
+</div>
+</li>
+<li>
+<p>Finally, if your server are not in the tryrun mode (which means you are in <a href="../getting-started/Quick%20Tutorial.html#deploy-your-rollup-application">deploy mode</a>), the txdata will be sent to the zkWasm Hub or your own zkWasm Prover with other data to generate proofs:</p>
+<div class="highlight"><pre><span></span><code><span class="kd">let</span><span class="w"> </span><span class="nx">task_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">submitProofWithRetry</span><span class="p">(</span><span class="nx">merkle_root</span><span class="p">,</span><span class="w"> </span><span class="nx">transactions_witness</span><span class="p">,</span><span class="w"> </span><span class="nx">txdata</span><span class="p">);</span>
+</code></pre></div>
+<p>Then a bundleRecord will be created in the zkWasm Mini Rollup's database:</p>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">bundleRecord</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">modelBundle</span><span class="p">({</span>
+<span class="w">    </span><span class="nx">merkleRoot</span><span class="o">:</span><span class="w"> </span><span class="kt">merkleRootToBeHexString</span><span class="p">(</span><span class="nx">merkle_root</span><span class="p">),</span>
+<span class="w">    </span><span class="nx">taskId</span><span class="o">:</span><span class="w"> </span><span class="kt">task_id</span><span class="p">,</span>
+<span class="p">});</span>
+<span class="k">await</span><span class="w"> </span><span class="nx">bundleRecord</span><span class="p">.</span><span class="nx">save</span><span class="p">();</span>
+</code></pre></div>
+<p>This will be used later when we verify the proofs and settle on the blockchain.</p>
+<div class="admonition note">
+<p class="admonition-title">Merkle Root</p>
+<p>The submitted <code>merkle_root</code> is the old root (which indicates the root before the current batch of transactions).</p>
+</div>
+</li>
+</ol>
+<h2 id="settle-on-the-blockchain">Settle on the blockchain</h2>
+<p>Let's assume the proof has been generated successfully by zkWasm Hub or your own zkWasm Prover, and you have already deployed your <a href="zkWasm%20Protocol.html">proxy contract</a>. The next step is to settle on the blockchain. In order to do this, we need a settlement monitor to periodically verify the proofs. You may first take a look on <a href="../zkwasm-mini-rollup/Rollup%20Server.html#rollup-settlement-monitor-tssettlets">Rollup Settlement Monitor</a> to learn how to implement a settlement monitor. In its core function <code>trySettle</code>, you can find the following code:</p>
+<div class="highlight"><pre><span></span><code><span class="kd">let</span><span class="w"> </span><span class="nx">merkleRoot</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">getMerkle</span><span class="p">();</span>
+</code></pre></div>
+<p>The function first gets the merkle root from the proxy contract, which is the old root as we have mentioned in the note of the previous section. Then it will get the bundleRecord from the database by the old root: </p>
+<div class="highlight"><pre><span></span><code><span class="kd">let</span><span class="w"> </span><span class="nx">record</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">modelBundle</span><span class="p">.</span><span class="nx">findOne</span><span class="p">({</span><span class="w"> </span><span class="nx">merkleRoot</span><span class="o">:</span><span class="w"> </span><span class="kt">merkleRoot</span><span class="w"> </span><span class="p">});</span>
+</code></pre></div>
+<p>It then gets all the data needed for the proof verification from zkWasm Hub by the taskId from the bundleRecord:</p>
+<div class="highlight"><pre><span></span><code><span class="kd">let</span><span class="w"> </span><span class="nx">taskId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">record</span><span class="p">.</span><span class="nx">taskId</span><span class="p">;</span>
+<span class="kd">let</span><span class="w"> </span><span class="nx">data0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">getTaskWithTimeout</span><span class="p">(</span><span class="nx">taskId</span><span class="p">,</span><span class="w"> </span><span class="mf">60000</span><span class="p">);</span>
+</code></pre></div>
+<p>After getting all the data, the monitor will verify the proof and settle on the blockchain if the proof is valid:</p>
+<div class="highlight"><pre><span></span><code><span class="kd">let</span><span class="w"> </span><span class="nx">txData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">Uint8Array</span><span class="p">(</span><span class="nx">data0</span><span class="p">.</span><span class="nx">input_context</span><span class="p">);</span>
+<span class="kd">let</span><span class="w"> </span><span class="nx">proofArr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">U8ArrayUtil</span><span class="p">(</span><span class="nx">data0</span><span class="p">.</span><span class="nx">proof</span><span class="p">).</span><span class="nx">toNumber</span><span class="p">();</span>
+
+<span class="kd">let</span><span class="w"> </span><span class="nx">shadowInstances</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">data0</span><span class="p">.</span><span class="nx">shadow_instances</span><span class="p">;</span>
+<span class="kd">let</span><span class="w"> </span><span class="nx">batchInstances</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">data0</span><span class="p">.</span><span class="nx">batch_instances</span><span class="p">;</span>
+<span class="kd">let</span><span class="w"> </span><span class="nx">verifyInstancesArr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">shadowInstances</span><span class="p">.</span><span class="nx">length</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="mf">0</span>
+<span class="w">    </span><span class="o">?</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">U8ArrayUtil</span><span class="p">(</span><span class="nx">batchInstances</span><span class="p">).</span><span class="nx">toNumber</span><span class="p">()</span>
+<span class="w">    </span><span class="o">:</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">U8ArrayUtil</span><span class="p">(</span><span class="nx">shadowInstances</span><span class="p">).</span><span class="nx">toNumber</span><span class="p">();</span>
+<span class="kd">let</span><span class="w"> </span><span class="nx">auxArr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">U8ArrayUtil</span><span class="p">(</span><span class="nx">data0</span><span class="p">.</span><span class="nx">aux</span><span class="p">).</span><span class="nx">toNumber</span><span class="p">();</span>
+<span class="kd">let</span><span class="w"> </span><span class="nx">instArr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">U8ArrayUtil</span><span class="p">(</span><span class="nx">data0</span><span class="p">.</span><span class="nx">instances</span><span class="p">).</span><span class="nx">toNumber</span><span class="p">();</span>
+
+<span class="kd">const</span><span class="w"> </span><span class="nx">tx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">proxy</span><span class="p">.</span><span class="nx">verify</span><span class="p">(</span><span class="nx">txData</span><span class="p">,</span><span class="w"> </span><span class="nx">proofArr</span><span class="p">,</span><span class="w"> </span><span class="nx">verifyInstancesArr</span><span class="p">,</span><span class="w"> </span><span class="nx">auxArr</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nx">instArr</span><span class="p">]);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">receipt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">tx</span><span class="p">.</span><span class="nx">wait</span><span class="p">();</span>
+</code></pre></div>
+<p>Then we can update the database with withdraw information and transaction hash after checking the withdraw parameters from blockchain events with the txData we got from the proof generation task of zkWasm Hub:</p>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">decodeWithdraw</span><span class="p">(</span><span class="nx">txData</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">getWithdrawEventParameters</span><span class="p">(</span><span class="nx">proxy</span><span class="p">,</span><span class="w"> </span><span class="nx">receipt</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">withdrawArray</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[];</span>
+
+<span class="c1">// Check if the lengths of the arrays are the same</span>
+<span class="kd">let</span><span class="w"> </span><span class="nx">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Done&#39;</span><span class="p">;</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">r</span><span class="p">.</span><span class="nx">length</span><span class="w"> </span><span class="o">!==</span><span class="w"> </span><span class="nx">s</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Fail&#39;</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s2">&quot;Arrays have different lengths,&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">r</span><span class="p">,</span><span class="w"> </span><span class="nx">s</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kd">let</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nx">r</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">rItem</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">r</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
+<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">sItem</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">s</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">rItem</span><span class="p">.</span><span class="nx">address</span><span class="w"> </span><span class="o">!==</span><span class="w"> </span><span class="nx">sItem</span><span class="p">.</span><span class="nx">address</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nx">rItem</span><span class="p">.</span><span class="nx">amount</span><span class="w"> </span><span class="o">!==</span><span class="w"> </span><span class="nx">sItem</span><span class="p">.</span><span class="nx">amount</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Crash(Need manual review):&quot;</span><span class="p">);</span>
+<span class="w">            </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="sb">`Mismatch found: </span><span class="si">${</span><span class="nx">rItem</span><span class="p">.</span><span class="nx">address</span><span class="si">}</span><span class="sb">:</span><span class="si">${</span><span class="nx">rItem</span><span class="p">.</span><span class="nx">amount</span><span class="si">}</span><span class="sb"> </span><span class="si">${</span><span class="nx">sItem</span><span class="p">.</span><span class="nx">address</span><span class="si">}</span><span class="sb">:</span><span class="si">${</span><span class="nx">sItem</span><span class="p">.</span><span class="nx">amount</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
+<span class="w">            </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="mf">1</span><span class="p">);</span><span class="w"> </span><span class="c1">//This is serious error, while loop to trigger manual review. This can be replaced by other methods to decently handle this error.</span>
+<span class="w">            </span><span class="nx">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Fail&#39;</span><span class="p">;</span>
+<span class="w">            </span><span class="k">break</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">record</span><span class="p">.</span><span class="nx">withdrawArray</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span>
+<span class="w">                </span><span class="nx">address</span><span class="o">:</span><span class="w"> </span><span class="kt">rItem.address</span><span class="p">,</span>
+<span class="w">                </span><span class="nx">amount</span><span class="o">:</span><span class="w"> </span><span class="kt">rItem.amount</span><span class="p">,</span>
+<span class="w">            </span><span class="p">});</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+<span class="nx">record</span><span class="p">.</span><span class="nx">settleTxHash</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">tx</span><span class="p">.</span><span class="nx">hash</span><span class="p">;</span>
+<span class="nx">record</span><span class="p">.</span><span class="nx">settleStatus</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">status</span><span class="p">;</span>
+<span class="k">await</span><span class="w"> </span><span class="nx">record</span><span class="p">.</span><span class="nx">save</span><span class="p">();</span>
+</code></pre></div>
+<p>Now you can refer to the <a href="zkWasm%20Protocol.html#settlement-flow">Settlement Flow</a> and <a href="zkWasm%20Protocol.html#transaction-execution">Transaction Execution</a> in zkWasm Protocol to learn how the proxy contract actually processes the withdraw transactions after the settlement monitor request to verify the proofs.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "..", "features": ["navigation.indexes", "navigation.instant", "navigation.tracking", "navigation.sections", "navigation.expand", "navigation.top", "search.suggest", "content.code.copy", "search.highlight"], "search": "../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      
+        <script src="https://unpkg.com/mermaid@10.6.1/dist/mermaid.min.js"></script>
+      
+    
+  </body>
+</html>

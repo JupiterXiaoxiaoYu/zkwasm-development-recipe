@@ -116,4 +116,4 @@ pub fn merkle_set(arg: u64) {
 ```
 
 !!!info 
-    For host functions, you can also refer to [zkWasm Overview](zkWasm Overview.md#3-host-builtin-functions)
+    For host functions, you can also refer to [zkWasm Overview](../zkWasm Overview.md#3-host-builtin-functions)

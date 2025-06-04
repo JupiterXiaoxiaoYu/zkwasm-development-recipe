@@ -9,7 +9,7 @@ In this section, we will use what we have learned from [zkWasm Protocol Overview
 
 ## Withdraw flow in the application
 
-As a kind of transaction, the withdraw function can be implemented in the `Transaction` struct which we have discussed a little bit in the [Quick Tutorial](../Quick%20Tutorial.md#3-transaction-handler). Take [automata](https://github.com/riddles-are-us/zkwasm-automata/blob/main/src/state.rs) as an example, the withdraw function is implemented in the `Transaction` struct as follows:
+As a kind of transaction, the withdraw function can be implemented in the `Transaction` struct which we have discussed a little bit in the [Quick Tutorial](../getting-started/Quick Tutorial.md#3-transaction-handler). Take [automata](https://github.com/riddles-are-us/zkwasm-automata/blob/main/src/state.rs) as an example, the withdraw function is implemented in the `Transaction` struct as follows:
 
 ```rs
 pub fn withdraw(&self, pid: &[u64; 2]) -> Result<(), u32> {
@@ -99,7 +99,7 @@ WITHDRAW => self
 
 You may notice that the withdraw function just appends the withdraw information to the settlement information and then returns. Remember that the withdraw transactions will be submitted with `merkle_root` and `transactions_witness` to the zkWasm Hub or your own zkWasm Prover to generate proofs when the rollup server is ready to settle, you may have a look at [Transaction Installation (Rollup)](../zkwasm-mini-rollup/Rollup%20Server.md#transaction-installation-rollup). This takes several steps:
 
-1. First, the server will check if the application has reached the [preemption threshold](../zkWasm%20Rust%20SDK.md#3-preemption-check):
+1. First, the server will check if the application has reached the [preemption threshold](../development-guide/zkWasm Rust SDK.md#3-preemption-check):
 
     ```
     if (application.preempt()){
@@ -129,10 +129,10 @@ You may notice that the withdraw function just appends the withdraw information 
     The `finalize` function will call the implemented `flush_settlement` function in your application to get the settlement information which the application has appended in the withdraw function and return it to the server.
 
     !!! note
-        For the details of the `ABI` which represents the workflow of rollup, you may have a look at [zkWasm Rust SDK](../zkWasm%20Rust%20SDK.md#5-zkwasm-rest-abi)
+        For the details of the `ABI` which represents the workflow of rollup, you may have a look at [zkWasm Rust SDK](../development-guide/zkWasm Rust SDK.md#5-zkwasm-rest-abi)
 
 
-3. Finally, if your server are not in the tryrun mode (which means you are in [deploy mode](../Quick%20Tutorial.md#deploy-your-rollup-application)), the txdata will be sent to the zkWasm Hub or your own zkWasm Prover with other data to generate proofs:
+3. Finally, if your server are not in the tryrun mode (which means you are in [deploy mode](../getting-started/Quick Tutorial.md#deploy-your-rollup-application)), the txdata will be sent to the zkWasm Hub or your own zkWasm Prover with other data to generate proofs:
 
     ```ts
     let task_id = await submitProofWithRetry(merkle_root, transactions_witness, txdata);

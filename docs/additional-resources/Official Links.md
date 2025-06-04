@@ -7,7 +7,7 @@ Welcome to DelphinusLab's official communication channels and resources. Feel fr
 | :globe_with_meridians: Website | [https://delphinuslab.com/](https://delphinuslab.com/)                                |
 | :books: Tutorials & Resources  | [https://delphinuslab.com/tutorial/learning-resource/](https://delphinuslab.com/tutorial/learning-resource/) |
 | :bird: Twitter                | [https://x.com/DelphinusLab](https://x.com/DelphinusLab)                              |
-| :speech_balloon: Discord      | [https://discord.com/invite/delphinuslab](https://discord.com/invite/delphinuslab)     |
+| :speech_balloon: Discord      | [https://discord.com/invite/EhFMmF7S7b](https://discord.com/invite/EhFMmF7S7b)     |
 | :incoming_envelope: Telegram  | [https://t.me/DelphinusLabOfficial](https://t.me/DelphinusLabOfficial)                |
 | :computer: GitHub             | [https://github.com/DelphinusLab](https://github.com/DelphinusLab)                     |
 | :cloud: zkWasm Hub           | [https://zkwasmhub.com/](https://zkwasmhub.com/)                                       |

@@ -1,0 +1,1901 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://development-recipe.zkwasm.ai/development-guide/Generating%20Random%20Numbers.html">
+      
+      
+        <link rel="prev" href="Implementing%20Time-Driven%20Events.html">
+      
+      
+        <link rel="next" href="../zkwasm-mini-rollup/Rollup%20Overview.html">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
+    
+    
+      
+        <title>Generating Random Numbers - zkWasm Development Recipe</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.342714a4.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="pink">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#generating-random-numbers" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../index.html" title="zkWasm Development Recipe" class="md-header__button md-logo" aria-label="zkWasm Development Recipe" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            zkWasm Development Recipe
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Generating Random Numbers
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="pink"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="lime"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../index.html" title="zkWasm Development Recipe" class="md-nav__button md-logo" aria-label="zkWasm Development Recipe" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    zkWasm Development Recipe
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Getting Started
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Getting Started
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting-started/Setup%20Environment.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Setup Environment
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting-started/Quick%20Tutorial.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Quick Tutorial
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting-started/Development%20Workflow.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Development Workflow
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Core Documentation
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Core Documentation
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Core%20Concepts.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Core Concepts
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../zkWasm%20Overview.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    zkWasm Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Design Guide
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Design Guide
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Design%20Application%20as%20State%20Machine.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Design Application as State Machine
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Development Guide
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Development Guide
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="zkWasm%20Rust%20SDK.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    zkWasm Rust SDK and Rest Service ABI
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Web3%20Development%20Frameworks.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Web3 Development Frameworks
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Implementing%20Time-Driven%20Events.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Implementing Time-Driven Events
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Generating Random Numbers
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="Generating%20Random%20Numbers.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Generating Random Numbers
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#game-autocombat" class="md-nav__link">
+    <span class="md-ellipsis">
+      Game: autocombat
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Game: autocombat">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#interaction-details" class="md-nav__link">
+    <span class="md-ellipsis">
+      Interaction Details
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Interaction Details">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#first-round-first-timetick-server-initialization-and-commitment-record" class="md-nav__link">
+    <span class="md-ellipsis">
+      First Round, First Timetick (Server Initialization and Commitment Record)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#second-round-second-timetick-commitment-verification-and-random-number-generation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Second Round, Second Timetick (Commitment Verification and Random Number Generation)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#second-round-player-interaction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Second Round (Player Interaction)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#understanding-the-random-number-generation-mechanism" class="md-nav__link">
+    <span class="md-ellipsis">
+      Understanding the Random Number Generation Mechanism
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Understanding the Random Number Generation Mechanism">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-randomness-is-achieved" class="md-nav__link">
+    <span class="md-ellipsis">
+      How Randomness is Achieved
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How Randomness is Achieved">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#server-admins-random-number-security" class="md-nav__link">
+    <span class="md-ellipsis">
+      Server Admin's Random Number Security
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#players-random-number-security" class="md-nav__link">
+    <span class="md-ellipsis">
+      Player's Random Number Security
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#combined-randomness-through-xor" class="md-nav__link">
+    <span class="md-ellipsis">
+      Combined Randomness Through XOR
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#preventing-manipulation-through-timing-timetick" class="md-nav__link">
+    <span class="md-ellipsis">
+      Preventing Manipulation Through Timing (Timetick)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    zkWasm Mini Rollup
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            zkWasm Mini Rollup
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../zkwasm-mini-rollup/Rollup%20Overview.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../zkwasm-mini-rollup/Rollup%20Host.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Host Environment
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../zkwasm-mini-rollup/Rollup%20Database.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Database Service
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../zkwasm-mini-rollup/Rollup%20Server.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Server Implementation (zkWasm-ts-Server)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../zkwasm-mini-rollup/Rollup%20Convention.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Convention
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    zkWasm Protocol
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            zkWasm Protocol
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../zkwasm-protocol/zkWasm%20Protocol.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    zkWasm Protocol Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../zkwasm-protocol/Deposit.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Deposit
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../zkwasm-protocol/Withdraw.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Withdraw
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../zkwasm-protocol/Custom%20Transaction.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Custom Transaction
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Additional Resources
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            Additional Resources
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../additional-resources/Official%20Links.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Official Links
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../additional-resources/Project%20Examples.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Project Examples
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../additional-resources/Frequently%20Asked%20Questions.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Frequently Asked Questions
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#game-autocombat" class="md-nav__link">
+    <span class="md-ellipsis">
+      Game: autocombat
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Game: autocombat">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#interaction-details" class="md-nav__link">
+    <span class="md-ellipsis">
+      Interaction Details
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Interaction Details">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#first-round-first-timetick-server-initialization-and-commitment-record" class="md-nav__link">
+    <span class="md-ellipsis">
+      First Round, First Timetick (Server Initialization and Commitment Record)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#second-round-second-timetick-commitment-verification-and-random-number-generation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Second Round, Second Timetick (Commitment Verification and Random Number Generation)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#second-round-player-interaction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Second Round (Player Interaction)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#understanding-the-random-number-generation-mechanism" class="md-nav__link">
+    <span class="md-ellipsis">
+      Understanding the Random Number Generation Mechanism
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Understanding the Random Number Generation Mechanism">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-randomness-is-achieved" class="md-nav__link">
+    <span class="md-ellipsis">
+      How Randomness is Achieved
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How Randomness is Achieved">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#server-admins-random-number-security" class="md-nav__link">
+    <span class="md-ellipsis">
+      Server Admin's Random Number Security
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#players-random-number-security" class="md-nav__link">
+    <span class="md-ellipsis">
+      Player's Random Number Security
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#combined-randomness-through-xor" class="md-nav__link">
+    <span class="md-ellipsis">
+      Combined Randomness Through XOR
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#preventing-manipulation-through-timing-timetick" class="md-nav__link">
+    <span class="md-ellipsis">
+      Preventing Manipulation Through Timing (Timetick)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="generating-random-numbers">Generating Random Numbers</h1>
+<h2 id="overview">Overview</h2>
+<p>Random numbers are essential for many applications, including games, simulations, and secure systems. Generating random numbers in a zkWasm Rollup Application is a bit different from generating random numbers in a traditional Web2 application, it follows an interactive approach to ensure the randomness of the numbers is secure and verifiable. We will use the <a href="https://github.com/riddles-are-us/autocombat">autocombat Game</a> as an example to demonstrate how to generate random numbers in a zkWasm Rollup Application.</p>
+<h2 id="game-autocombat">Game: autocombat</h2>
+<p>autocombat is a PVE game where players can bet on the outcome of battles between themselves and the enemy (which is controlled by the server admin). And the outcome of a battle is determined by a random number. There are several stages to generate the random number and can be summarized as follows:</p>
+<p><strong>Timetick 1:</strong></p>
+<ul>
+<li>Seed Commitment: The admin generates a random seed and commits to it by storing its hash, commitment = hash(seed), in the game state.</li>
+</ul>
+<p><strong>Timetick 2:</strong></p>
+<ul>
+<li>Player Signature: The player signs their bet transaction, and their signature is used to generate a random component (SR).</li>
+<li>Seed Revelation: The admin reveals the seed by submitting it to the server.</li>
+<li>Verification: The server verifies that the revealed seed is correct by checking that hash(seed) = commitment.</li>
+<li>Random Number Generation: Then, a random number for the player is generated using the formula seed xor SR. This random number will be used in the next battle.</li>
+</ul>
+<p>Remind that <a href="../zkwasm-mini-rollup/Rollup%20Server.html#timetick-transaction">timetick</a> is a kind of transaction that generates by the server which can be used to manage or trigger time-related operations and events.</p>
+<h3 id="interaction-details">Interaction Details</h3>
+<p>Let's examine the details of how random numbers are generated by walking through several rounds of game interactions.</p>
+<h4 id="first-round-first-timetick-server-initialization-and-commitment-record">First Round, First Timetick (Server Initialization and Commitment Record)</h4>
+<ol>
+<li>Server starts timetick without any player bets.</li>
+<li>In zkwasm ts server, when a timetick transaction is generated, <code>generateRandomSeed()</code> generates a randseed and returns its 64-bit SHA256 commitment, you can refer to the <a href="../zkwasm-mini-rollup/Rollup%20Server.html#automatic-timetick-transaction-flow">code</a> to see how it works.  And specifically, in <code>generateRandomSeed()</code>:
+    <div class="highlight"><pre><span></span><code><span class="kd">function</span><span class="w"> </span><span class="nx">randByte</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mh">0xff</span><span class="p">);</span><span class="w"> </span><span class="c1">// generate a random byte between 0 and 255, this is because the randseed is a 64-bit array of bytes</span>
+<span class="p">}</span>
+<span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">generateRandomSeed</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">randSeed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="nx">randByte</span><span class="p">(),</span><span class="w"> </span><span class="nx">randByte</span><span class="p">(),</span><span class="w"> </span><span class="nx">randByte</span><span class="p">(),</span><span class="w"> </span><span class="nx">randByte</span><span class="p">(),</span><span class="w"> </span><span class="nx">randByte</span><span class="p">(),</span><span class="w"> </span><span class="nx">randByte</span><span class="p">(),</span><span class="w"> </span><span class="nx">randByte</span><span class="p">(),</span><span class="w"> </span><span class="nx">randByte</span><span class="p">()];</span><span class="w"> </span><span class="c1">// generate a 64-bit randseed</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">sha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">sha256</span><span class="p">(</span><span class="ow">new</span><span class="w"> </span><span class="nb">Uint8Array</span><span class="p">(</span><span class="nx">randSeed</span><span class="p">));</span><span class="w"> </span><span class="c1">// hash the randseed</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">mask64</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">BigInt</span><span class="p">(</span><span class="s2">&quot;0xFFFFFFFFFFFFFFFF&quot;</span><span class="p">);</span><span class="w"> </span><span class="c1">// generate a 64-bit mask</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">shaCommitment</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">BigInt</span><span class="p">(</span><span class="nx">sha</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="nx">mask64</span><span class="p">;</span><span class="w"> </span><span class="c1">// mask the sha to 64-bit</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">randRecord</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">modelRand</span><span class="p">({</span>
+<span class="w">        </span><span class="nx">commitment</span><span class="o">:</span><span class="w"> </span><span class="kt">shaCommitment.toString</span><span class="p">(),</span>
+<span class="w">        </span><span class="nx">seed</span><span class="o">:</span><span class="w"> </span><span class="kt">randSeed</span><span class="p">,</span>
+<span class="w">    </span><span class="p">});</span><span class="w">  </span><span class="c1">// create a new rand record</span>
+<span class="w">    </span><span class="k">await</span><span class="w"> </span><span class="nx">randRecord</span><span class="p">.</span><span class="nx">save</span><span class="p">();</span><span class="w"> </span><span class="c1">// save the rand record to the database</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">shaCommitment</span><span class="p">;</span><span class="w"> </span><span class="c1">// return the commitment</span>
+<span class="p">}</span>
+</code></pre></div>
+    The commitment and rand seed are stored in the database and the commitment is returned to the server.</li>
+<li>Then, <code>application.randSeed()</code> returns 0 (which is the initial value) and assign it to <code>oldSeed</code>. And we assign the 0 to <code>seed</code>:
+        <div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">oldSeed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">application</span><span class="p">.</span><span class="nx">randSeed</span><span class="p">();</span><span class="w"> </span><span class="c1">// get the old seed</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">seed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0n</span><span class="p">;</span><span class="w"> </span><span class="c1">// assign the seed to 0n</span>
+</code></pre></div></li>
+<li>Because the oldSeed is 0, we don't need to retrive the rand generated in the previous round (because there is no previous round) so we skip the following code:
+        <div class="highlight"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">oldSeed</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0n</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="p">...</span>
+<span class="p">}</span><span class="w"> </span><span class="c1">// This is skipped</span>
+</code></pre></div></li>
+<li>
+<p>Then, the server signs <code>[0n, seed, rand, 0n]</code> and sends it to the application, the first 0n is the command which indicates <code>timetick</code>, the seed is the oldSeed, the rand is the new commitment, the last 0n just indicates empty:
+    <div class="highlight"><pre><span></span><code><span class="kd">let</span><span class="w"> </span><span class="nx">signature</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">sign</span><span class="p">(</span><span class="ow">new</span><span class="w"> </span><span class="nb">BigUint64Array</span><span class="p">([</span><span class="mi">0n</span><span class="p">,</span><span class="w"> </span><span class="nx">seed</span><span class="p">,</span><span class="w"> </span><span class="nx">rand</span><span class="p">,</span><span class="w"> </span><span class="mi">0n</span><span class="p">]),</span><span class="w"> </span><span class="nx">SERVER_PRI_KEY</span><span class="p">);</span>
+<span class="kd">let</span><span class="w"> </span><span class="nx">u64array</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">signature_to_u64array</span><span class="p">(</span><span class="nx">signature</span><span class="p">);</span>
+<span class="nx">application</span><span class="p">.</span><span class="nx">handle_tx</span><span class="p">(</span><span class="nx">u64array</span><span class="p">);</span>
+</code></pre></div>
+    In <code>sign</code>, we use the server's private key to sign the transaction:
+    <div class="highlight"><pre><span></span><code><span class="k">export</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">sign</span><span class="p">(</span><span class="nx">cmd</span><span class="o">:</span><span class="w"> </span><span class="kt">BigUint64Array</span><span class="p">,</span><span class="w"> </span><span class="nx">prikey</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">pkey</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">PrivateKey</span><span class="p">.</span><span class="nx">fromString</span><span class="p">(</span><span class="nx">prikey</span><span class="p">);</span>
+<span class="w">    </span><span class="p">...</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">H</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">cmd</span><span class="p">[</span><span class="mf">0</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="nx">cmd</span><span class="p">[</span><span class="mf">1</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mi">64n</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="nx">cmd</span><span class="p">[</span><span class="mf">2</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mi">128n</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="nx">cmd</span><span class="p">[</span><span class="mf">3</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mi">192n</span><span class="p">);</span><span class="w"> </span><span class="c1">// convert the command array to a single big number</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">hbn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">BN</span><span class="p">(</span><span class="nx">H</span><span class="p">.</span><span class="nx">toString</span><span class="p">(</span><span class="mf">10</span><span class="p">));</span><span class="w"> </span><span class="c1">// convert the bigint to a BN</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">S</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">r</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">pkey</span><span class="p">.</span><span class="nx">key</span><span class="p">.</span><span class="nx">mul</span><span class="p">(</span><span class="ow">new</span><span class="w"> </span><span class="nx">CurveField</span><span class="p">(</span><span class="nx">hbn</span><span class="p">)));</span><span class="w"> </span><span class="c1">// sign the command</span>
+<span class="w">    </span><span class="p">...</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">msg</span><span class="o">:</span><span class="w"> </span><span class="kt">bnToHexLe</span><span class="p">(</span><span class="nx">hbn</span><span class="p">),</span><span class="w"> </span><span class="c1">// convert the bigint to a hex string</span>
+<span class="w">        </span><span class="p">...</span>
+<span class="w">        </span><span class="nx">sigr</span><span class="o">:</span><span class="w"> </span><span class="kt">bnToHexLe</span><span class="p">(</span><span class="nx">S</span><span class="p">.</span><span class="nx">v</span><span class="p">),</span><span class="w"> </span><span class="c1">// convert the signature to a hex string</span>
+<span class="w">    </span><span class="p">};</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">data</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<p>In signature_to_u64array, we convert the signature to a u64array:
+<div class="highlight"><pre><span></span><code><span class="kd">function</span><span class="w"> </span><span class="nx">signature_to_u64array</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">msg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">LeHexBN</span><span class="p">(</span><span class="nx">value</span><span class="p">.</span><span class="nx">msg</span><span class="p">).</span><span class="nx">toU64Array</span><span class="p">();</span>
+<span class="w">    </span><span class="p">...</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">sigr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">LeHexBN</span><span class="p">(</span><span class="nx">value</span><span class="p">.</span><span class="nx">sigr</span><span class="p">).</span><span class="nx">toU64Array</span><span class="p">();</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">u64array</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">BigUint64Array</span><span class="p">(</span><span class="mf">24</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">u64array</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="nx">msg</span><span class="p">);</span>
+<span class="w">    </span><span class="p">...</span>
+<span class="w">    </span><span class="nx">u64array</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="nx">sigr</span><span class="p">,</span><span class="w"> </span><span class="mf">20</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">u64array</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+And you can record that the msg is in the first 4 elements of the u64array, which is 0-3, and the sigr is in the last 4 elements of the u64array, which is 20-23. </p>
+<p>And in <code>handle_tx</code>:
+<div class="highlight"><pre><span></span><code><span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">handle_tx</span><span class="p">(</span><span class="n">params</span><span class="p">:</span><span class="w"> </span><span class="nb">Vec</span><span class="o">&lt;</span><span class="kt">u64</span><span class="o">&gt;</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kt">u32</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">user_address</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">params</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span><span class="w"> </span><span class="n">params</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span><span class="w"> </span><span class="n">params</span><span class="p">[</span><span class="mi">6</span><span class="p">],</span><span class="w"> </span><span class="n">params</span><span class="p">[</span><span class="mi">7</span><span class="p">]];</span><span class="w"> </span><span class="c1">// get the user address</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">command</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">params</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="n">params</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="n">params</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="w"> </span><span class="n">params</span><span class="p">[</span><span class="mi">3</span><span class="p">]];</span><span class="w"> </span><span class="c1">// get the command and the parameters, here will be [0n, seed, rand, 0n]</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">sig_r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">params</span><span class="p">[</span><span class="mi">20</span><span class="p">],</span><span class="w"> </span><span class="n">params</span><span class="p">[</span><span class="mi">21</span><span class="p">],</span><span class="w"> </span><span class="n">params</span><span class="p">[</span><span class="mi">22</span><span class="p">],</span><span class="w"> </span><span class="n">params</span><span class="p">[</span><span class="mi">23</span><span class="p">]];</span><span class="w"> </span><span class="c1">// get the sig_r</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">transaction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="cp">$T</span><span class="p">::</span><span class="n">decode</span><span class="p">(</span><span class="n">command</span><span class="p">);</span><span class="w"> </span><span class="c1">// decode the command</span>
+<span class="w">    </span><span class="n">transaction</span><span class="p">.</span><span class="n">process</span><span class="p">(</span><span class="o">&amp;</span><span class="n">user_address</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">sig_r</span><span class="p">)</span><span class="w"> </span><span class="c1">// process the transaction</span>
+<span class="p">}</span>
+<span class="w">    </span><span class="err">```</span>
+<span class="n">We</span><span class="w"> </span><span class="n">can</span><span class="w"> </span><span class="n">see</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">command</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="err">`</span><span class="p">[</span><span class="mi">0</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">seed</span><span class="p">,</span><span class="w"> </span><span class="n">rand</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="n">n</span><span class="p">]</span><span class="err">`</span><span class="p">,</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">sig_r</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">signature</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">command</span><span class="p">.</span><span class="w"> </span><span class="n">They</span><span class="w"> </span><span class="n">are</span><span class="w"> </span><span class="n">retrived</span><span class="w"> </span><span class="n">through</span><span class="w"> </span><span class="n">their</span><span class="w"> </span><span class="n">positions</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">u64array</span><span class="p">.</span><span class="w"> </span><span class="n">Remind</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">Transaction</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">is</span><span class="w"> </span><span class="n">defined</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="err">`</span><span class="n">state</span><span class="p">.</span><span class="n">rs</span><span class="err">`</span><span class="w"> </span><span class="k">as</span><span class="p">:</span>
+<span class="err">```</span><span class="n">rs</span>
+<span class="k">pub</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">Transaction</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">command</span><span class="p">:</span><span class="w"> </span><span class="kt">u32</span><span class="p">,</span>
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">data</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="kt">u64</span><span class="p">;</span><span class="w"> </span><span class="mi">3</span><span class="p">],</span>
+<span class="p">}</span>
+</code></pre></div>
+This matches the command <code>[params[0], params[1], params[2], params[3]]</code>, as the command in Transaction is the first element of the u64array, and the data is the next 3 elements of the u64array. In Transaction implementation, we can call <code>self.command</code> and <code>self.data</code> to get the command and the data.</p>
+</li>
+<li>
+<p>State updates rand_commitment to the new commitment</p>
+<p>In <code>process</code> function of <code>state.rs</code>, we can see that the rand_commitment is updated to the new commitment in the Timetick transaction through <code>state.rand_commitment = self.data[1];</code>:
+<div class="highlight"><pre><span></span><code><span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">process</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">pid</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="p">[</span><span class="kt">u64</span><span class="p">;</span><span class="w"> </span><span class="mi">4</span><span class="p">],</span><span class="w"> </span><span class="n">sigr</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="p">[</span><span class="kt">u64</span><span class="p">;</span><span class="w"> </span><span class="mi">4</span><span class="p">])</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kt">u32</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">command</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">TIMETICK</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">unsafe</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="n">STATE</span><span class="w"> </span><span class="p">};</span>
+<span class="w">        </span><span class="n">state</span><span class="p">.</span><span class="n">counter</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">rand</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span><span class="w"> </span><span class="c1">// get the new commitment</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">hasher</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HASHER</span><span class="p">.</span><span class="n">clone</span><span class="p">();</span>
+<span class="w">        </span><span class="n">hasher</span><span class="p">.</span><span class="n">update</span><span class="p">(</span><span class="n">rand</span><span class="p">.</span><span class="n">to_le_bytes</span><span class="p">());</span><span class="w"> </span><span class="c1">// hash the new commitment</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hasher</span><span class="p">.</span><span class="n">finalize</span><span class="p">();</span><span class="w"> </span><span class="c1">// get the hash result</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">checkseed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">u64</span><span class="p">::</span><span class="n">from_be_bytes</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="mi">24</span><span class="o">..</span><span class="mi">32</span><span class="p">].</span><span class="n">try_into</span><span class="p">().</span><span class="n">unwrap</span><span class="p">());</span><span class="w"> </span><span class="c1">// get the checkseed</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="n">state</span><span class="p">.</span><span class="n">rand_commitment</span><span class="w"> </span><span class="o">!=</span><span class="mi">0</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">unsafe</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">zkwasm_rust_sdk</span><span class="p">::</span><span class="n">require</span><span class="p">(</span><span class="n">state</span><span class="p">.</span><span class="n">rand_commitment</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">checkseed</span><span class="p">)</span><span class="w"> </span><span class="p">};</span>
+<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="c1">// verify the rand, which is skipped here because the rand_commitment is 0 (initial value)</span>
+<span class="w">        </span><span class="n">state</span><span class="p">.</span><span class="n">rand_commitment</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span><span class="w"> </span><span class="c1">// update the rand_commitment to the new commitment</span>
+<span class="w">        </span><span class="o">..</span><span class="p">.</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="o">..</span><span class="p">.</span>
+</code></pre></div>
+Now we set the rand_commitment to the new commitment, this is the foundation of the verification of the next round.</p>
+</li>
+</ol>
+<div class="admonition application api calls">
+<p class="admonition-title">Application</p>
+<p>You may notice that the server calls the application to get the states of the game through <code>application.FUNCTION_NAME()</code>. Typically, these functions are defined in the implementation of the state struct in the state.rs file of the application and actually, they are implementations of <a href="zkWasm%20Rust%20SDK.html">zkWasm Rest Server's ABI</a>.</p>
+</div>
+<h4 id="second-round-second-timetick-commitment-verification-and-random-number-generation">Second Round, Second Timetick (Commitment Verification and Random Number Generation)</h4>
+<ol>
+<li>Server executes another timetick, just like the first round.</li>
+<li>Generates new randseed and commitment through <code>let rand = await generateRandomSeed();</code>, now the <code>rand</code> is the new commitment.</li>
+<li>Retrieves previous rand_commitment:
+<div class="highlight"><pre><span></span><code><span class="kd">let</span><span class="w"> </span><span class="nx">oldSeed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">application</span><span class="p">.</span><span class="nx">randSeed</span><span class="p">();</span>
+</code></pre></div></li>
+<li>Retrieves previous randseed from database using the commitment as key:
+<div class="highlight"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">oldSeed</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0n</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">randRecord</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">modelRand</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span>
+<span class="w">        </span><span class="nx">commitment</span><span class="o">:</span><span class="w"> </span><span class="kt">oldSeed.toString</span><span class="p">(),</span>
+<span class="w">    </span><span class="p">});</span>
+<span class="w">    </span><span class="nx">seed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">randRecord</span><span class="p">[</span><span class="mf">0</span><span class="p">].</span><span class="nx">seed</span><span class="p">.</span><span class="nx">readBigInt64LE</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div></li>
+<li>Signs <code>[0n, previous_randseed, new_commitment, 0n]</code> as the same way as the first round and send it to the application.</li>
+<li>
+<p>Verifies hash(previous_randseed) = previous_commitment:</p>
+<p>In <code>process</code> function of <code>state.rs</code>, we can see that the previously generated randseed, which indicates by the <code>rand</code>, is verified through <code>unsafe {zkwasm_rust_sdk::require(state.rand_commitment == checkseed)};</code>:
+<div class="highlight"><pre><span></span><code><span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">process</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">pid</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="p">[</span><span class="kt">u64</span><span class="p">;</span><span class="w"> </span><span class="mi">4</span><span class="p">],</span><span class="w"> </span><span class="n">sigr</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="p">[</span><span class="kt">u64</span><span class="p">;</span><span class="w"> </span><span class="mi">4</span><span class="p">])</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kt">u32</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">unsafe</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="n">STATE</span><span class="w"> </span><span class="p">};</span>
+<span class="w">    </span><span class="n">state</span><span class="p">.</span><span class="n">counter</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">rand</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">hasher</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HASHER</span><span class="p">.</span><span class="n">clone</span><span class="p">();</span>
+<span class="w">    </span><span class="n">hasher</span><span class="p">.</span><span class="n">update</span><span class="p">(</span><span class="n">rand</span><span class="p">.</span><span class="n">to_le_bytes</span><span class="p">());</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hasher</span><span class="p">.</span><span class="n">finalize</span><span class="p">();</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">checkseed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">u64</span><span class="p">::</span><span class="n">from_be_bytes</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="mi">24</span><span class="o">..</span><span class="mi">32</span><span class="p">].</span><span class="n">try_into</span><span class="p">().</span><span class="n">unwrap</span><span class="p">());</span><span class="w"> </span><span class="c1">// get the commitment of the previous randseed as the same way when the server generates the new commitment</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">state</span><span class="p">.</span><span class="n">rand_commitment</span><span class="w"> </span><span class="o">!=</span><span class="mi">0</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">unsafe</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">zkwasm_rust_sdk</span><span class="p">::</span><span class="n">require</span><span class="p">(</span><span class="n">state</span><span class="p">.</span><span class="n">rand_commitment</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">checkseed</span><span class="p">)</span><span class="w"> </span><span class="p">};</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="c1">// verify the rand</span>
+<span class="w">    </span><span class="o">..</span><span class="p">.</span>
+<span class="p">}</span>
+</code></pre></div></p>
+</li>
+<li>
+<p>Updates rand_commitment to new_commitment, this is for the next round's verification of randseed generated in this round:
+    <div class="highlight"><pre><span></span><code><span class="n">state</span><span class="p">.</span><span class="n">rand_commitment</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span><span class="w"> </span><span class="c1">// update the rand_commitment to the new commitment</span>
+</code></pre></div></p>
+</li>
+<li>
+<p>Settles using previous_randseed, after the verification, the previously generated randseed is used to generate the random number for the player:
+    <div class="highlight"><pre><span></span><code><span class="k">unsafe</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">STATE</span><span class="p">.</span><span class="n">settle</span><span class="p">(</span><span class="n">rand</span><span class="p">)</span><span class="w"> </span><span class="p">};</span>
+</code></pre></div></p>
+<p>In <code>settle</code> function, we can see that the random number is generated through <code>let final_rand = game.rand ^ rand</code>:
+<div class="highlight"><pre><span></span><code><span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">settle</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">rand</span><span class="p">:</span><span class="w"> </span><span class="kt">u64</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">game</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">games</span><span class="p">.</span><span class="n">iter_mut</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">final_rand</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">game</span><span class="p">.</span><span class="n">rand</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">rand</span><span class="p">;</span>
+<span class="w">        </span><span class="n">game</span><span class="p">.</span><span class="n">settle</span><span class="p">(</span><span class="n">final_rand</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="bp">self</span><span class="p">.</span><span class="n">games</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="fm">vec!</span><span class="p">[];</span>
+<span class="p">}</span>
+</code></pre></div>
+8. You may notice that we haven't mentioned the <code>game.rand</code> appears in the <code>settle</code> function. This is the Player's random number generated from their signature. Let's see how it works.</p>
+</li>
+</ol>
+<h4 id="second-round-player-interaction">Second Round (Player Interaction)</h4>
+<p>This is still the second round, but here we will see how the player's random number is generated.</p>
+<ol>
+<li>Player can start to play the game by signing transaction data <code>[command, bet, 0n, 0n]</code> by calling <code>place</code> function of <code>api.js</code>:
+   <div class="highlight"><pre><span></span><code><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="nx">place</span><span class="p">(</span><span class="nx">bet</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">     </span><span class="kd">let</span><span class="w"> </span><span class="nx">nonce</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">getNonce</span><span class="p">();</span>
+<span class="w">     </span><span class="kd">let</span><span class="w"> </span><span class="nx">processStamp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">rpc</span><span class="p">.</span><span class="nx">sendTransaction</span><span class="p">(</span><span class="ow">new</span><span class="w"> </span><span class="nb">BigUint64Array</span><span class="p">([</span><span class="nx">createCommand</span><span class="p">(</span><span class="nx">nonce</span><span class="p">,</span><span class="w"> </span><span class="nx">CMD_PLACE</span><span class="p">,</span><span class="w"> </span><span class="mi">0n</span><span class="p">),</span><span class="w"> </span><span class="nx">bet</span><span class="p">,</span><span class="w"> </span><span class="mi">0n</span><span class="p">,</span><span class="w"> </span><span class="mi">0n</span><span class="p">]),</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">processingKey</span><span class="p">);</span>
+<span class="w"> </span><span class="p">}</span>
+</code></pre></div></li>
+<li>
+<p>And in the <code>process</code> function of <code>state.rs</code>, we can see that the player's random number is generated through <code>let rand = sigr[0] ^ sigr[1] ^ sigr[2] ^ sigr[3];</code>:
+   <div class="highlight"><pre><span></span><code><span class="w"> </span><span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">process</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">pid</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="p">[</span><span class="kt">u64</span><span class="p">;</span><span class="w"> </span><span class="mi">4</span><span class="p">],</span><span class="w"> </span><span class="n">sigr</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="p">[</span><span class="kt">u64</span><span class="p">;</span><span class="w"> </span><span class="mi">4</span><span class="p">])</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kt">u32</span><span class="w"> </span><span class="p">{</span>
+<span class="w">     </span><span class="k">if</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">command</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">PLACE</span><span class="w"> </span><span class="p">{</span>
+<span class="w">         </span><span class="kd">let</span><span class="w"> </span><span class="n">rand</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sigr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">sigr</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">sigr</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">sigr</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span>
+<span class="w">         </span><span class="bp">self</span><span class="p">.</span><span class="n">place</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="o">&amp;</span><span class="n">pid</span><span class="p">,</span><span class="w"> </span><span class="n">rand</span><span class="p">)</span>
+<span class="w">     </span><span class="p">}</span>
+<span class="w">     </span><span class="o">..</span><span class="p">.</span>
+<span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+   Remind that the sigr is the signature of the transaction data <code>[command, bet, 0n, 0n]</code>. Therefore, we got the player's random number generated from their signature.</p>
+</li>
+<li>
+<p>Now we take a look at the <code>place</code> function of <code>state.rs</code>, we can see the <code>rand</code> is stored in the game record through <code>let game = Game::new(&amp;player, place, rand);</code>:
+   <div class="highlight"><pre><span></span><code><span class="w"> </span><span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">place</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">place</span><span class="p">:</span><span class="w"> </span><span class="kt">u64</span><span class="p">,</span><span class="w"> </span><span class="n">pkey</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="p">[</span><span class="kt">u64</span><span class="p">;</span><span class="w"> </span><span class="mi">4</span><span class="p">],</span><span class="w"> </span><span class="n">rand</span><span class="p">:</span><span class="w"> </span><span class="kt">u64</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kt">u32</span><span class="w"> </span><span class="p">{</span>
+<span class="w">     </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">player</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CombatPlayer</span><span class="p">::</span><span class="n">get_from_pid</span><span class="p">(</span><span class="o">&amp;</span><span class="n">CombatPlayer</span><span class="p">::</span><span class="n">pkey_to_pid</span><span class="p">(</span><span class="n">pkey</span><span class="p">));</span>
+<span class="w">     </span><span class="k">match</span><span class="w"> </span><span class="n">player</span><span class="p">.</span><span class="n">as_mut</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">         </span><span class="nb">None</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">ERROR_PLAYER_NOT_FOUND</span><span class="p">,</span>
+<span class="w">         </span><span class="nb">Some</span><span class="p">(</span><span class="n">player</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">             </span><span class="k">if</span><span class="w"> </span><span class="n">player</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">placed</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                 </span><span class="k">return</span><span class="w"> </span><span class="n">PLAYER_IN_GAME</span><span class="p">;</span>
+<span class="w">             </span><span class="p">}</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">player</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">power</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                 </span><span class="k">return</span><span class="w"> </span><span class="n">PLAYER_IS_DEAD</span><span class="p">;</span>
+<span class="w">             </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                 </span><span class="kd">let</span><span class="w"> </span><span class="n">game</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Game</span><span class="p">::</span><span class="n">new</span><span class="p">(</span><span class="o">&amp;</span><span class="n">player</span><span class="p">,</span><span class="w"> </span><span class="n">place</span><span class="p">,</span><span class="w"> </span><span class="n">rand</span><span class="p">);</span>
+<span class="w">                 </span><span class="k">unsafe</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">STATE</span><span class="p">.</span><span class="n">new_game</span><span class="p">(</span><span class="n">game</span><span class="p">)</span><span class="w"> </span><span class="p">};</span>
+<span class="w">                 </span><span class="n">player</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">placed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">place</span><span class="p">;</span>
+<span class="w">                 </span><span class="n">player</span><span class="p">.</span><span class="n">store</span><span class="p">();</span>
+<span class="w">                 </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">             </span><span class="p">}</span>
+<span class="w">         </span><span class="p">}</span>
+<span class="w">     </span><span class="p">}</span>
+<span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+   Now we can retrieve the player's random number from the game record through <code>let player_rand = game.rand;</code>. And this shall answer the question that how the player's random number is generated and how the final random number is generated in <code>settle</code> function:</p>
+<div class="highlight"><pre><span></span><code><span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">settle</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">rand</span><span class="p">:</span><span class="w"> </span><span class="kt">u64</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">game</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">games</span><span class="p">.</span><span class="n">iter_mut</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">final_rand</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">game</span><span class="p">.</span><span class="n">rand</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">rand</span><span class="p">;</span>
+<span class="w">        </span><span class="n">game</span><span class="p">.</span><span class="n">settle</span><span class="p">(</span><span class="n">final_rand</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="bp">self</span><span class="p">.</span><span class="n">games</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="fm">vec!</span><span class="p">[];</span>
+<span class="p">}</span>
+</code></pre></div>
+</li>
+</ol>
+<h2 id="understanding-the-random-number-generation-mechanism">Understanding the Random Number Generation Mechanism</h2>
+<h3 id="how-randomness-is-achieved">How Randomness is Achieved</h3>
+<p>The final random number is generated through XOR operation between two components:</p>
+<ol>
+<li>The player's random number (derived from transaction signature)</li>
+<li>The server admin's random number</li>
+</ol>
+<p>This dual-source approach ensures true randomness through several security measures.</p>
+<h4 id="server-admins-random-number-security">Server Admin's Random Number Security</h4>
+<ul>
+<li>While the admin knows their generated random number, they cannot manipulate it</li>
+<li>Security is achieved through commitment mechanism:<ul>
+<li>Admin must commit to the random number before revealing it</li>
+<li>Commitment (hash) is stored in the game state</li>
+<li>Later revelation must match the commitment</li>
+<li>Any attempt to change the number would be detected through hash verification</li>
+</ul>
+</li>
+</ul>
+<h4 id="players-random-number-security">Player's Random Number Security</h4>
+<ul>
+<li>Players can calculate their own random number from their signature, but cannot predict the final random number since the server admin's random number is only revealed in the next timetick transaction.</li>
+<li>The player's random number is maintained through:<ul>
+<li>Transparent signature calculation process and can be verified.</li>
+<li>Cannot be altered after submission</li>
+</ul>
+</li>
+</ul>
+<h4 id="combined-randomness-through-xor">Combined Randomness Through XOR</h4>
+<ul>
+<li>The XOR operation between these two sources creates unpredictability</li>
+<li>Neither party can determine the final random number</li>
+<li>Even if one party knows their random number component, they cannot predict or manipulate the outcome</li>
+</ul>
+<h3 id="preventing-manipulation-through-timing-timetick">Preventing Manipulation Through Timing (Timetick)</h3>
+<p>A critical aspect of the system is preventing manipulation through careful timing of operations:</p>
+<ol>
+<li>
+<p><strong>Sequential Submission</strong>:</p>
+<ul>
+<li>Players submit their random number component (through place operation) before seeing the admin's random number.</li>
+<li>Admin's random number is only revealed in the next timetick</li>
+<li>This prevents players from choosing their random number based on known admin values</li>
+</ul>
+</li>
+<li>
+<p><strong>Settlement Timing</strong>:</p>
+<ul>
+<li>Settlement cannot occur in the same timetick (Server submits the commitment) as the player's place operation, this is because the server's random number is revealed in the next timetick.</li>
+<li>Must wait for next timetick when:<ul>
+<li>Admin reveals the previous commitment's random number</li>
+<li>New commitment is created for future rounds</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Round Structure</strong>:
+   <div class="highlight"><pre><span></span><code>Round N / Timetick N:
+- Player submits their random component
+- Admin commits to new random number
+
+Round N+1 / Timetick N+1:
+- Admin reveals previous round&#39;s random number
+- Settlement occurs using XOR of:
+  - Player&#39;s submitted random (from Round N)
+  - Admin&#39;s revealed random (committed in Round N-1)
+</code></pre></div></p>
+</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "..", "features": ["navigation.indexes", "navigation.instant", "navigation.tracking", "navigation.sections", "navigation.expand", "navigation.top", "search.suggest", "content.code.copy", "search.highlight"], "search": "../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      
+        <script src="https://unpkg.com/mermaid@10.6.1/dist/mermaid.min.js"></script>
+      
+    
+  </body>
+</html>

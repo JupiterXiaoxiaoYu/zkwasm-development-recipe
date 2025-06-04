@@ -272,4 +272,4 @@ fn set_entries(&self, entries: &Vec<u64>, counter: u64) {
 The above code can store all the events that shall be processed in a same specific counter to the storage. This is particularly useful to save the memory space and improve the performance.
 
 !!!info
-    We will cover how to leverage the event queue and time-based events in [Implementing Time-Driven Events](../Development%20Guide/Implementing%20Time-Driven%20Events.md) chapter.
+    We will cover how to leverage the event queue and time-based events in [Implementing Time-Driven Events](../development-guide/Implementing Time-Driven Events.md) chapter.

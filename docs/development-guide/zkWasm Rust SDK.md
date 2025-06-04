@@ -128,7 +128,7 @@ zkwasm_rest_abi::create_zkwasm_apis!(Transaction, State, Config);
 
 #### System Architecture and Flow
 
-![zkWasm System Architecture](./media/minirollup-bundled.png)
+![zkWasm System Architecture](../media/minirollup-bundled.png)
 
 Now we delve into the REST service ABI to see how it constructs the framework for the zkWasm rollup Application. Above figure shows the system execution flow of zkWasm rollup application, and below we will explain each phase in detail.
 

@@ -13,8 +13,8 @@ This workflow will guide you through the process of developing a zkWasm applicat
 ## Development Workflow
 
 ### Learn
-1. Understand [Web Application Development](../Core%20Concepts#1-understanding-web-application-development) 
-2. Understand [Blockchain Engineering](../Core%20Concepts#3-understanding-blockchain-engineering) and [Zero-Knowledge Proof](../Core%20Concepts#4-understanding-zero-knowledge-proofs)
+1. Understand [Web Application Development](../Core Concepts.md#1-understanding-web-application-development)
+2. Understand [Blockchain Engineering](../Core Concepts.md#3-understanding-blockchain-engineering) and [Zero-Knowledge Proof](../Core Concepts.md#4-understanding-zero-knowledge-proofs)
 3. Understand [zkWasm Basics](../zkWasm%20Overview.md#1-introduction-to-zkwasm) and [Architecture](../zkWasm%20Overview.md#6-architecture-of-a-zkwasm-rollup-application)
 
 ### Design

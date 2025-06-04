@@ -1,0 +1,1951 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://development-recipe.zkwasm.ai/zkWasm%20Overview.html">
+      
+      
+        <link rel="prev" href="Core%20Concepts.html">
+      
+      
+        <link rel="next" href="Design%20Application%20as%20State%20Machine.html">
+      
+      
+      <link rel="icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
+    
+    
+      
+        <title>zkWasm Overview - zkWasm Development Recipe</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.342714a4.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="stylesheets/extra.css">
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="pink">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#zkwasm-overview" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="index.html" title="zkWasm Development Recipe" class="md-header__button md-logo" aria-label="zkWasm Development Recipe" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            zkWasm Development Recipe
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              zkWasm Overview
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="pink"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="lime"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="index.html" title="zkWasm Development Recipe" class="md-nav__button md-logo" aria-label="zkWasm Development Recipe" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    zkWasm Development Recipe
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Getting Started
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Getting Started
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="getting-started/Setup%20Environment.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Setup Environment
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="getting-started/Quick%20Tutorial.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Quick Tutorial
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="getting-started/Development%20Workflow.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Development Workflow
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Core Documentation
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Core Documentation
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Core%20Concepts.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Core Concepts
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    zkWasm Overview
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="zkWasm%20Overview.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    zkWasm Overview
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-introduction-to-zkwasm" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Introduction to zkWasm
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-the-state-machine-foundation" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. The State Machine Foundation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. The State Machine Foundation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#state-representation-and-execution-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      State Representation and Execution Flow
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-host-builtin-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Host (Builtin) Functions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Host (Builtin) Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inputoutput-system-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Input/Output System Implementation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#merkle-tree-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Merkle Tree Integration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#signature-scheme" class="md-nav__link">
+    <span class="md-ellipsis">
+      Signature Scheme
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-proof-generation-and-verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Proof Generation and Verification
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-development-process-and-best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Development Process and Best Practices
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-architecture-of-a-zkwasm-rollup-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Architecture of a zkWasm Rollup Application
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Design Guide
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Design Guide
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Design%20Application%20as%20State%20Machine.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Design Application as State Machine
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Development Guide
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Development Guide
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="development-guide/zkWasm%20Rust%20SDK.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    zkWasm Rust SDK and Rest Service ABI
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="development-guide/Web3%20Development%20Frameworks.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Web3 Development Frameworks
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="development-guide/Implementing%20Time-Driven%20Events.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Implementing Time-Driven Events
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="development-guide/Generating%20Random%20Numbers.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Generating Random Numbers
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    zkWasm Mini Rollup
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            zkWasm Mini Rollup
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="zkwasm-mini-rollup/Rollup%20Overview.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="zkwasm-mini-rollup/Rollup%20Host.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Host Environment
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="zkwasm-mini-rollup/Rollup%20Database.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Database Service
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="zkwasm-mini-rollup/Rollup%20Server.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Server Implementation (zkWasm-ts-Server)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="zkwasm-mini-rollup/Rollup%20Convention.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Convention
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    zkWasm Protocol
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            zkWasm Protocol
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="zkwasm-protocol/zkWasm%20Protocol.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    zkWasm Protocol Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="zkwasm-protocol/Deposit.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Deposit
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="zkwasm-protocol/Withdraw.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Withdraw
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="zkwasm-protocol/Custom%20Transaction.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Custom Transaction
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Additional Resources
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            Additional Resources
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="additional-resources/Official%20Links.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Official Links
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="additional-resources/Project%20Examples.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Project Examples
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="additional-resources/Frequently%20Asked%20Questions.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Frequently Asked Questions
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-introduction-to-zkwasm" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Introduction to zkWasm
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-the-state-machine-foundation" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. The State Machine Foundation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. The State Machine Foundation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#state-representation-and-execution-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      State Representation and Execution Flow
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-host-builtin-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Host (Builtin) Functions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Host (Builtin) Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inputoutput-system-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Input/Output System Implementation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#merkle-tree-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Merkle Tree Integration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#signature-scheme" class="md-nav__link">
+    <span class="md-ellipsis">
+      Signature Scheme
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-proof-generation-and-verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Proof Generation and Verification
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-development-process-and-best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Development Process and Best Practices
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-architecture-of-a-zkwasm-rollup-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Architecture of a zkWasm Rollup Application
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="zkwasm-overview">zkWasm Overview</h1>
+<h2 id="1-introduction-to-zkwasm">1. Introduction to zkWasm</h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This section provides a high-level overview of zkWasm. For more detailed information about zkWasm, please refer to the:</p>
+<ul>
+<li><a href="https://ieeexplore.ieee.org/document/10587123">zkWasm Whitepaper</a></li>
+<li><a href="https://zkwasmdoc.gitbook.io/delphinus-zkwasm">zkWasm Book</a></li>
+</ul>
+</div>
+<p>zkWasm represents a fundamental advancement in the field of trustless computation by combining WebAssembly with zero-knowledge proofs. The system implements a complete WebAssembly virtual machine within zkSNARK circuits, creating a bridge between traditional application development and blockchain technology. This approach allows developers to write programs in familiar languages while gaining the benefits of zero-knowledge proofs without requiring specialized cryptographic knowledge.</p>
+<p>The core innovation of zkWasm lies in its approach to implementing zero-knowledge proofs. Rather than requiring developers to write programs in specialized circuit-friendly languages, zkWasm applies zero-knowledge proofs at the bytecode level of the virtual machine. This means that any program that can be compiled to WebAssembly can automatically benefit from zero-knowledge capabilities, making the technology accessible to a much broader range of developers and applications. </p>
+<p>Traditional approaches to implementing zero-knowledge proofs often require developers to work with specialized languages and tools like Pinocchio, TinyRAM, or ZoKrates. This requirement creates a significant barrier to adoption, as developers must learn new programming paradigms and rewrite existing applications. zkWasm eliminates this barrier by operating at the WebAssembly level, allowing developers to work in languages they already know, such as C++, Rust, or AssemblyScript.</p>
+<p><img alt="Easily Migrate Web Apps to Trustless Web3 Apps" src="media/toWeb3.png" /></p>
+<p>This accessibility extends beyond just the programming language choice. While traditional blockchain development requires extensive knowledge of specific blockchain protocols and smart contract languages, zkWasm further simplifies the blockchain integration process. By operating at the WebAssembly bytecode level, zkWasm automatically handles the generation of zero-knowledge proofs for any application logic like user operations and user interactions. These standardized proofs can be verified on any blockchain platform without requiring developers to write custom smart contracts or complex blockchain-specific protocols for application logic. This approach not only lowers the technical barriers for Web2 developers (as well as their users) entering the Web3 space, but also enables seamless cross-chain compatibility for their applications. </p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>Compared to the traditional Web3 applications which heavily rely on smart contracts and a specific blockchain system, zkWasm applications are more like Web2 applications, but with the trustless verification capabilities brought by zero-knowledge proofs, it can:</p>
+<ul>
+<li>Seamlessly integrate with existing Web2 or Web3 applications</li>
+<li>Allow developers to focus on business logic and frontend design, without the need to learn much about blockchain or zero-knowledge proofs</li>
+<li>Allow developers to easily switch between different blockchain platforms if needed</li>
+<li>Allow developers to easily scale or upgrade their applications</li>
+<li>Allow gasless interactions and operations (except for the proof verification, deposit and withdrawal which is required when manipulating the onchain assets) for application users</li>
+</ul>
+</div>
+<h2 id="2-the-state-machine-foundation">2. The State Machine Foundation</h2>
+<p>At its core, zkWasm operates as a state machine that processes WebAssembly bytecode while generating proofs of correct execution. The state machine takes as input a tuple consisting of several key components that together define the program and its execution environment. This tuple, represented as (I(C,H), E, IO), contains the WebAssembly executable image I (which includes both code C and initial memory state H), the entry point E, and the input/output firmware IO.</p>
+<p>The state machine maintains an internal state that captures every aspect of program execution. This state, represented as a tuple (iaddr, F, M, G, Sp, I, IO), includes the current instruction address (iaddr), the call frame (F), memory state (M), global variables (G), and the execution stack (Sp). Each of these components plays a crucial role in program execution and proof generation.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Understanding the state machine model is crucial for application development because:</p>
+<ul>
+<li>Design the state machine model before starting to write code will help a lot on development efficiency</li>
+<li>Your application's performance depends on minimizing state transitions</li>
+<li>Proper state handling is essential for correctness and security of your application</li>
+<li>Consider using tools to analyze your application's state transitions during development</li>
+</ul>
+</div>
+<h3 id="state-representation-and-execution-flow">State Representation and Execution Flow</h3>
+<p>The instruction address (iaddr) keeps track of the current position in the program, determining which instruction will be executed next. The call frame (F) manages function calls and their context, including a depth field that tracks the nesting level of function calls. This depth tracking is crucial for ensuring that all function calls properly return and maintaining the correct execution context. </p>
+<p>Memory management in zkWasm is handled through the memory state (M), which represents the linear memory space available to the WebAssembly program. This memory can be read from and written to during program execution, with all operations being tracked and verified through the proof system. Global variables (G) provide a way to maintain state across function calls, while the stack (Sp) handles temporary values and computation results.</p>
+<p>Program execution proceeds through a series of state transitions, with each transition function taking the current state and producing a new state based on the instruction being executed. These transitions form an execution trace that represents the complete history of program execution. The system ensures that each transition follows the WebAssembly specification and maintains the integrity of the program state.</p>
+<p>Here's a core state structure in Rust:</p>
+<div class="highlight"><pre><span></span><code><span class="k">struct</span><span class="w"> </span><span class="nc">State</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">iaddr</span><span class="p">:</span><span class="w"> </span><span class="nc">InstructionAddress</span><span class="p">,</span><span class="w">  </span><span class="c1">// Current instruction address</span>
+<span class="w">    </span><span class="n">F</span><span class="p">:</span><span class="w"> </span><span class="nc">CallFrame</span><span class="p">,</span><span class="w">               </span><span class="c1">// Call frame with depth</span>
+<span class="w">    </span><span class="n">M</span><span class="p">:</span><span class="w"> </span><span class="nc">MemoryState</span><span class="p">,</span><span class="w">            </span><span class="c1">// Memory state</span>
+<span class="w">    </span><span class="n">G</span><span class="p">:</span><span class="w"> </span><span class="nc">GlobalVariables</span><span class="p">,</span><span class="w">        </span><span class="c1">// Global variables</span>
+<span class="w">    </span><span class="n">Sp</span><span class="p">:</span><span class="w"> </span><span class="nc">Stack</span><span class="p">,</span><span class="w">                 </span><span class="c1">// Execution stack</span>
+<span class="w">    </span><span class="n">I</span><span class="p">:</span><span class="w"> </span><span class="nc">WasmImage</span><span class="p">,</span><span class="w">              </span><span class="c1">// WASM executable image</span>
+<span class="w">    </span><span class="n">IO</span><span class="p">:</span><span class="w"> </span><span class="nc">IOFirmware</span><span class="w">            </span><span class="c1">// Input/Output handling</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>State transitions and execution can be defined as:</p>
+<div class="highlight"><pre><span></span><code><span class="k">type</span><span class="w"> </span><span class="nc">StateTransition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">fn</span><span class="p">(</span><span class="n">State</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nc">State</span><span class="p">;</span>
+
+<span class="k">struct</span><span class="w"> </span><span class="nc">ExecutionTrace</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">transitions</span><span class="p">:</span><span class="w"> </span><span class="nb">Vec</span><span class="o">&lt;</span><span class="n">StateTransition</span><span class="o">&gt;</span><span class="p">,</span>
+<span class="w">    </span><span class="n">initial_state</span><span class="p">:</span><span class="w"> </span><span class="nc">State</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Let's examine a concrete example of how state transitions work in practice:</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#[no_mangle]</span>
+<span class="k">pub</span><span class="w"> </span><span class="k">extern</span><span class="w"> </span><span class="s">&quot;C&quot;</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">add</span><span class="p">(</span><span class="n">x</span><span class="p">:</span><span class="w"> </span><span class="kt">i32</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">:</span><span class="w"> </span><span class="kt">i32</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kt">i32</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">y</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>This simple addition function generates several state transitions under the hood. Here's what happens:</p>
+<div class="highlight"><pre><span></span><code><span class="kd">let</span><span class="w"> </span><span class="n">transitions</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="fm">vec!</span><span class="p">[</span>
+<span class="w">    </span><span class="c1">// Load first parameter</span>
+<span class="w">    </span><span class="o">|</span><span class="n">s</span><span class="o">|</span><span class="w"> </span><span class="n">State</span><span class="w"> </span><span class="p">{</span><span class="w"> </span>
+<span class="w">        </span><span class="n">stack</span><span class="p">:</span><span class="w"> </span><span class="nc">s</span><span class="p">.</span><span class="n">stack</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="n">memory</span><span class="p">[</span><span class="n">s</span><span class="p">.</span><span class="n">iaddr</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">]),</span>
+<span class="w">        </span><span class="n">iaddr</span><span class="p">:</span><span class="w"> </span><span class="nc">s</span><span class="p">.</span><span class="n">iaddr</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">        </span><span class="o">..</span><span class="n">s</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="c1">// Load second parameter</span>
+<span class="w">    </span><span class="o">|</span><span class="n">s</span><span class="o">|</span><span class="w"> </span><span class="n">State</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">stack</span><span class="p">:</span><span class="w"> </span><span class="nc">s</span><span class="p">.</span><span class="n">stack</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="n">memory</span><span class="p">[</span><span class="n">s</span><span class="p">.</span><span class="n">iaddr</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">]),</span>
+<span class="w">        </span><span class="n">iaddr</span><span class="p">:</span><span class="w"> </span><span class="nc">s</span><span class="p">.</span><span class="n">iaddr</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">        </span><span class="o">..</span><span class="n">s</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="c1">// Perform addition</span>
+<span class="w">    </span><span class="o">|</span><span class="n">s</span><span class="o">|</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="p">(</span><span class="n">stack</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">stack</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="p">(</span><span class="n">stack</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">stack</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
+<span class="w">        </span><span class="n">State</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">stack</span><span class="p">:</span><span class="w"> </span><span class="nc">stack</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">y</span><span class="p">),</span>
+<span class="w">            </span><span class="n">iaddr</span><span class="p">:</span><span class="w"> </span><span class="nc">s</span><span class="p">.</span><span class="n">iaddr</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">            </span><span class="o">..</span><span class="n">s</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">];</span>
+</code></pre></div>
+<p>Each transition represents a specific operation in the WebAssembly execution:</p>
+<ol>
+<li>The first transition loads parameter x from memory onto the stack</li>
+<li>The second transition loads parameter y</li>
+<li>The final transition pops both values, adds them, and pushes the result</li>
+</ol>
+<p>The validity of an execution trace is verified as follows:</p>
+<div class="highlight"><pre><span></span><code><span class="k">impl</span><span class="w"> </span><span class="n">ExecutionTrace</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">is_valid</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">current_state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">initial_state</span><span class="p">;</span>
+
+<span class="w">        </span><span class="c1">// Verify each transition</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="n">transition</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="o">&amp;</span><span class="bp">self</span><span class="p">.</span><span class="n">transitions</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">current_state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">transition</span><span class="p">(</span><span class="n">current_state</span><span class="p">);</span>
+
+<span class="w">            </span><span class="c1">// Verify transition follows WASM semantics</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="o">!</span><span class="n">verify_semantics</span><span class="p">(</span><span class="n">current_state</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="c1">// Verify final state</span>
+<span class="w">        </span><span class="n">current_state</span><span class="p">.</span><span class="n">call_frame</span><span class="p">.</span><span class="n">depth</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2 id="3-host-builtin-functions">3. Host (Builtin) Functions</h2>
+<p>Besides the WebAssembly instructions, zkWasm also provides a set of host functions that are not defined in the WebAssembly module itself but are provided by the environment in which the WebAssembly code is executed. These functions are crucial for WebAssembly modules to interact with the outside world, as WASM on its own is quite sandboxed and limited in what it can do directly.</p>
+<p>Here are some key points about WASM host functions:</p>
+<ul>
+<li>Interaction with the Environment: WASM is designed to be a low-level, portable bytecode, which runs in a sandboxed environment. By itself, it doesn't have direct access to the system's resources like file systems, network, or the DOM in web browsers. Host functions serve as the bridge between the WASM code and these external resources.</li>
+<li>Provided by the Host Environment: The host environment (which could be a web browser, a server-side platform like Node.js, or any other system that supports running WebAssembly) defines and provides these host functions. For instance, in a web browser, the host functions might allow interactions with web APIs.</li>
+<li>Imported into WASM Modules: WASM modules import these host functions and use them as if they were part of the module. This import/export mechanism is part of the WASM design, allowing for modular code and separation of concerns.</li>
+<li>Custom Functionality: Host functions can be used to provide custom functionality to WASM modules that is not available in the standard WASM instruction set. This can include anything from accessing the file system to performing complex computations that are more efficiently done in the host language (like JavaScript in the case of web browsers).</li>
+</ul>
+<p>In the zkWasm system, a wide range of pre-defined host functions are provided to make it easier to build complex applications. These host functions are divided into three main categories:</p>
+<ul>
+<li>I/O related host functions: These functions handle the input and output operations in zkWasm. They provide ways for reading both public and private inputs, keeping track of the current position in the input stream, and outputting results. The difference between public and private inputs is very important for zero-knowledge applications.</li>
+<li>Merkle tree related host functions: zkWasm includes a Merkle tree implementation for efficiently verifying large data structures. The Merkle tree host functions include setting the root, specifying leaf addresses, updating and retrieving values, and getting the root hash. These functions follow a specific set of rules to ensure consistency and verifiability.</li>
+<li>Cryptographic operation related host functions: zkWasm implements advanced cryptographic operations, particularly the Poseidon signature scheme, which works well with zero-knowledge proofs. The signature host functions use elliptic curve cryptography (through the BabyJubjub curve) and involve multi-scalar multiplication for verification. These functions provide a secure and efficient way to perform cryptographic operations within the zkWasm environment.</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When developing zkWasm applications:</p>
+<ul>
+<li>Use host functions for external interactions and cryptographic operations (like user operations and signature)</li>
+<li>Carefully manage the distinction between public and private inputs</li>
+<li>Leverage the Merkle tree functions for efficient data structure storage, retrieval, and verification, because in zkWasm, we implement Merkle tree as Database Service.</li>
+<li>Design your application architecture around these built-in capabilities rather than implementing custom solutions.    </li>
+</ul>
+</div>
+<h3 id="inputoutput-system-implementation">Input/Output System Implementation</h3>
+<p>The input/output system in zkWasm provides a mechanism for handling both public and private data. The system centers around the zkmain function, which serves as the entry point for all zkWasm applications. This function has the signature zkmain(void): (void), but can interact with the outside world through specialized host functions.</p>
+<p>zkWasm distinguishes between public and private inputs through its input functions:</p>
+<ul>
+<li><code>zkwasm_input(1)</code> reads public inputs (instances) that will be visible in the proof. </li>
+<li><code>zkwasm_input(0)</code> handles private inputs (witnesses) that should remain confidential. </li>
+</ul>
+<p>This distinction is crucial for zero-knowledge applications, where some data must remain private while still proving computations were performed correctly.</p>
+<p>The system maintains an internal cursor that tracks the current position in the input stream. When reading inputs, the system takes the value at the current cursor position, places it on top of the execution stack, and advances the cursor. This mechanism ensures orderly processing of inputs while maintaining the distinction between public and private data.</p>
+<h3 id="merkle-tree-integration">Merkle Tree Integration</h3>
+<p>An integral part of the I/O system is the Merkle tree implementation, which provides efficient verification of large data structures. zkWasm includes a built-in Merkle tree with a depth of 32 levels, supporting indices from 0 to 2^32-1. </p>
+<p>The Merkle tree API provides the following functions:</p>
+<div class="highlight"><pre><span></span><code><span class="k">extern</span><span class="w"> </span><span class="s">&quot;C&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">merkle_setroot</span><span class="p">(</span><span class="n">x</span><span class="p">:</span><span class="w"> </span><span class="kt">u64</span><span class="p">);</span>
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">merkle_address</span><span class="p">(</span><span class="n">x</span><span class="p">:</span><span class="w"> </span><span class="kt">u64</span><span class="p">);</span>
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">merkle_set</span><span class="p">(</span><span class="n">x</span><span class="p">:</span><span class="w"> </span><span class="kt">u64</span><span class="p">);</span>
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">merkle_get</span><span class="p">()</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kt">u64</span><span class="p">;</span>
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">merkle_getroot</span><span class="p">()</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kt">u64</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<ul>
+<li><code>merkle_setroot</code>: Sets the Merkle root to establish the context.</li>
+<li><code>merkle_address</code>: Specifies the leaf address for the operation.</li>
+<li><code>merkle_set</code>: Updates the value at the currently selected address.</li>
+<li><code>merkle_get</code>: Retrieves the value at the currently selected address, along with a proof of inclusion.</li>
+<li><code>merkle_getroot</code>: Returns the current root hash, which represents the entire state of the tree.</li>
+</ul>
+<p>The Merkle tree operations follow a specific protocol to ensure consistency and verifiability. Here's an example:</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#[no_mangle]</span>
+<span class="k">pub</span><span class="w"> </span><span class="k">extern</span><span class="w"> </span><span class="s">&quot;C&quot;</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">merkle_tree_example</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">unsafe</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Set up Merkle tree state</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">root</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="k">u64</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="k">u64</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="k">u64</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="k">u64</span><span class="p">];</span><span class="w">  </span><span class="c1">// Example root</span>
+
+<span class="w">        </span><span class="c1">// Set root for operations</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">value</span><span class="p">)</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">root</span><span class="p">.</span><span class="n">iter</span><span class="p">().</span><span class="n">enumerate</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">merkle_setroot</span><span class="p">(</span><span class="n">value</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="c1">// Query leaf at index 0</span>
+<span class="w">        </span><span class="n">merkle_address</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">merkle_get</span><span class="p">();</span>
+
+<span class="w">        </span><span class="c1">// Update leaf value</span>
+<span class="w">        </span><span class="n">merkle_set</span><span class="p">(</span><span class="n">value</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+
+<span class="w">        </span><span class="c1">// Get new root after modification</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">new_root</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">merkle_getroot</span><span class="p">();</span>
+<span class="w">        </span><span class="n">zkwasm_output</span><span class="p">(</span><span class="n">new_root</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>This example demonstrates a complete Merkle tree operation cycle:</p>
+<ol>
+<li>First, it initializes the tree with a known root</li>
+<li>Then it queries a specific leaf value</li>
+<li>Updates that value</li>
+<li>Finally retrieves the new root hash that reflects the change</li>
+</ol>
+<p>The Merkle tree implementation supports efficient verification of data integrity. Here's an example of how verification works:</p>
+<div class="highlight"><pre><span></span><code><span class="k">pub</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">MerkleProof</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">leaf_value</span><span class="p">:</span><span class="w"> </span><span class="kt">u64</span><span class="p">,</span>
+<span class="w">    </span><span class="n">path</span><span class="p">:</span><span class="w"> </span><span class="nb">Vec</span><span class="o">&lt;</span><span class="p">(</span><span class="kt">u64</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="p">)</span><span class="o">&gt;</span><span class="p">,</span><span class="w">  </span><span class="c1">// (hash, is_left)</span>
+<span class="w">    </span><span class="n">root</span><span class="p">:</span><span class="w"> </span><span class="kt">u64</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="k">impl</span><span class="w"> </span><span class="n">MerkleProof</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">verify</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">current_hash</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">leaf_value</span><span class="p">;</span>
+
+<span class="w">        </span><span class="c1">// Traverse the path from leaf to root</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="o">&amp;</span><span class="p">(</span><span class="n">sibling_hash</span><span class="p">,</span><span class="w"> </span><span class="n">is_left</span><span class="p">)</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="o">&amp;</span><span class="bp">self</span><span class="p">.</span><span class="n">path</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">current_hash</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">is_left</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">hash_pair</span><span class="p">(</span><span class="n">sibling_hash</span><span class="p">,</span><span class="w"> </span><span class="n">current_hash</span><span class="p">)</span>
+<span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">hash_pair</span><span class="p">(</span><span class="n">current_hash</span><span class="p">,</span><span class="w"> </span><span class="n">sibling_hash</span><span class="p">)</span>
+<span class="w">            </span><span class="p">};</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="n">current_hash</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">root</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>This verification process ensures that a particular leaf value is indeed part of the Merkle tree with the given root. The path provides the necessary sibling hashes to reconstruct the root hash.</p>
+<h3 id="signature-scheme">Signature Scheme</h3>
+<p>zkWasm implements the Poseidon signature scheme, which leverages elliptic curve cryptography through the BabyJubjub curve, providing efficient verification while maintaining security.</p>
+<p>The signature consists of two components:
+- sig_r: A point on the BabyJubjub elliptic curve
+- sig_s: A scalar value used in the signature verification equation</p>
+<div class="highlight"><pre><span></span><code><span class="k">struct</span><span class="w"> </span><span class="nc">JubjubSignature</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">sig_r</span><span class="p">:</span><span class="w"> </span><span class="nc">BabyJubjubPoint</span><span class="p">,</span>
+<span class="w">    </span><span class="n">sig_s</span><span class="p">:</span><span class="w"> </span><span class="nc">Scalar</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>This verification process involves several steps:</p>
+<ol>
+<li>It performs a multi-scalar multiplication (msm) combining:</li>
+<li>The public key with the message hash</li>
+<li>The signature's R point with the constant ONE</li>
+<li>The negative of the base point with the s value</li>
+<li>The result should be the point (0, 1) if the signature is valid</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="k">impl</span><span class="w"> </span><span class="n">JubjubSignature</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">verify</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">pk</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="nc">BabyJubjubPoint</span><span class="p">,</span><span class="w"> </span><span class="n">msghash</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="p">[</span><span class="kt">u64</span><span class="p">;</span><span class="w"> </span><span class="mi">4</span><span class="p">])</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">unsafe</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="kd">let</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BabyJubjubPoint</span><span class="p">::</span><span class="n">msm</span><span class="p">(</span><span class="o">&amp;</span><span class="p">[</span>
+<span class="w">                </span><span class="p">(</span><span class="n">pk</span><span class="p">,</span><span class="w"> </span><span class="n">msghash</span><span class="p">),</span>
+<span class="w">                </span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">.</span><span class="n">sig_r</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">ONE</span><span class="p">.</span><span class="mi">0</span><span class="p">),</span>
+<span class="w">                </span><span class="p">(</span><span class="o">&amp;</span><span class="n">NEG_BASE</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="bp">self</span><span class="p">.</span><span class="n">sig_s</span><span class="p">),</span>
+<span class="w">            </span><span class="p">]);</span>
+
+<span class="w">            </span><span class="n">require</span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">x</span><span class="p">.</span><span class="n">is_zero</span><span class="p">()</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">ONE</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Let's look at how this is used in practice:</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#[no_mangle]</span>
+<span class="k">pub</span><span class="w"> </span><span class="k">extern</span><span class="w"> </span><span class="s">&quot;C&quot;</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">verify_signature_example</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">unsafe</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Read signature components from input</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">sig_r_x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">zkwasm_input</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">sig_r_y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">zkwasm_input</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">sig_s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">zkwasm_input</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+
+<span class="w">        </span><span class="c1">// Read public key</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">pk_x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">zkwasm_input</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">pk_y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">zkwasm_input</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+
+<span class="w">        </span><span class="c1">// Read message hash</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">msg_hash</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<span class="w">            </span><span class="n">zkwasm_input</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+<span class="w">            </span><span class="n">zkwasm_input</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+<span class="w">            </span><span class="n">zkwasm_input</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+<span class="w">            </span><span class="n">zkwasm_input</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+<span class="w">        </span><span class="p">];</span>
+
+<span class="w">        </span><span class="c1">// Construct signature object</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">signature</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">JubjubSignature</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">sig_r</span><span class="p">:</span><span class="w"> </span><span class="nc">BabyJubjubPoint</span><span class="p">::</span><span class="n">new</span><span class="p">(</span><span class="n">sig_r_x</span><span class="p">,</span><span class="w"> </span><span class="n">sig_r_y</span><span class="p">),</span>
+<span class="w">            </span><span class="n">sig_s</span><span class="p">:</span><span class="w"> </span><span class="nc">Scalar</span><span class="p">::</span><span class="n">new</span><span class="p">(</span><span class="n">sig_s</span><span class="p">),</span>
+<span class="w">        </span><span class="p">};</span>
+
+<span class="w">        </span><span class="c1">// Verify signature</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">pk</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BabyJubjubPoint</span><span class="p">::</span><span class="n">new</span><span class="p">(</span><span class="n">pk_x</span><span class="p">,</span><span class="w"> </span><span class="n">pk_y</span><span class="p">);</span>
+<span class="w">        </span><span class="n">signature</span><span class="p">.</span><span class="n">verify</span><span class="p">(</span><span class="o">&amp;</span><span class="n">pk</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">msg_hash</span><span class="p">);</span>
+
+<span class="w">        </span><span class="c1">// Output verification result</span>
+<span class="w">        </span><span class="n">zkwasm_output</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w">  </span><span class="c1">// Success if we reach here</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2 id="4-proof-generation-and-verification">4. Proof Generation and Verification</h2>
+<p>The proof generation system in zkWasm handles the complexity of real-world applications through a segmentation approach. This is necessary because execution traces can contain millions of instructions, far exceeding what can be proved in a single circuit. The system breaks down long execution traces into manageable segments, each with its own proof, which are then combined into a complete verification of the entire execution.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To optimize proof generation in your applications:</p>
+<ul>
+<li>Design with proof segmentation in mind</li>
+<li>Batch related operations to minimize segment boundaries</li>
+<li>Implement proper error handling that doesn't leak private information</li>
+<li>Consider the trade-offs between segment size and proof generation time</li>
+</ul>
+</div>
+<p>Each execution segment maintains its own starting state, sequence of instructions, ending state, and proof of correct execution:</p>
+<div class="highlight"><pre><span></span><code><span class="k">struct</span><span class="w"> </span><span class="nc">ExecutionSegment</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">start_state</span><span class="p">:</span><span class="w"> </span><span class="nc">State</span><span class="p">,</span>
+<span class="w">    </span><span class="n">instructions</span><span class="p">:</span><span class="w"> </span><span class="nb">Vec</span><span class="o">&lt;</span><span class="n">Instruction</span><span class="o">&gt;</span><span class="p">,</span>
+<span class="w">    </span><span class="n">end_state</span><span class="p">:</span><span class="w"> </span><span class="nc">State</span><span class="p">,</span>
+<span class="w">    </span><span class="n">proof</span><span class="p">:</span><span class="w"> </span><span class="nc">SegmentProof</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>This structure represents a single segment of execution. Let's understand each component:</p>
+<ul>
+<li>start_state: Contains the complete state at the beginning of the segment</li>
+<li>instructions: The list of WebAssembly instructions executed in this segment</li>
+<li>end_state: The resulting state after executing all instructions</li>
+<li>proof: The zero-knowledge proof for this segment's execution</li>
+</ul>
+<p>The proof generation system uses these segments as building blocks. Here's how a segment is processed:</p>
+<div class="highlight"><pre><span></span><code><span class="k">impl</span><span class="w"> </span><span class="n">ExecutionSegment</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">process_segment</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nb">Result</span><span class="o">&lt;</span><span class="p">(),</span><span class="w"> </span><span class="n">Error</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">current_state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">start_state</span><span class="p">.</span><span class="n">clone</span><span class="p">();</span>
+
+<span class="w">        </span><span class="c1">// Execute each instruction and track state changes</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="n">instruction</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="o">&amp;</span><span class="bp">self</span><span class="p">.</span><span class="n">instructions</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="c1">// Execute instruction</span>
+<span class="w">            </span><span class="n">current_state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">execute_instruction</span><span class="p">(</span><span class="n">current_state</span><span class="p">,</span><span class="w"> </span><span class="n">instruction</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+
+<span class="w">            </span><span class="c1">// Verify state transition</span>
+<span class="w">            </span><span class="n">verify_state_transition</span><span class="p">(</span><span class="o">&amp;</span><span class="n">current_state</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+
+<span class="w">            </span><span class="c1">// Generate constraints for the proof</span>
+<span class="w">            </span><span class="bp">self</span><span class="p">.</span><span class="n">proof</span><span class="p">.</span><span class="n">add_constraints</span><span class="p">(</span><span class="n">current_state</span><span class="p">.</span><span class="n">clone</span><span class="p">())</span><span class="o">?</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="c1">// Verify final state matches expected end state</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="n">current_state</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">end_state</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="nb">Err</span><span class="p">(</span><span class="n">Error</span><span class="p">::</span><span class="n">StateMismatch</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="nb">Ok</span><span class="p">(())</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>This implementation shows how each segment maintains execution integrity:</p>
+<ol>
+<li>It starts from the initial state</li>
+<li>Processes each instruction sequentially</li>
+<li>Verifies state transitions</li>
+<li>Generates proof constraints</li>
+<li>Ensures the final state matches expectations</li>
+</ol>
+<p>Additionally, segments are grouped into bundles for efficient management:</p>
+<div class="highlight"><pre><span></span><code><span class="k">struct</span><span class="w"> </span><span class="nc">BundleExecution</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">segments</span><span class="p">:</span><span class="w"> </span><span class="nb">Vec</span><span class="o">&lt;</span><span class="n">ExecutionSegment</span><span class="o">&gt;</span><span class="p">,</span>
+<span class="w">    </span><span class="n">continuation_proof</span><span class="p">:</span><span class="w"> </span><span class="nc">ContinuationProof</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Segments are grouped into bundles for efficient management:</p>
+<div class="highlight"><pre><span></span><code><span class="k">struct</span><span class="w"> </span><span class="nc">BundleExecution</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">segments</span><span class="p">:</span><span class="w"> </span><span class="nb">Vec</span><span class="o">&lt;</span><span class="n">ExecutionSegment</span><span class="o">&gt;</span><span class="p">,</span>
+<span class="w">    </span><span class="n">continuation_proof</span><span class="p">:</span><span class="w"> </span><span class="nc">ContinuationProof</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="k">impl</span><span class="w"> </span><span class="n">BundleExecution</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">new</span><span class="p">()</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nc">Self</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">BundleExecution</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">segments</span><span class="p">:</span><span class="w"> </span><span class="nb">Vec</span><span class="p">::</span><span class="n">new</span><span class="p">(),</span>
+<span class="w">            </span><span class="n">continuation_proof</span><span class="p">:</span><span class="w"> </span><span class="nc">ContinuationProof</span><span class="p">::</span><span class="n">default</span><span class="p">(),</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">add_segment</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">segment</span><span class="p">:</span><span class="w"> </span><span class="nc">ExecutionSegment</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nb">Result</span><span class="o">&lt;</span><span class="p">(),</span><span class="w"> </span><span class="n">Error</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Verify segment connects with previous one</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="kd">let</span><span class="w"> </span><span class="nb">Some</span><span class="p">(</span><span class="n">last_segment</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">segments</span><span class="p">.</span><span class="n">last</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="n">last_segment</span><span class="p">.</span><span class="n">end_state</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">segment</span><span class="p">.</span><span class="n">start_state</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="nb">Err</span><span class="p">(</span><span class="n">Error</span><span class="p">::</span><span class="n">SegmentMismatch</span><span class="p">);</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="c1">// Process and add segment</span>
+<span class="w">        </span><span class="n">segment</span><span class="p">.</span><span class="n">process_segment</span><span class="p">()</span><span class="o">?</span><span class="p">;</span>
+<span class="w">        </span><span class="bp">self</span><span class="p">.</span><span class="n">segments</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">segment</span><span class="p">);</span>
+
+<span class="w">        </span><span class="nb">Ok</span><span class="p">(())</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">finalize</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nb">Result</span><span class="o">&lt;</span><span class="p">(),</span><span class="w"> </span><span class="n">Error</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Generate continuation proof</span>
+<span class="w">        </span><span class="bp">self</span><span class="p">.</span><span class="n">continuation_proof</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ContinuationProof</span><span class="p">::</span><span class="n">connect_segments</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">.</span><span class="n">segments</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+
+<span class="w">        </span><span class="c1">// Verify bundle consistency</span>
+<span class="w">        </span><span class="bp">self</span><span class="p">.</span><span class="n">verify_bundle_integrity</span><span class="p">()</span><span class="o">?</span><span class="p">;</span>
+
+<span class="w">        </span><span class="nb">Ok</span><span class="p">(())</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>The system ensures that segments connect properly, with the ending state of one segment matching the starting state of the next. This segmentation allows for efficient proof generation while maintaining the security and correctness of the overall system.</p>
+<p>zkWasm generates three types of proofs that work together to verify program execution:</p>
+<ol>
+<li>Guest Circuit Proofs: Verify the correct execution of WebAssembly instructions within a segment. These proofs ensure that each instruction follows the WebAssembly specification.</li>
+<li>Host Circuit Proofs: Validate external function calls and their results. These proofs verify that interactions with the environment (through host functions) are correct.</li>
+<li>Aggregation Circuit Proofs: Combine multiple proofs into a single, verifiable proof. This includes connecting segment proofs and ensuring the overall execution is valid.</li>
+</ol>
+<p>The proof generation process begins with individual segment proofs, creates continuation proofs to connect the segments, and finally combines everything into a single, verifiable proof. This hierarchical approach allows zkWasm to handle complex applications while maintaining efficient proof generation and verification.</p>
+<h2 id="5-development-process-and-best-practices">5. Development Process and Best Practices</h2>
+<p>Developing applications for zkWasm requires careful attention to state management and performance optimization. State changes should be minimized when possible, as each state transition must be proved in the zero-knowledge system. Related operations should be batched together when possible to reduce the number of state transitions and improve proof generation efficiency.</p>
+<p>Besides, memory management plays a crucial role in zkWasm application performance. The linear memory model of WebAssembly must be used efficiently, with careful attention paid to memory layout and access patterns. Global variables should be used judiciously, as they affect the state that must be tracked and proved.</p>
+<p>Error handling in zkWasm applications requires special consideration due to the zero-knowledge context. Errors must be handled in a way that doesn't leak information about private data while still providing useful feedback about what went wrong. This often involves careful design of error conditions and appropriate use of public and private inputs. We will cover more about error handling in practice in the later chapters.</p>
+<h2 id="6-architecture-of-a-zkwasm-rollup-application">6. Architecture of a zkWasm Rollup Application</h2>
+<p><img alt="Architecture of a zkWasm Rollup Application" src="media/monitor-architecture.png" /></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": ".", "features": ["navigation.indexes", "navigation.instant", "navigation.tracking", "navigation.sections", "navigation.expand", "navigation.top", "search.suggest", "content.code.copy", "search.highlight"], "search": "assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="assets/javascripts/bundle.13a4f30d.min.js"></script>
+      
+        <script src="https://unpkg.com/mermaid@10.6.1/dist/mermaid.min.js"></script>
+      
+    
+  </body>
+</html>
