@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.12">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
     
     
       
@@ -26,7 +26,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.2afb09e1.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.342714a4.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
@@ -1454,7 +1454,7 @@
 <p>Time-Driven Events are events that are triggered by the passage of time. For example, in a farming game, crops growing over time and eventually becoming harvestable would be a time-driven event.</p>
 <p>These events can affect the state of a minirollup application. Using the farming game example, crop growth would be represented by changes in the crop's state, which could then trigger other events.</p>
 <p>Traditional blockchain systems don't natively support time-driven events since blockchains cannot autonomously trigger state changes. However, we can simulate time-driven events using an external account controlled by an off-chain service.</p>
-<p>In zkWasm, we have a server-side sequencer that manages the transaction queue. This sequencer can generate timetick transactions to trigger time-driven events (see the <a href="../zkwasm-mini-rollup/Rollup%20Server.html#sequencer-tsservicets">Sequencer section in the server documentation</a>). This provides native support for time-driven events in zkWasm.</p>
+<p>In zkWasm, we have a server-side sequencer that manages the transaction queue. This sequencer can generate timetick transactions to trigger time-driven events (see the <a href="../zkwasm-mini-rollup/Rollup%20Server.html#sequencer">Sequencer section in the server documentation</a>). This provides native support for time-driven events in zkWasm.</p>
 <h2 id="implementation-components">Implementation Components</h2>
 <p>To implement time-driven events in zkWasm, we'll work with several components:</p>
 <ul>
@@ -1825,10 +1825,10 @@
     
     
       
-      <script id="__config" type="application/json">{"base": "..", "features": ["navigation.indexes", "navigation.instant", "navigation.tracking", "navigation.sections", "navigation.expand", "navigation.top", "search.suggest", "content.code.copy", "search.highlight"], "search": "../assets/javascripts/workers/search.f8cc74c7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"base": "..", "features": ["navigation.indexes", "navigation.instant", "navigation.tracking", "navigation.sections", "navigation.expand", "navigation.top", "search.suggest", "content.code.copy", "search.highlight"], "search": "../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.c8b220af.min.js"></script>
+      <script src="../assets/javascripts/bundle.13a4f30d.min.js"></script>
       
         <script src="https://unpkg.com/mermaid@10.6.1/dist/mermaid.min.js"></script>
       
