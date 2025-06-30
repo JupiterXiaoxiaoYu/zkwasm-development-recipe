@@ -6,19 +6,75 @@
 - Basic knowledge of Docker.
 - Basic knowledge of TypeScript and Node.js.
 
+## Install Make
+
+!!! note "Linux/macOS Users"
+    For Unix-based systems, Make is usually pre-installed. If not:
+
+    Ubuntu/Debian:
+    ```bash
+    sudo apt update
+    sudo apt install build-essential
+    ```
+
+    macOS:
+    ```bash
+    xcode-select --install
+    ```
+
+!!! note "Windows Setup for Make"
+    Windows users have several options:
+
+    1. Using Chocolatey (Recommended):
+    ```bash
+    choco install make
+    ```
+
+    2. Using MSYS2:
+    ```bash
+    # First install MSYS2 from https://www.msys2.org/
+    # Then open MSYS2 terminal and run:
+    pacman -S make
+    ```
+
+    3. Using WSL (Best Option):
+    ```bash
+    # Install WSL first
+    wsl --install
+
+    # After WSL is installed, open Ubuntu terminal and run:
+    sudo apt update
+    sudo apt install build-essential
+    ```
+
+!!! tip "Verify Installation"
+    After installation, verify Make is properly installed:
+    ```bash
+    make --version
+    ```
+
+!!! info "Package Manager Installation"
+    If you need to install package managers first:
+
+    - Chocolatey: [Installation Guide](https://chocolatey.org/install)
+    - MSYS2: [Download Page](https://www.msys2.org/)
+    - WSL: [Microsoft Guide](https://learn.microsoft.com/en-us/windows/wsl/install)
+
+    After installing the package manager, make sure you correctly setup the environment variables for the package manager.
+
 ## Node.js Setup
 
-!!! note "Install Node.js and npm"
-    To install Node.js and npm, follow these steps:
+!!! note "Install Node.js 18 and npm"
+    To install Node.js 18 and npm, follow these steps:
 
-    1. Visit the [Node.js download page](https://nodejs.org/) and download the LTS version for your operating system.
+    1. Visit the [Node.js download page](https://nodejs.org/) and download Node.js **version 18.x (LTS)** for your operating system.
     2. Run the installer and follow the setup instructions.
     3. Ensure that you check the option to install npm along with Node.js.
 
 !!! tip "Verify Installation"
-    After installation, verify Node.js, npm, and npx are properly installed:
+    After installation, verify Node.js 18, npm, and npx are properly installed:
     ```bash
-    node --version
+    node --version  # Should show v18.x.x
     npm --version
     npx --version    # npx comes with npm 5.2.0+
     ```
@@ -37,17 +93,22 @@
 !!! warning "Note for Windows Users"
     If you encounter issues with permissions or paths, consider using [nvm-windows](https://github.com/coreybutler/nvm-windows) to manage Node.js versions.
 
-!!! example "Using nvm for Node.js"
-    If you prefer using a version manager, you can use nvm (Node Version Manager):
+!!! example "Using nvm for Node.js 18"
+    If you prefer using a version manager, you can use nvm (Node Version Manager) to install Node.js 18:
 
     - For macOS/Linux:
     ```bash
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
     source ~/.bashrc
-    nvm install --lts
+    nvm install 18
+    nvm use 18
     ```
 
-    - For Windows, use [nvm-windows](https://github.com/coreybutler/nvm-windows) and follow the installation instructions on the GitHub page.
+    - For Windows, use [nvm-windows](https://github.com/coreybutler/nvm-windows) and follow the installation instructions on the GitHub page:
+    ```bash
+    nvm install 18
+    nvm use 18
+    ```
 
 !!! info "Package Manager Installation"
     If you need to install package managers first:
@@ -128,62 +189,6 @@
     ```bash
     wasm-opt --version
     ```
-
-## Install Make
-
-!!! note "Linux/macOS Users"
-    For Unix-based systems, Make is usually pre-installed. If not:
-
-    Ubuntu/Debian:
-    ```bash
-    sudo apt update
-    sudo apt install build-essential
-    ```
-
-    macOS:
-    ```bash
-    xcode-select --install
-    ```
-
-!!! note "Windows Setup for Make"
-    Windows users have several options:
-
-    1. Using Chocolatey (Recommended):
-    ```bash
-    choco install make
-    ```
-
-    2. Using MSYS2:
-    ```bash
-    # First install MSYS2 from https://www.msys2.org/
-    # Then open MSYS2 terminal and run:
-    pacman -S make
-    ```
-
-    3. Using WSL (Best Option):
-    ```bash
-    # Install WSL first
-    wsl --install
-
-    # After WSL is installed, open Ubuntu terminal and run:
-    sudo apt update
-    sudo apt install build-essential
-    ```
-
-!!! tip "Verify Installation"
-    After installation, verify Make is properly installed:
-    ```bash
-    make --version
-    ```
-
-!!! info "Package Manager Installation"
-    If you need to install package managers first:
-
-    - Chocolatey: [Installation Guide](https://chocolatey.org/install)
-    - MSYS2: [Download Page](https://www.msys2.org/)
-    - WSL: [Microsoft Guide](https://learn.microsoft.com/en-us/windows/wsl/install)
-
-    After installing the package manager, make sure you correctly setup the environment variables for the package manager.
 
 ## Docker Setup
 
