@@ -370,6 +370,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#install-make" class="md-nav__link">
+    <span class="md-ellipsis">
+      Install Make
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#nodejs-setup" class="md-nav__link">
     <span class="md-ellipsis">
       Node.js Setup
@@ -417,15 +426,6 @@
         
       </ul>
     </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#install-make" class="md-nav__link">
-    <span class="md-ellipsis">
-      Install Make
-    </span>
-  </a>
   
 </li>
       
@@ -1335,6 +1335,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#install-make" class="md-nav__link">
+    <span class="md-ellipsis">
+      Install Make
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#nodejs-setup" class="md-nav__link">
     <span class="md-ellipsis">
       Node.js Setup
@@ -1386,15 +1395,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#install-make" class="md-nav__link">
-    <span class="md-ellipsis">
-      Install Make
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#docker-setup" class="md-nav__link">
     <span class="md-ellipsis">
       Docker Setup
@@ -1427,20 +1427,76 @@
 <li>Basic knowledge of Docker.</li>
 <li>Basic knowledge of TypeScript and Node.js.</li>
 </ul>
+<h2 id="install-make">Install Make</h2>
+<div class="admonition note">
+<p class="admonition-title">Linux/macOS Users</p>
+<p>For Unix-based systems, Make is usually pre-installed. If not:</p>
+<p>Ubuntu/Debian:
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt<span class="w"> </span>update
+sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>build-essential
+</code></pre></div></p>
+<p>macOS:
+<div class="highlight"><pre><span></span><code>xcode-select<span class="w"> </span>--install
+</code></pre></div></p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Windows Setup for Make</p>
+<p>Windows users have several options:</p>
+<ol>
+<li>
+<p>Using Chocolatey (Recommended):
+<div class="highlight"><pre><span></span><code>choco<span class="w"> </span>install<span class="w"> </span>make
+</code></pre></div></p>
+</li>
+<li>
+<p>Using MSYS2:
+<div class="highlight"><pre><span></span><code><span class="c1"># First install MSYS2 from https://www.msys2.org/</span>
+<span class="c1"># Then open MSYS2 terminal and run:</span>
+pacman<span class="w"> </span>-S<span class="w"> </span>make
+</code></pre></div></p>
+</li>
+<li>
+<p>Using WSL (Best Option):
+<div class="highlight"><pre><span></span><code><span class="c1"># Install WSL first</span>
+wsl<span class="w"> </span>--install
+
+<span class="c1"># After WSL is installed, open Ubuntu terminal and run:</span>
+sudo<span class="w"> </span>apt<span class="w"> </span>update
+sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>build-essential
+</code></pre></div></p>
+</li>
+</ol>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Verify Installation</p>
+<p>After installation, verify Make is properly installed:
+<div class="highlight"><pre><span></span><code>make<span class="w"> </span>--version
+</code></pre></div></p>
+</div>
+<div class="admonition info">
+<p class="admonition-title">Package Manager Installation</p>
+<p>If you need to install package managers first:</p>
+<ul>
+<li>Chocolatey: <a href="https://chocolatey.org/install">Installation Guide</a></li>
+<li>MSYS2: <a href="https://www.msys2.org/">Download Page</a></li>
+<li>WSL: <a href="https://learn.microsoft.com/en-us/windows/wsl/install">Microsoft Guide</a></li>
+</ul>
+<p>After installing the package manager, make sure you correctly setup the environment variables for the package manager.</p>
+</div>
 <h2 id="nodejs-setup">Node.js Setup</h2>
 <div class="admonition note">
-<p class="admonition-title">Install Node.js and npm</p>
-<p>To install Node.js and npm, follow these steps:</p>
+<p class="admonition-title">Install Node.js 18 and npm</p>
+<p>To install Node.js 18 and npm, follow these steps:</p>
 <ol>
-<li>Visit the <a href="https://nodejs.org/">Node.js download page</a> and download the LTS version for your operating system.</li>
+<li>Visit the <a href="https://nodejs.org/">Node.js download page</a> and download Node.js <strong>version 18.x (LTS)</strong> for your operating system.</li>
 <li>Run the installer and follow the setup instructions.</li>
 <li>Ensure that you check the option to install npm along with Node.js.</li>
 </ol>
 </div>
 <div class="admonition tip">
 <p class="admonition-title">Verify Installation</p>
-<p>After installation, verify Node.js, npm, and npx are properly installed:
-<div class="highlight"><pre><span></span><code>node<span class="w"> </span>--version
+<p>After installation, verify Node.js 18, npm, and npx are properly installed:
+<div class="highlight"><pre><span></span><code>node<span class="w"> </span>--version<span class="w">  </span><span class="c1"># Should show v18.x.x</span>
 npm<span class="w"> </span>--version
 npx<span class="w"> </span>--version<span class="w">    </span><span class="c1"># npx comes with npm 5.2.0+</span>
 </code></pre></div></p>
@@ -1462,18 +1518,22 @@ npx<span class="w"> </span>--version<span class="w">    </span><span class="c1">
 <p>If you encounter issues with permissions or paths, consider using <a href="https://github.com/coreybutler/nvm-windows">nvm-windows</a> to manage Node.js versions.</p>
 </div>
 <div class="admonition example">
-<p class="admonition-title">Using nvm for Node.js</p>
-<p>If you prefer using a version manager, you can use nvm (Node Version Manager):</p>
+<p class="admonition-title">Using nvm for Node.js 18</p>
+<p>If you prefer using a version manager, you can use nvm (Node Version Manager) to install Node.js 18:</p>
 <ul>
 <li>
 <p>For macOS/Linux:
 <div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-o-<span class="w"> </span>https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>bash
 <span class="nb">source</span><span class="w"> </span>~/.bashrc
-nvm<span class="w"> </span>install<span class="w"> </span>--lts
+nvm<span class="w"> </span>install<span class="w"> </span><span class="m">18</span>
+nvm<span class="w"> </span>use<span class="w"> </span><span class="m">18</span>
 </code></pre></div></p>
 </li>
 <li>
-<p>For Windows, use <a href="https://github.com/coreybutler/nvm-windows">nvm-windows</a> and follow the installation instructions on the GitHub page.</p>
+<p>For Windows, use <a href="https://github.com/coreybutler/nvm-windows">nvm-windows</a> and follow the installation instructions on the GitHub page:
+<div class="highlight"><pre><span></span><code>nvm<span class="w"> </span>install<span class="w"> </span><span class="m">18</span>
+nvm<span class="w"> </span>use<span class="w"> </span><span class="m">18</span>
+</code></pre></div></p>
 </li>
 </ul>
 </div>
@@ -1555,62 +1615,6 @@ tar<span class="w"> </span>-xzf<span class="w"> </span>binaryen-version_109-x86_
 <p>After installation, verify wasm-opt is properly installed:
 <div class="highlight"><pre><span></span><code>wasm-opt<span class="w"> </span>--version
 </code></pre></div></p>
-</div>
-<h2 id="install-make">Install Make</h2>
-<div class="admonition note">
-<p class="admonition-title">Linux/macOS Users</p>
-<p>For Unix-based systems, Make is usually pre-installed. If not:</p>
-<p>Ubuntu/Debian:
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt<span class="w"> </span>update
-sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>build-essential
-</code></pre></div></p>
-<p>macOS:
-<div class="highlight"><pre><span></span><code>xcode-select<span class="w"> </span>--install
-</code></pre></div></p>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Windows Setup for Make</p>
-<p>Windows users have several options:</p>
-<ol>
-<li>
-<p>Using Chocolatey (Recommended):
-<div class="highlight"><pre><span></span><code>choco<span class="w"> </span>install<span class="w"> </span>make
-</code></pre></div></p>
-</li>
-<li>
-<p>Using MSYS2:
-<div class="highlight"><pre><span></span><code><span class="c1"># First install MSYS2 from https://www.msys2.org/</span>
-<span class="c1"># Then open MSYS2 terminal and run:</span>
-pacman<span class="w"> </span>-S<span class="w"> </span>make
-</code></pre></div></p>
-</li>
-<li>
-<p>Using WSL (Best Option):
-<div class="highlight"><pre><span></span><code><span class="c1"># Install WSL first</span>
-wsl<span class="w"> </span>--install
-
-<span class="c1"># After WSL is installed, open Ubuntu terminal and run:</span>
-sudo<span class="w"> </span>apt<span class="w"> </span>update
-sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>build-essential
-</code></pre></div></p>
-</li>
-</ol>
-</div>
-<div class="admonition tip">
-<p class="admonition-title">Verify Installation</p>
-<p>After installation, verify Make is properly installed:
-<div class="highlight"><pre><span></span><code>make<span class="w"> </span>--version
-</code></pre></div></p>
-</div>
-<div class="admonition info">
-<p class="admonition-title">Package Manager Installation</p>
-<p>If you need to install package managers first:</p>
-<ul>
-<li>Chocolatey: <a href="https://chocolatey.org/install">Installation Guide</a></li>
-<li>MSYS2: <a href="https://www.msys2.org/">Download Page</a></li>
-<li>WSL: <a href="https://learn.microsoft.com/en-us/windows/wsl/install">Microsoft Guide</a></li>
-</ul>
-<p>After installing the package manager, make sure you correctly setup the environment variables for the package manager.</p>
 </div>
 <h2 id="docker-setup">Docker Setup</h2>
 <div class="admonition note">
