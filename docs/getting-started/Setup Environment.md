@@ -148,6 +148,9 @@
     - Even Better TOML
     - CodeLLDB
 
+!!! note "wasm-bindgen Version Requirement"
+    For rust project, you **must** use wasm-bindgen version **0.2.91** (You may check the Cargo.toml / Cargo.lock file in your project for the exact version). Other versions may cause compatibility issues.
+
 ## WebAssembly Tools Setup
 
 ### Install wasm-pack
