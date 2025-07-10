@@ -3,6 +3,23 @@
 ## Guideline 
 This tutorial will guide you through the process of creating a simple zkWasm application in minutes. Please make sure you have already setup the environment by following the [Setup Environment](Setup Environment.md) guide.
 
+!!! tip "Quick Start with zkWasm DApp CLI"
+    You can also try our brand new [zkWasm DApp CLI](https://github.com/DelphinusLab/zkwasm-dapp-starter) to create a new project conveniently. The CLI provides:
+    
+    - 🎯 Quick project generation from templates
+    - 🔍 Smart deployment checks
+    - ⚙️ Automatic environment configuration
+    - 📦 Multiple project templates
+    - 🛠️ Built-in development tools
+    
+    ```bash
+    # Install globally
+    npm install -g zkwasm-dapp-cli
+    
+    # Create a new project
+    zkwasm-dapp create my-zkwasm-app
+    ```
+
 ## Step 1: Install the zkWasm Mini-Rollup service
 The zkWasm Mini-Rollup service is a RESTful service that provides the zkWasm runtime environment. It provides the following functionalities:
 
